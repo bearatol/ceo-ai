@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add a three-language GitHub Pages site with tool selection, an installation
+  message, keyboard navigation and reduced-motion support.
+
 - Add illustrative dialogues, compatibility evidence and installation help in
   English, Russian and Simplified Chinese.
 - Document migration from the original manual installation, contribution

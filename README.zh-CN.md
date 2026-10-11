@@ -2,6 +2,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[网站](https://bearatol.github.io/ceo-ai/zh/)
+
 **不知道怎样做更合适？先和 AI CEO 商量一下。**
 
 CEO AI 为 Codex、Claude Code 和 Cursor 提供一套工作方法，帮助你讨论想法、选择方案，

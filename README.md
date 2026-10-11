@@ -2,6 +2,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[Website](https://bearatol.github.io/ceo-ai/)
+
 **Not sure how to approach a task? Talk it through with an AI CEO.**
 
 CEO AI adds a workflow to Codex, Claude Code, or Cursor for discussing an idea,

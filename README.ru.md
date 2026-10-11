@@ -2,6 +2,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[Сайт](https://bearatol.github.io/ceo-ai/ru/)
+
 **Не знаешь, как лучше сделать? Посоветуйся с ИИ CEO.**
 
 CEO AI добавляет в Codex, Claude Code или Cursor помощника, с которым можно
