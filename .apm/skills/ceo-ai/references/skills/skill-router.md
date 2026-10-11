@@ -7,14 +7,13 @@ description: Select the smallest useful set of installed skills for a task.
 
 Use at the start of a task when several ecosystem capabilities may apply.
 
-1. Resolve the ecosystem root from explicit host context or configured
-   AGENTS_HOME. Read its catalog.json and the task packet if available.
-   For this standalone checkout, use its own root; do not guess a global path.
+1. Read `catalog.json` from the package root supplied by the ceo-ai entry skill.
+   Resolve component paths against that root; never substitute a global catalog.
 2. Extract the task domain, deliverable, risk, dependencies, and host limits.
 3. Inspect all plausible catalog matches, not only the CEO recommendations.
 4. Rank skills by material contribution and remove redundant workflows.
 5. Select every useful skill that fits the task scope, context, and permissions.
-6. Load each selected `SKILL.md` completely before applying it.
+6. Load each selected skill document completely before applying it.
 7. If a capability is missing, use `capability-discovery`; do not pretend it
    exists.
 8. Record considered, applied, omitted, and missing skills in the result.

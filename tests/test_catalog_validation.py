@@ -16,8 +16,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 # in the source tree; installers copy component directories verbatim.
 sys.dont_write_bytecode = True
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
-PACK = ROOT
-TEAM_DIRECTORY = ROOT / "scripts"
+PACK = ROOT / ".apm/skills/ceo-ai"
+TEAM_DIRECTORY = PACK / "scripts"
 sys.path.insert(0, str(TEAM_DIRECTORY))
 import catalog as team  # noqa: E402
 

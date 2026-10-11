@@ -7,7 +7,8 @@ import tempfile
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-TEAM = ROOT / "tools/team/team.py"
+PACK = ROOT / ".apm/skills/ceo-ai"
+TEAM = PACK / "tools/team/team.py"
 
 
 class BundleTests(unittest.TestCase):
@@ -15,7 +16,7 @@ class BundleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             unrelated = pathlib.Path(directory)
             (unrelated / "catalog.json").write_text("broken global catalog")
-            run = subprocess.run([sys.executable, str(TEAM), "--home", str(ROOT), "list", "--type", "agent"],
+            run = subprocess.run([sys.executable, str(TEAM), "--home", str(PACK), "list", "--type", "agent"],
                                  cwd=directory, env=dict(os.environ, AGENTS_HOME=directory),
                                  capture_output=True, text=True, timeout=10)
         self.assertEqual(run.returncode, 0, run.stderr)
@@ -29,9 +30,9 @@ class BundleTests(unittest.TestCase):
         self.assertIn("--home", run.stderr)
 
     def test_shipped_examples_match(self):
-        run = subprocess.run([sys.executable, str(TEAM), "--home", str(ROOT),
-                              "validate", "result", str(ROOT / "orchestration/templates/result.json"),
-                              "--task", str(ROOT / "orchestration/templates/task.json")],
+        run = subprocess.run([sys.executable, str(TEAM), "--home", str(PACK),
+                              "validate", "result", str(PACK / "orchestration/templates/result.json"),
+                              "--task", str(PACK / "orchestration/templates/task.json")],
                              capture_output=True, text=True, timeout=10)
         self.assertEqual(run.returncode, 0, run.stderr)
 

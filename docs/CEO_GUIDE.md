@@ -12,7 +12,8 @@ the smallest useful check. It does not approve spending, grant access, or replac
 a mandatory security review. The normal limit is one assessment and one focused
 follow-up. Settled preferences should not be debated again without new evidence.
 
-The installed CEO agent has read-only access. It delegates implementation to an
+The optional CEO agent role declares read-only access; the installer does not
+register it as a native agent. It delegates implementation to an
 authorized worker when one is available. A host running the CEO skill directly
 may use its own permitted tools. Neither the skill nor a task packet grants
 additional permissions.
@@ -24,17 +25,19 @@ proposes an appropriate pinned installation or an original minimal component.
 It explains the source, permissions, compatibility, and verification needed.
 Installation and creation follow the user's authorization.
 
-This checkout includes a conservative inventory utility. From the checkout:
+This checkout includes a conservative inventory utility. For an explicitly approved directory of native skills and agent metadata:
 
 ```bash
-python3 scripts/ceo_inventory.py --home .
-python3 scripts/ceo_inventory.py --home . --refresh
+python3 .apm/skills/ceo-ai/scripts/ceo_inventory.py --home /approved/skills-root
+python3 .apm/skills/ceo-ai/scripts/ceo_inventory.py --home /approved/skills-root --refresh
 ```
 
 Supply an approved root explicitly. The first command only reads. The second
 writes a separate `.ceo-inventory.json` cache within that root; use it only when
 that write is permitted. It never rewrites the source catalog or installs code.
-For this checkout, use its root directory. An inventory of source files does
+The self-contained package uses internal reference files; use its catalog to
+inspect those guides. This scanner is for the native metadata layout below.
+An inventory of source files does
 not establish that components are installed or callable in a host.
 
 The scanner reads `skills/*/SKILL.md` and `agents/*.md`, fingerprints those files,
@@ -68,7 +71,7 @@ When validating a returned packet with the compatibility team utility, supply
 the original assignment:
 
 ```bash
-python3 tools/team/team.py --home . \
+python3 .apm/skills/ceo-ai/tools/team/team.py --home .apm/skills/ceo-ai \
   validate result result.json --task task.json
 ```
 

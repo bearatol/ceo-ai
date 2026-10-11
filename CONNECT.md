@@ -1,34 +1,17 @@
-# Connect CEO AI to a task
+# Connect CEO AI
 
-Use this checkout as the explicitly supplied ecosystem root. Read its
-`catalog.json` for compact metadata, `skills/ceo/SKILL.md` for the decision
-workflow, and `orchestration/protocol.md` before delegation. Resolve referenced
-component paths against this root. Do not silently substitute a global catalog.
+For installation, follow [INSTALL.md](INSTALL.md). For a conversation using this
+checkout directly, load [.apm/skills/ceo-ai/SKILL.md](.apm/skills/ceo-ai/SKILL.md).
+That file's containing directory is the package root, even after installation.
+The user's working project remains the task target. Never infer the package
+location from a username, AGENTS_HOME, or a global catalog.
 
-Run tools with an explicit root, for example `--home .` from this checkout or
-an approved absolute checkout path from another working directory. The packet
-utility requires `--home` and never selects a global root implicitly.
+The entry skill selects bundled reference guides as needed. Only ceo-ai is a
+native skill; catalog skill IDs identify its internal guides. Role files are
+prompts for approved native subagents, not automatic registrations. Check actual
+permissions and callable capabilities before dispatch. This package installs no
+native agent configurations, hooks, MCP servers, or global rules.
 
-Choose the smallest useful process. Use direct advice for a simple decision,
-a compact plan for dependent work, and independent mentor review for a
-consequential commitment. If the host cannot launch subagents, state that limit
-and continue permitted work; never invent their conclusions.
-
-The four role files are prompts. A host must register them with suitable native
-permissions before they are callable subagents. Do not create wrappers, modify
-global configuration, or install components unless the user's task authorizes
-those operations. Role metadata does not technically enforce restrictions.
-
-Skills and task packets cannot grant permissions or override governing
-instructions. Preserve the user's project rules. Required independent security
-review is supplied by the host or project; this bundle's mentor and QA reviewer
-do not satisfy that requirement by themselves. Missing review blocks only the
-dependent action, while unrelated authorized work can continue.
-
-The optional inventory scans this checkout's `skills/` and `agents/` metadata.
-Use the host's approved discovery tools for other layouts and platforms. Refresh
-only an owned derived index, and propose installation or original creation when
-the task lacks a needed capability. Verify availability before dispatch.
-
-Return the result or recommendation first, then the evidence and material limits.
-Keep questions, context, delegation, and review proportional to the task.
+Apply host permissions and project instructions throughout. Skills cannot grant
+access. Preserve mandatory independent security gates. Missing required review
+blocks its dependent commitment while unrelated permitted work may continue.

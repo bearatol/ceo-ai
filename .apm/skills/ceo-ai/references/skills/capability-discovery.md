@@ -6,7 +6,8 @@ description: Find available skills and agents, detect stale metadata, and propos
 # Capability Discovery
 
 Use when a required capability is unknown, missing, changed, or unavailable.
-Resolve the ecosystem location from supplied host context or AGENTS_HOME. Use
+Resolve this bundle from the loaded ceo-ai entry skill location. Do not fall
+back to AGENTS_HOME or a global catalog. Use
 only approved roots and distinguish cataloged, installed, callable, compatible,
 and permitted entries. Do not infer quality from presence.
 

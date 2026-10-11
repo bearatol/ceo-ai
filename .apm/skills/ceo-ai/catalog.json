@@ -1,7 +1,7 @@
 {
   "$schema": "./catalog.schema.json",
   "schema_version": 2,
-  "ecosystem_version": "0.1.0",
+  "ecosystem_version": "0.2.0",
   "language": "en",
   "license": "MIT",
   "components": [
@@ -164,7 +164,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/ceo",
+      "path": "references/skills/ceo.md",
       "tags": [
         "coordination",
         "governance"
@@ -184,7 +184,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/skill-router",
+      "path": "references/skills/skill-router.md",
       "tags": [
         "routing",
         "discovery"
@@ -202,7 +202,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/capability-discovery",
+      "path": "references/skills/capability-discovery.md",
       "tags": [
         "discovery",
         "provenance"
@@ -217,7 +217,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/skill-authoring",
+      "path": "references/skills/skill-authoring.md",
       "tags": [
         "skills",
         "authoring"
@@ -232,7 +232,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/software-delivery",
+      "path": "references/skills/software-delivery.md",
       "tags": [
         "software",
         "implementation"
@@ -247,7 +247,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/quality-review",
+      "path": "references/skills/quality-review.md",
       "tags": [
         "quality",
         "review"
@@ -262,7 +262,7 @@
       ],
       "origin": "original",
       "license": "MIT",
-      "path": "skills/context-engineering",
+      "path": "references/skills/context-engineering.md",
       "tags": [
         "context",
         "handoff",

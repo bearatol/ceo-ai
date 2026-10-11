@@ -12,7 +12,7 @@ from unittest import mock
 sys.dont_write_bytecode = True
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-PACK = ROOT
+PACK = ROOT / ".apm/skills/ceo-ai"
 spec = importlib.util.spec_from_file_location("ceo_team", PACK / "tools/team/team.py")
 team = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(team)
@@ -95,7 +95,7 @@ class InventoryTests(unittest.TestCase):
         self.skill.write_text("---\nname: demo\ndescription: Example\n---\nOriginal behavior.\n")
 
     def run_index(self, *args):
-        return subprocess.run([sys.executable, str(ROOT / "scripts/ceo_inventory.py"),
+        return subprocess.run([sys.executable, str(ROOT / ".apm/skills/ceo-ai/scripts/ceo_inventory.py"),
                                "--home", str(self.home), *args], capture_output=True,
                               text=True, timeout=10)
 
@@ -176,7 +176,7 @@ class InventoryTests(unittest.TestCase):
 
     def test_concurrent_refresh_is_refused_without_overwrite(self):
         import fcntl
-        module_spec = importlib.util.spec_from_file_location("ceo_index", ROOT / "scripts/ceo_inventory.py")
+        module_spec = importlib.util.spec_from_file_location("ceo_index", ROOT / ".apm/skills/ceo-ai/scripts/ceo_inventory.py")
         inventory = importlib.util.module_from_spec(module_spec)
         module_spec.loader.exec_module(inventory)
         self.assertEqual(self.run_index("--refresh").returncode, 0)
@@ -194,7 +194,7 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual((self.home / ".ceo-inventory.json").read_bytes(), before)
 
     def test_interrupted_refresh_keeps_previous_cache(self):
-        module_spec = importlib.util.spec_from_file_location("ceo_index", ROOT / "scripts/ceo_inventory.py")
+        module_spec = importlib.util.spec_from_file_location("ceo_index", ROOT / ".apm/skills/ceo-ai/scripts/ceo_inventory.py")
         inventory = importlib.util.module_from_spec(module_spec)
         module_spec.loader.exec_module(inventory)
         self.assertEqual(self.run_index("--refresh").returncode, 0)

@@ -5,13 +5,15 @@ import pathlib
 import sys
 
 sys.dont_write_bytecode = True
+ROOT = pathlib.Path(__file__).resolve().parents[1] / ".apm/skills/ceo-ai"
+sys.path.insert(0, str(ROOT / "scripts"))
 from catalog import validate_catalog
-
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+from install import package
 
 
 def main():
     try:
+        package(ROOT)
         catalog = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
         errors = validate_catalog(catalog, ROOT)
         profile = (ROOT / "profiles/core.profile").read_text().splitlines()

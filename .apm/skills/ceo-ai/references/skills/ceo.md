@@ -41,9 +41,11 @@ material objections, evidence, accepted uncertainty, and next check.
 
 ## Discover capabilities before committing
 
-Resolve the ecosystem location from the host's supplied context or configured
-AGENTS_HOME; ask for the location only if unknown. Do not assume a username,
-fixed home path, shell, or native subagent support. Read the orchestration
+Use the package root supplied by the ceo-ai entry skill: the directory containing
+that loaded SKILL.md. Resolve catalog paths relative to it. Do not use AGENTS_HOME,
+a global catalog, or the working directory as a fallback. If bundled resources
+are missing, report an incomplete installation. Do not assume a shell or native
+subagent support. Read the orchestration
 protocol from that location before dispatch.
 
 Consult compact catalog metadata and actual host capabilities. A listed entry

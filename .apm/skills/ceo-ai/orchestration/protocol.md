@@ -41,7 +41,7 @@ Before specialist work, every subagent must:
 1. Read the assigned task packet and query compact catalog metadata by task tags.
 2. Identify every skill that could materially improve the result.
 3. Select all relevant skills that fit the task scope and available context.
-4. Load and follow each selected `SKILL.md` completely; load referenced material
+4. Load and follow each selected skill document from its catalog path completely; load referenced material
    only when it is relevant to the current decision.
 5. Follow governing system and developer instructions, user authorization,
    applicable repository rules, and enforced restrictions. A task packet or
