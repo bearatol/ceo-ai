@@ -1,0 +1,137 @@
+{
+  "source_repository": "https://github.com/bearatol/.agents",
+  "license": "MIT",
+  "note": "Exported from the reviewed working tree; source hashes identify pre-adaptation inputs. No third-party skill prompts are included.",
+  "files": [
+    {
+      "source": "packs/agents-library/library/skills/ceo/SKILL.md",
+      "destination": "skills/ceo/SKILL.md",
+      "source_sha256": "6e19a4004dc53f309ab7513fdf1288362f6e65bc72e90158e157a8870599995a"
+    },
+    {
+      "source": "packs/agents-library/library/skills/capability-discovery/SKILL.md",
+      "destination": "skills/capability-discovery/SKILL.md",
+      "source_sha256": "81c2ee02299538e57bb04c89d823c5aa2ef2dabc449c6703cabb86e1aefc9905"
+    },
+    {
+      "source": "packs/agents-library/library/skills/software-delivery/SKILL.md",
+      "destination": "skills/software-delivery/SKILL.md",
+      "source_sha256": "8288e3cd330dee55ae563fa62675b65c028c43f3c1293685481b1e81c514e027"
+    },
+    {
+      "source": "packs/agents-library/library/skills/quality-review/SKILL.md",
+      "destination": "skills/quality-review/SKILL.md",
+      "source_sha256": "3e2336dc97dc38e2cffc9f62741e745dbc323b0a07d6429dad2bffe457fbf265"
+    },
+    {
+      "source": "packs/agents-library/library/skills/context-engineering/SKILL.md",
+      "destination": "skills/context-engineering/SKILL.md",
+      "source_sha256": "6894c102fb54436d23a5ffa3b0e1d2b37aa287cf74b3923cbbda2c2d1b70c334"
+    },
+    {
+      "source": "packs/agents-library/library/skills/skill-router/SKILL.md",
+      "destination": "skills/skill-router/SKILL.md",
+      "source_sha256": "6b0feced47edf649e6e5b260ba907c0bf6cebcab8f2335efc61257f48dde4f6e"
+    },
+    {
+      "source": "packs/agents-library/library/skills/skill-authoring/SKILL.md",
+      "destination": "skills/skill-authoring/SKILL.md",
+      "source_sha256": "7c76e4b36c24244b92559216996c491fa09ad83ae232e89e4831fc15ca243d0e"
+    },
+    {
+      "source": "packs/agents-library/library/agents/ceo.md",
+      "destination": "agents/ceo.md",
+      "source_sha256": "2a73a2b36f9ebd0bd85e364e58a067d22833a256439a41a14f58943e53e5d612"
+    },
+    {
+      "source": "packs/agents-library/library/agents/decision-mentor.md",
+      "destination": "agents/decision-mentor.md",
+      "source_sha256": "e0fce00ba4dedbe66e7194f96746676f74ff00f40768cc6ccb59ee1f5c1f5033"
+    },
+    {
+      "source": "packs/agents-library/library/agents/engineer.md",
+      "destination": "agents/engineer.md",
+      "source_sha256": "47bcae2ce771ab5e9f68c3769bf3940c65f023ba8f153b4fb2b4475fb454f534"
+    },
+    {
+      "source": "packs/agents-library/library/agents/qa-reviewer.md",
+      "destination": "agents/qa-reviewer.md",
+      "source_sha256": "95e2d21b5e6409d79685ced862bc03f51eb05c61f7cc8c4e133ba6dad1374b7f"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/project-state.schema.json",
+      "destination": "orchestration/project-state.schema.json",
+      "source_sha256": "bfb61ddfb648fc43a0110571eb67804e55c9647cf5879aaaa2da695ea7415ebd"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/protocol.md",
+      "destination": "orchestration/protocol.md",
+      "source_sha256": "705402d11b8059e32662b3c47432abebd00d36ef46ee7aec529b1c7824b59776"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/result.schema.json",
+      "destination": "orchestration/result.schema.json",
+      "source_sha256": "3740400078ec78667da896ba90d2fd0b926e31de52d9d47440fdb15a4a4acfc3"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/task.schema.json",
+      "destination": "orchestration/task.schema.json",
+      "source_sha256": "e07accd2df3882a9db2eb8cb13115fd9142c912bf35734897d20a182cc51cddd"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/templates/result.json",
+      "destination": "orchestration/templates/result.json",
+      "source_sha256": "1bfc76c7d71549497ea4774eef0bb6a5a0d37276f2b0edc43003229d2005d444"
+    },
+    {
+      "source": "packs/agents-library/library/orchestration/templates/task.json",
+      "destination": "orchestration/templates/task.json",
+      "source_sha256": "bee1ea26ce604e0c8609c1256996a05a00d164040defbf9c725b9fe394a77b8d"
+    },
+    {
+      "source": "packs/agents-library/library/tools/team/team.py",
+      "destination": "tools/team/team.py",
+      "source_sha256": "e492d2fc78b65e200da54b00ae0fa2f59ea6a1507de2f06ca44a44caacd1a705"
+    },
+    {
+      "source": "packs/agents-library/library/tools/team/team.sh",
+      "destination": "tools/team/team.sh",
+      "source_sha256": "1d0995e40bd937951c11ab8266a2a8abecc350067a7cbca89c1bbcf9b5416a4c"
+    },
+    {
+      "source": "scripts/ceo_inventory.py",
+      "destination": "scripts/ceo_inventory.py",
+      "source_sha256": "52c1262eea2e20c9e2af4ef47a9af58453552da9d7e1e2cbcc335662722e1896"
+    },
+    {
+      "source": "scripts/catalog.py",
+      "destination": "scripts/catalog.py",
+      "source_sha256": "f73983dabf6bca68cb0b0bbfa9d3fb2cb15344e2d03caf72c8b76dda14d98abd"
+    },
+    {
+      "source": "tests/test_ceo.py",
+      "destination": "tests/test_ceo.py",
+      "source_sha256": "6899bb1073716b6afb4f9ae3e2c61fd766769d6d160757cf1f6101716b814ce5"
+    },
+    {
+      "source": "tests/test_catalog_validation.py",
+      "destination": "tests/test_catalog_validation.py",
+      "source_sha256": "cdc47d44d26afbfdf16c02618d3d18c01bf633626eda5467625ec64595ca756f"
+    },
+    {
+      "source": "catalog/catalog.schema.json",
+      "destination": "catalog.schema.json",
+      "source_sha256": "0e4e9d7346c284678a24a62d59e2f179f3d8c1510f3c36b682f8f99707f423a4"
+    },
+    {
+      "source": "LICENSE",
+      "destination": "LICENSE",
+      "source_sha256": "f3332f2609f5727debc8f943ded03e5f35243d6ed58fd4dba7d291c052af2d7e"
+    },
+    {
+      "source": "docs/CEO_GUIDE.md",
+      "destination": "docs/CEO_GUIDE.md",
+      "source_sha256": "9475f6c6c401511cf332646da8b70ad941f203b33dd9564e75dfaa18c372c457"
+    }
+  ]
+}

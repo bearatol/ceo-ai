@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ceo-inventory.json
+.ceo-inventory-*.tmp
+.env
+.env.*
+*.pem
+*.key
+*.log
+.venv/
+node_modules/
+.DS_Store
