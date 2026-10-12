@@ -99,7 +99,7 @@ class InstallTests(unittest.TestCase):
         self.run_cli()
         source = self.base / 'new-package'
         shutil.copytree(PACKAGE, source)
-        (source / 'VERSION').write_text('0.2.1\n')
+        (source / 'VERSION').write_bytes(b'0.2.1\n')
         manifest = json.loads((source / 'bundle.json').read_text())
         manifest['version'] = '0.2.1'
         manifest['files']['VERSION'] = hashlib.sha256(b'0.2.1\n').hexdigest()
@@ -227,7 +227,7 @@ module.main(["install", "--project", sys.argv[2], "--host", "codex", "--source",
 '''
         source = self.base / 'next'
         shutil.copytree(PACKAGE, source)
-        (source / 'VERSION').write_text('0.2.1\n')
+        (source / 'VERSION').write_bytes(b'0.2.1\n')
         manifest = json.loads((source / 'bundle.json').read_text())
         manifest['version'] = '0.2.1'
         manifest['files']['VERSION'] = hashlib.sha256(b'0.2.1\n').hexdigest()
