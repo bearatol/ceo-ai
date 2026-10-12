@@ -1,6 +1,6 @@
 # CEO AI
 
-[![CEO AI: от вопроса к проверенному результату](docs/assets/ceo-ai-ru.svg)](https://bearatol.github.io/ceo-ai/ru/)
+<a href="https://bearatol.github.io/ceo-ai/ru/"><img src="docs/assets/ceo-ai-banner.png" alt="CEO AI: обсуждение решений и организация работы" width="1280"></a>
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 

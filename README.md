@@ -1,6 +1,6 @@
 # CEO AI
 
-[![CEO AI: from a question to a checked result](docs/assets/ceo-ai-en.svg)](https://bearatol.github.io/ceo-ai/)
+<a href="https://bearatol.github.io/ceo-ai/"><img src="docs/assets/ceo-ai-banner.png" alt="CEO AI: Think. Challenge. Orchestrate." width="1280"></a>
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 

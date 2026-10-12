@@ -1,6 +1,6 @@
 # CEO AI
 
-[![CEO AI：从问题到经过检查的结果](docs/assets/ceo-ai-zh.svg)](https://bearatol.github.io/ceo-ai/zh/)
+<a href="https://bearatol.github.io/ceo-ai/zh/"><img src="docs/assets/ceo-ai-banner.png" alt="CEO AI：讨论决策，协调工作" width="1280"></a>
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
