@@ -53,19 +53,23 @@
   const stage = visual?.querySelector('.flow-stage');
   if (!visual || !button || !stage) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let paused = false, visible = true, phase = 0, timer;
+  let paused = false, visible = false, phase = 0;
   const sync = () => {
-    clearInterval(timer);
     const active = !paused && !reduced.matches && visible && !document.hidden;
     visual.classList.toggle('motion-active', active);
     button.hidden = reduced.matches;
-    button.textContent = paused ? visual.dataset.play : visual.dataset.pause;
-    if (active) timer = setInterval(() => {
-      phase = (phase + 1) % 3;
-      visual.dataset.phase = String(phase);
-      stage.textContent = visual.getAttribute('data-stage-' + phase);
-    }, 3600);
+    const label = paused ? visual.dataset.play : visual.dataset.pause;
+    button.setAttribute('aria-label', label);
+    button.title = label;
+    button.dataset.paused = String(paused);
   };
+  visual.addEventListener('animationiteration', event => {
+    if (event.animationName !== 'task-flow' || !event.target.classList.contains('route-0') ||
+        !visual.classList.contains('motion-active')) return;
+    phase = (phase + 1) % 3;
+    visual.dataset.phase = String(phase);
+    stage.textContent = visual.getAttribute('data-stage-' + phase);
+  });
   button.addEventListener('click', () => { paused = !paused; sync(); });
   reduced.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
@@ -73,5 +77,6 @@
     visible = entries[0].isIntersecting;
     sync();
   }).observe(visual);
+  else visible = true;
   sync();
 })();
