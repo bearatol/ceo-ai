@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "task_id": "task-001",
+  "agent": "agent:qa-reviewer",
+  "status": "complete",
+  "summary": "Concise outcome of the specialist task.",
+  "artifacts": [],
+  "skills_considered": [
+    "skill:quality-review"
+  ],
+  "skills_applied": [
+    "skill:quality-review"
+  ],
+  "skill_gaps": [],
+  "evidence": [
+    "Specific source, test, or observation"
+  ],
+  "risks": [],
+  "recommended_specialist": null,
+  "next_action": null
+}

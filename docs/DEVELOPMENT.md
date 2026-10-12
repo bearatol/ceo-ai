@@ -6,7 +6,12 @@ The repository ships one installable skill at `.apm/skills/ceo-ai/`. Its entry
 `SKILL.md` selects seven internal guides under `references/skills/`; `catalog.json`
 contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
-APM discovers this layout through `apm.yml`. No generated copy is maintained.
+APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
+committed `plugins/ceo-ai` copy for both native plugin managers. Edit only the
+canonical APM source; the doctor rejects drift between it and the generated copy.
+The plugin builder uses an explicit publication allowlist, verifies source hashes,
+rejects symlinks and refuses to overwrite edited or unmanaged generated payloads.
+It is a developer build for a trusted checkout, not a concurrent runtime installer.
 
 The local installer reads only the reviewed local bundle and an explicit project.
 It writes one namespaced skill directory, an owned lock file, and temporary
@@ -30,6 +35,7 @@ Python dependencies. After an intentional change to bundled resources:
 
 ```bash
 python3 scripts/package.py --write
+python3 scripts/plugins.py --write
 bash tests/test.sh
 bash scripts/doctor.sh
 python3 -B scripts/check_docs.py
@@ -85,6 +91,7 @@ Use the latest commit's run for release acceptance.
 
 ## Further details
 
+- [Native plugins, migration and actual host verification](PLUGINS.md)
 - [CEO behavior and evidence](CEO_GUIDE.md)
 - [Agent installation procedure](../INSTALL.md)
 - [APM integration](APM.md)

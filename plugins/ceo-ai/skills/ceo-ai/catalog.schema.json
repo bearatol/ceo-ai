@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/bearatol/.agents/catalog.schema.json",
+  "title": ".agents Catalog",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "ecosystem_version",
+    "language",
+    "license",
+    "components"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./catalog.schema.json"
+    },
+    "schema_version": {
+      "const": 2
+    },
+    "ecosystem_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "language": {
+      "const": "en"
+    },
+    "license": {
+      "type": "string"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "name",
+        "profile",
+        "origin",
+        "license",
+        "path",
+        "tags"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z]+:[a-z0-9-]+$"
+        },
+        "type": {
+          "enum": [
+            "skill",
+            "agent",
+            "rule",
+            "model",
+            "orchestration",
+            "tool"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "origin": {
+          "enum": [
+            "original",
+            "referenced",
+            "vendored"
+          ]
+        },
+        "license": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "access": {
+          "enum": [
+            "read-only",
+            "workspace-write"
+          ]
+        },
+        "skill_policy": {
+          "enum": [
+            "self-select",
+            "self-select-restricted"
+          ]
+        },
+        "recommended_skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "delegates": {
+          "type": "boolean"
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]+:[a-z0-9-]+$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "agent"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "description",
+              "capabilities",
+              "access",
+              "skill_policy",
+              "recommended_skills",
+              "delegates"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

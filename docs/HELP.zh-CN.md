@@ -2,6 +2,10 @@
 
 [网站与安装](https://bearatol.github.io/ceo-ai/zh/#install)
 
+使用插件安装？插件指南说明调用、更新、卸载和迁移方式。下方文件检查适用于项目安装程序。
+
+[Codex / Claude Code plugins](PLUGINS.md#简体中文)
+
 [English](HELP.md) · [Русский](HELP.ru.md) · [简体中文](HELP.zh-CN.md)
 
 找到与你遇到的情况相符的部分。可以让智能体执行检查，无需自己输入终端命令。

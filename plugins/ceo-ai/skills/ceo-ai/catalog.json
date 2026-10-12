@@ -1,0 +1,274 @@
+{
+  "$schema": "./catalog.schema.json",
+  "schema_version": 2,
+  "ecosystem_version": "0.3.0",
+  "language": "en",
+  "license": "MIT",
+  "components": [
+    {
+      "id": "agent:ceo",
+      "type": "agent",
+      "name": "ceo",
+      "description": "Coordinates skill-aware specialists, evidence, decisions, and ecosystem health.",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "agents/ceo.md",
+      "tags": [
+        "coordination",
+        "governance"
+      ],
+      "capabilities": [
+        "decomposition",
+        "delegation",
+        "integration",
+        "verification"
+      ],
+      "access": "read-only",
+      "skill_policy": "self-select",
+      "recommended_skills": [
+        "skill:ceo",
+        "skill:capability-discovery",
+        "skill:context-engineering"
+      ],
+      "delegates": true,
+      "requires": [
+        "skill:ceo",
+        "orchestration:protocols",
+        "tool:team"
+      ]
+    },
+    {
+      "id": "agent:decision-mentor",
+      "type": "agent",
+      "name": "decision-mentor",
+      "description": "Independently challenges consequential decisions and recommends the smallest useful check.",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "agents/decision-mentor.md",
+      "tags": [
+        "decisions",
+        "review"
+      ],
+      "capabilities": [
+        "decision-review",
+        "assumption-review",
+        "tradeoff-analysis"
+      ],
+      "access": "read-only",
+      "skill_policy": "self-select",
+      "recommended_skills": [
+        "skill:quality-review"
+      ],
+      "delegates": false
+    },
+    {
+      "id": "agent:engineer",
+      "type": "agent",
+      "name": "engineer",
+      "description": "Implements bounded software changes and returns tested evidence.",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "agents/engineer.md",
+      "tags": [
+        "software",
+        "implementation"
+      ],
+      "capabilities": [
+        "implementation",
+        "refactoring",
+        "testing",
+        "debugging"
+      ],
+      "access": "workspace-write",
+      "skill_policy": "self-select",
+      "recommended_skills": [
+        "skill:software-delivery",
+        "skill:quality-review"
+      ],
+      "delegates": false
+    },
+    {
+      "id": "agent:qa-reviewer",
+      "type": "agent",
+      "name": "qa-reviewer",
+      "description": "Independently verifies requirements, regressions, and release evidence.",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "agents/qa-reviewer.md",
+      "tags": [
+        "quality",
+        "review"
+      ],
+      "capabilities": [
+        "acceptance-review",
+        "regression-review",
+        "edge-case-analysis"
+      ],
+      "access": "read-only",
+      "skill_policy": "self-select",
+      "recommended_skills": [
+        "skill:quality-review"
+      ],
+      "delegates": false
+    },
+    {
+      "id": "orchestration:protocols",
+      "type": "orchestration",
+      "name": "protocols",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "orchestration",
+      "tags": [
+        "coordination",
+        "contracts",
+        "multi-host"
+      ]
+    },
+    {
+      "id": "tool:team",
+      "type": "tool",
+      "name": "team",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "tools/team",
+      "tags": [
+        "coordination",
+        "cli",
+        "multi-host"
+      ]
+    },
+    {
+      "id": "skill:ceo",
+      "type": "skill",
+      "name": "ceo",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/ceo.md",
+      "tags": [
+        "coordination",
+        "governance"
+      ],
+      "requires": [
+        "orchestration:protocols",
+        "tool:team",
+        "skill:capability-discovery"
+      ]
+    },
+    {
+      "id": "skill:skill-router",
+      "type": "skill",
+      "name": "skill-router",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/skill-router.md",
+      "tags": [
+        "routing",
+        "discovery"
+      ],
+      "requires": [
+        "skill:capability-discovery"
+      ]
+    },
+    {
+      "id": "skill:capability-discovery",
+      "type": "skill",
+      "name": "capability-discovery",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/capability-discovery.md",
+      "tags": [
+        "discovery",
+        "provenance"
+      ]
+    },
+    {
+      "id": "skill:skill-authoring",
+      "type": "skill",
+      "name": "skill-authoring",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/skill-authoring.md",
+      "tags": [
+        "skills",
+        "authoring"
+      ]
+    },
+    {
+      "id": "skill:software-delivery",
+      "type": "skill",
+      "name": "software-delivery",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/software-delivery.md",
+      "tags": [
+        "software",
+        "implementation"
+      ]
+    },
+    {
+      "id": "skill:quality-review",
+      "type": "skill",
+      "name": "quality-review",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/quality-review.md",
+      "tags": [
+        "quality",
+        "review"
+      ]
+    },
+    {
+      "id": "skill:context-engineering",
+      "type": "skill",
+      "name": "context-engineering",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/context-engineering.md",
+      "tags": [
+        "context",
+        "handoff",
+        "efficiency",
+        "compression"
+      ]
+    }
+  ]
+}

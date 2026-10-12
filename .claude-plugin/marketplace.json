@@ -1,0 +1,16 @@
+{
+  "name": "ceo-ai-plugins",
+  "owner": {
+    "name": "Mikhail Diesperov"
+  },
+  "plugins": [
+    {
+      "name": "ceo-ai",
+      "source": "./plugins/ceo-ai",
+      "description": "Discuss decisions, challenge assumptions, and coordinate verified work."
+    }
+  ],
+  "metadata": {
+    "description": "CEO AI decision and work orchestration skill."
+  }
+}

@@ -23,24 +23,26 @@ to test the choice. Once you decide, it helps plan and carry out the work.
 
 ## Get started
 
-For Windows, macOS and Linux. The agent uses the installer for your current environment.
-Open your project in **Codex, Claude Code, or Cursor** and send your agent:
+Open your project in **Codex, Claude Code or Cursor** and send:
 
 ```text
-Install CEO AI in this project using these instructions.
-Identify my operating system and check the prerequisites first.
-https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md
+Install CEO AI for my current AI app using these instructions.
+Check existing installations and use a native plugin where supported.
+Explain the installation scope first; preserve my current project and local edits.
+https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md
 ```
 
-The agent reads the instructions, installs the skill for your tool, and checks
-the files. If your app needs permission, it will show what access is required.
-You do not need to create folders, copy skills, or supply a repository path.
-The installation applies to this project.
+Codex and Claude Code can use the plugin manager. Cursor uses the project
+installer, which also remains available for Codex and Claude Code on Windows,
+macOS and Linux. Native plugin managers store some settings outside the project.
+You do not need to create folders or copy files yourself.
 
-Start a new conversation in the project and invoke **`$ceo-ai` in Codex** or
-**`/ceo-ai` in Claude Code and Cursor**. Then describe the task in your own words.
+After installation, start a new chat. For a plugin, select **`ceo-ai:ceo-ai`**
+in Codex or invoke **`/ceo-ai:ceo-ai`** in Claude Code. With the project installer,
+use **`$ceo-ai`** in Codex or **`/ceo-ai`** in Claude Code and Cursor.
 
-Already use Microsoft APM? Follow the [APM instructions](docs/APM.md#english).
+[Plugin setup, updates and migration](docs/PLUGINS.md#english) ·
+[Microsoft APM](docs/APM.md#english)
 
 ## Things to ask
 
@@ -72,18 +74,16 @@ changes, CEO can then help implement the plan and check the result.
 
 ## Compatibility and checks
 
-| Tool | File installation, update and removal | Skill invocation inside the app |
+| Installation method | Verified | Still unverified |
 | --- | --- | --- |
-| Codex | Tested in Windows, Linux and macOS CI | Not yet verified |
-| Claude Code | Tested in Windows, Linux and macOS CI | Not yet verified |
-| Cursor | Tested in Windows, Linux and macOS CI | Not yet verified |
+| Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Model invocation; Windows/Linux native managers |
+| Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
+| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.4.0 |
 
-The default installer is checked in Windows, Linux and macOS CI. The optional
-APM 0.31.0 route was checked on macOS with CEO AI 0.2.0; it has not been rerun
-for 0.3.0. App behavior and subagent availability
-depend on your tool, version and settings. Windows support covers ordinary local
-project folders, including spaces and Unicode names. See
-[verification details](docs/DEVELOPMENT.md) and [automated checks](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).
+The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232. They confirm
+that the host finds the skill, not that the model follows every instruction.
+See [test evidence and limitations](docs/PLUGINS.md#what-was-checked) and
+[automated checks](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).
 
 ## How it helps
 
@@ -112,9 +112,10 @@ See [changes and migration notes](CHANGELOG.md), [releases](https://github.com/b
 
 ## Update or remove
 
-Tell your agent “Update CEO AI in this project” or “Remove CEO AI from this
-project” and share the [instructions](INSTALL.md). If an installed file was
-edited, the agent must preserve the changes and resolve the conflict first.
+Ask your agent to update or remove CEO AI using the same method that installed
+it. Share [INSTALL.md](INSTALL.md). Removing a Codex user-level plugin affects
+all projects using it; removing a project skill affects that project, including
+Cursor if it shares the folder. Preserve local edits before either operation.
 
 CEO AI uses your current model and tools. AI answers need checking; a second
 opinion can also be wrong. CEO gains no extra permissions and does not replace

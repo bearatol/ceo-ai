@@ -1,0 +1,13 @@
+agent:ceo
+agent:decision-mentor
+agent:engineer
+agent:qa-reviewer
+orchestration:protocols
+tool:team
+skill:ceo
+skill:skill-router
+skill:capability-discovery
+skill:skill-authoring
+skill:software-delivery
+skill:quality-review
+skill:context-engineering

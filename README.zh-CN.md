@@ -20,22 +20,25 @@ CEO AI 正在积极开发中。我们持续测试这个协调任务的技能，�
 
 ## 开始使用
 
-适用于 Windows、macOS 和 Linux。智能体会选择适合当前系统的安装方式。
-在 **Codex、Claude Code 或 Cursor** 中打开你的项目，然后向智能体发送：
+在 **Codex、Claude Code 或 Cursor** 中打开项目，向助手发送：
 
 ```text
-请按照以下说明，把 CEO AI 安装到当前项目。
-请先识别我的操作系统，并检查所需工具。
-https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md
+请按照以下说明，为我的 AI 应用安装 CEO AI。
+先检查已有安装；应用支持插件时，请使用插件方式。
+请先说明安装范围，并保留当前项目和本地修改。
+https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md
 ```
 
-智能体会阅读说明，为当前工具安装技能并检查文件。如果应用需要授权，它会提示所需权限。
-你不需要手动创建文件夹、复制技能或填写仓库路径。安装仅作用于这个项目。
+Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安装程序，
+该程序也适用于 Windows、macOS 和 Linux 上的 Codex 与 Claude Code。
+插件管理器会在项目外保存部分设置。你无需手动创建目录或复制文件。
 
-安装后，在该项目中开启新会话。Codex 使用 **`$ceo-ai`**，
-Claude Code 和 Cursor 使用 **`/ceo-ai`**，然后用自己的话描述任务。
+安装后开启新会话。插件方式：在 Codex 中选择 **`ceo-ai:ceo-ai`**，
+在 Claude Code 中调用 **`/ceo-ai:ceo-ai`**。
+项目安装方式：Codex 使用 **`$ceo-ai`**，Claude Code 和 Cursor 使用 **`/ceo-ai`**。
 
-已经在用 Microsoft APM？也可以按 [APM 说明](docs/APM.md#简体中文)安装。
+[插件安装、更新与迁移](docs/PLUGINS.md#简体中文) ·
+[Microsoft APM](docs/APM.md#简体中文)
 
 ## 可以这样问
 
@@ -66,15 +69,15 @@ Claude Code 和 Cursor 使用 **`/ceo-ai`**，然后用自己的话描述任务�
 
 ## 兼容性与验证情况
 
-| 工具 | 文件安装、更新和卸载 | 在应用中调用技能 |
+| 安装方式 | 已验证 | 尚未验证 |
 | --- | --- | --- |
-| Codex | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
-| Claude Code | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
-| Cursor | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
+| Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 模型调用；Windows/Linux 原生管理器 |
+| 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
+| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | 0.4.0 的重新验证 |
 
-默认安装器已在 Windows、Linux 和 macOS CI 中验证。APM 0.31.0 仅在 macOS 上与 CEO AI 0.2.0 一起验证，尚未针对 0.3.0 重新测试。
-技能的实际行为及其他 AI 助手的可用性取决于应用、版本和设置。Windows 安装支持普通本地项目文件夹，包括含空格和中文的路径。
-参见[验证说明（英文）](docs/DEVELOPMENT.md)和
+插件检查使用 Codex CLI 0.147.0 和 Claude Code 2.1.232。
+应用发现了技能，但这不能证明模型会遵守所有指令。
+[验证结果与限制](docs/PLUGINS.md#验证范围) ·
 [自动检查](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)。
 
 ## 它如何协助你
@@ -98,8 +101,9 @@ Claude Code 和 Cursor 使用 **`/ceo-ai`**，然后用自己的话描述任务�
 
 ## 更新或卸载
 
-告诉智能体“更新当前项目中的 CEO AI”或“从当前项目卸载 CEO AI”，
-并提供[这份说明](INSTALL.md)。如果安装后的文件被修改过，智能体应先保留改动并处理冲突。
+请让助手用原来的安装方式更新或卸载 CEO AI，并提供[说明](INSTALL.md)。
+删除 Codex 用户级插件会影响所有使用它的项目。删除项目技能也会影响共用该目录的 Cursor。
+操作前必须保留本地修改。
 
 CEO AI 使用你现有的模型和工具。AI 的回答需要核实，第二意见也可能出错。
 CEO 不会获得额外权限，也不能替代项目要求的安全审查。

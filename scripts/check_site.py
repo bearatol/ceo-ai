@@ -160,7 +160,7 @@ def check(root):
         templates = [a.get('data-template', '') for _, a in doc.tags if 'data-template' in a]
         if len(templates) != 1 or any(term not in templates[0] for term in (scope, '{host}')):
             errors.append(f'{name}: installation scope missing')
-        if 'https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md' not in raw:
+        if 'https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md' not in raw:
             errors.append(f'{name}: pinned installation URL missing')
         if {a.get('value') for t, a in doc.tags if t == 'input'} != {'Codex', 'Claude Code', 'Cursor'}:
             errors.append(f'{name}: unexpected tool choices')

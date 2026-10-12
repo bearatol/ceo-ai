@@ -6,16 +6,28 @@
   const copy = document.getElementById('copy');
   const status = document.getElementById('copy-status');
   const activation = document.getElementById('activation');
-  const commands = new Map([['Codex', '$ceo-ai'], ['Claude Code', '/ceo-ai'], ['Cursor', '/ceo-ai']]);
-  const instructions = 'https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md';
+  const commands = new Map([
+    ['Codex', ['ceo-ai:ceo-ai', '$ceo-ai']],
+    ['Claude Code', ['/ceo-ai:ceo-ai', '/ceo-ai']],
+    ['Cursor', [null, '/ceo-ai']]
+  ]);
+  const instructions = 'https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md';
   if (!panel || !hosts || !prompt || !copy || !status || !activation) return;
   const update = () => {
     const selected = hosts.querySelector('input:checked');
     if (!selected || !commands.has(selected.value)) return;
     prompt.value = panel.dataset.template.replace('{host}', selected.value) + '\n' + instructions;
+    const [plugin, project] = commands.get(selected.value);
+    const parts = [panel.dataset.after + ' '];
+    if (plugin) {
+      const command = document.createElement('code');
+      command.textContent = plugin;
+      parts.push(panel.dataset.plugin + ' ', command, '; ');
+    }
     const command = document.createElement('code');
-    command.textContent = commands.get(selected.value);
-    activation.replaceChildren(panel.dataset.after + ' ', command, ' ' + panel.dataset.afterEnd);
+    command.textContent = project;
+    parts.push(panel.dataset.project + ' ', command, panel.dataset.afterEnd);
+    activation.replaceChildren(...parts);
     status.textContent = '';
   };
   hosts.addEventListener('change', update);

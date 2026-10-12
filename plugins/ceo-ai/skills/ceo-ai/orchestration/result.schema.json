@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/bearatol/.agents/result.schema.json",
+  "title": ".agents Result Packet",
+  "type": "object",
+  "required": ["schema_version", "task_id", "agent", "status", "summary", "skills_considered", "skills_applied", "evidence", "risks"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string"},
+    "agent": {"type": "string", "pattern": "^agent:[a-z0-9-]+$"},
+    "status": {"enum": ["complete", "blocked", "needs_specialist", "failed"]},
+    "summary": {"type": "string", "minLength": 1},
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "skills_considered": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "skills_applied": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "skill_gaps": {"type": "array", "items": {"type": "string"}},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "recommended_specialist": {"type": ["string", "null"]},
+    "next_action": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,12 @@
+{
+  "name": "ceo-ai-plugins",
+  "interface": {"displayName": "CEO AI"},
+  "plugins": [
+    {
+      "name": "ceo-ai",
+      "source": {"source": "local", "path": "./plugins/ceo-ai"},
+      "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+      "category": "Productivity"
+    }
+  ]
+}

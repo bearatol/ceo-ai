@@ -1,0 +1,23 @@
+{
+  "name": "ceo-ai",
+  "version": "0.4.0",
+  "description": "Discuss decisions, challenge assumptions, and coordinate verified work.",
+  "author": {
+    "name": "Mikhail Diesperov"
+  },
+  "homepage": "https://bearatol.github.io/ceo-ai/",
+  "repository": "https://github.com/bearatol/ceo-ai",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CEO AI",
+    "shortDescription": "Discuss decisions and coordinate verified work.",
+    "developerName": "Mikhail Diesperov",
+    "category": "Productivity",
+    "websiteURL": "https://bearatol.github.io/ceo-ai/",
+    "brandColor": "#FF963F",
+    "defaultPrompt": [
+      "Use CEO AI to challenge my assumptions and help me choose a next step."
+    ]
+  }
+}

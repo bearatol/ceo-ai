@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "task_id": "task-001",
+  "title": "Bounded specialist task",
+  "objective": "Describe the observable outcome.",
+  "assigned_agent": "agent:qa-reviewer",
+  "scope": [
+    "Files, systems, or questions included in the task"
+  ],
+  "inputs": [
+    "Authoritative source or artifact"
+  ],
+  "recommended_skills": [
+    "skill:quality-review"
+  ],
+  "permissions": "read-only",
+  "constraints": [
+    "Do not expand scope"
+  ],
+  "dependencies": [],
+  "acceptance_criteria": [
+    "Evidence-backed result is returned"
+  ],
+  "status": "ready"
+}

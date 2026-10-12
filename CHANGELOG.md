@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.4.0
+
+- Add a shared skills-only plugin for Codex and Claude Code, with separate
+  marketplace catalogs and a deterministic build from the existing APM skill.
+- Verify the publication allowlist, cached payload, version consistency and
+  isolation from native agent, hook and MCP registration.
+- Document native installation, update, removal and migration in English,
+  Russian and Simplified Chinese. Preserve the project installer for Cursor.
+- Test both native managers on macOS. Host discovery passed; model invocation
+  remains unverified because the available sessions could not run the test.
+
 ## 0.3.0
 
 - Support the default project installer on native Windows. Validate portable

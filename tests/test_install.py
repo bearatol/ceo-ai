@@ -71,6 +71,23 @@ class InstallTests(unittest.TestCase):
         self.assertEqual(snapshot(self.project), before)
         self.run_cli('verify')
 
+    def test_plugin_copy_has_separate_ownership_from_project_installer(self):
+        shutil.copytree(ROOT / 'plugins/ceo-ai/skills/ceo-ai', self.target)
+        before = snapshot(self.project)
+        for action in ('install', 'remove'):
+            self.run_cli(action, expect=1)
+            self.assertEqual(snapshot(self.project), before)
+
+    def test_codex_and_cursor_share_installation_but_claude_is_separate(self):
+        self.run_cli(host='cursor')
+        self.run_cli('verify', host='codex')
+        self.run_cli(host='claude')
+        separate = self.project / DESTINATIONS['claude']
+        before = snapshot(separate)
+        self.run_cli('remove', host='codex')
+        self.assertFalse((self.project / DESTINATIONS['cursor']).exists())
+        self.assertEqual(snapshot(separate), before)
+
     def test_unmanaged_collision_is_preserved(self):
         self.target.mkdir(parents=True)
         (self.target / 'SKILL.md').write_text('User skill')

@@ -9,11 +9,13 @@ ROOT = pathlib.Path(__file__).resolve().parents[1] / ".apm/skills/ceo-ai"
 sys.path.insert(0, str(ROOT / "scripts"))
 from catalog import validate_catalog
 from install import package
+from plugins import check as check_plugins
 
 
 def main():
     try:
         package(ROOT)
+        check_plugins()
         catalog = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
         errors = validate_catalog(catalog, ROOT)
         profile = (ROOT / "profiles/core.profile").read_text().splitlines()

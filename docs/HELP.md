@@ -2,6 +2,10 @@
 
 [Website and installation](https://bearatol.github.io/ceo-ai/#install)
 
+Installed as a plugin? Use the plugin guide for invocation, updates, removal and migration. The file-installation steps below apply to the project installer.
+
+[Codex / Claude Code plugins](PLUGINS.md#english)
+
 [English](HELP.md) · [Русский](HELP.ru.md) · [简体中文](HELP.zh-CN.md)
 
 Start with the case below that matches what you see. You can ask your agent to
