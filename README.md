@@ -14,6 +14,9 @@ CEO AI adds a workflow to Codex, Claude Code, or Cursor for discussing an idea,
 choosing an approach, and following through. It asks questions that affect the
 outcome, points out weak assumptions, and explains what to check before starting.
 
+CEO AI is under active development. We test and refine the orchestration skill
+based on test results and feedback.
+
 Suppose you want to rewrite an application. CEO first helps identify the problem
 the rewrite should solve, compares it with smaller changes, and suggests a way
 to test the choice. Once you decide, it helps plan and carry out the work.
