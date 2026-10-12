@@ -48,8 +48,8 @@ three host applications.
 
 ## Design and assets
 
-The visual direction is corporate cyberpunk: graphite panels, yellow controls,
-restrained cyan details, a central AI coordinator and readable body text.
+The visual direction is corporate cyberpunk: graphite panels, orange controls,
+restrained blue details, a central AI coordinator and readable body text.
 The workflow illustration is decorative, not live agent status. The dialogue is
 an example, not a recorded benchmark. App invocation and model behavior remain
 unverified; preserve that distinction when updating the copy.

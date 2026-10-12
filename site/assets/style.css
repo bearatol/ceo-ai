@@ -11,8 +11,8 @@
   --ink:#f0f2f2;
   --muted:#aab4be;
   --line:#313c47;
-  --accent:#f2dc58;
-  --cyan:#96dedc;
+  --accent:#ff963f;
+  --cyan:#9dc9e0;
   --font:Golos,'PingFang SC','Microsoft YaHei',sans-serif}
 
 *{
@@ -157,7 +157,7 @@ h1 em{
   background:var(--accent);
   color:#101418}
 .primary:hover{
-  background:#ffec89;
+  background:#ffb16b;
   transform:translateY(-2px)}
 .button span{
   font-size:20px;
@@ -395,7 +395,7 @@ legend,.prompt-label{
 .host-options input:checked+span{
   color:var(--cyan);
   border-color:var(--cyan);
-  background:#192b31}
+  background:#182a36}
 .host-options input:focus-visible+span{
   outline:3px solid var(--cyan);
   outline-offset:3px}
