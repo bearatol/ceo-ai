@@ -15,7 +15,7 @@ dummy data and a disposable project; do not test against someone else's systems.
 ## Versions and scope
 
 Reports should target the latest published patch of the 0.2 series, currently
-0.2.0. Earlier manual installations may need to migrate before a fix can be
+0.3.0. Earlier manual installations may need to migrate before a fix can be
 applied. This is a small maintainer-led project with no guaranteed response time.
 
 Relevant reports include installer path escapes, overwriting user files,

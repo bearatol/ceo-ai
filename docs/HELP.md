@@ -1,5 +1,7 @@
 # Installation help
 
+[Website and installation](https://bearatol.github.io/ceo-ai/#install)
+
 [English](HELP.md) · [Русский](HELP.ru.md) · [简体中文](HELP.zh-CN.md)
 
 Start with the case below that matches what you see. You can ask your agent to
@@ -24,8 +26,10 @@ still discuss your task but must say which independent checks it cannot perform.
 
 Ask the agent to explain the exact missing permission or prerequisite. The
 default installer needs Git and Python 3.10 or newer. Installing either requires
-the permissions of your environment. APM is optional. Native Windows installation
-is not supported in this release.
+the permissions of your environment. APM is optional. The default installer supports macOS and Linux, and native Windows from version 0.3.0.
+On native Windows, the agent can use an available Python 3.10+ through `py -3`
+or `python`. The project must be on a local drive; network shares, device paths
+and junctions are rejected. WSL projects use the Linux route inside WSL.
 
 If a folder already exists or installed files were edited, ask the agent to
 show the conflict and help preserve your changes. Use the same installation

@@ -1,8 +1,12 @@
 # CEO AI
 
+[![CEO AI: от вопроса к проверенному результату](docs/assets/ceo-ai-ru.svg)](https://bearatol.github.io/ceo-ai/ru/)
+
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
-[Сайт](https://bearatol.github.io/ceo-ai/ru/)
+**[Сайт](https://bearatol.github.io/ceo-ai/ru/) · [Примеры для разных профессий](https://bearatol.github.io/ceo-ai/ru/#cases) · [Установка](https://bearatol.github.io/ceo-ai/ru/#install) · [Помощь](https://bearatol.github.io/ceo-ai/ru/#help)**
+
+На сайте есть примеры задач и сообщение для установки через вашего агента.
 
 **Не знаешь, как лучше сделать? Посоветуйся с ИИ CEO.**
 
@@ -18,13 +22,13 @@ CEO AI добавляет в Codex, Claude Code или Cursor помощника
 
 ## Начать пользоваться
 
-Этот выпуск предназначен для macOS и Linux. Нативная установка на Windows пока не поддерживается.
+Для Windows, macOS и Linux. Агент выберет способ запуска установщика для вашей системы.
 Откройте свой проект в **Codex, Claude Code или Cursor** и отправьте агенту:
 
 ```text
 Установи CEO AI в этот проект по инструкции.
-Если это нативная среда Windows, остановись: она пока не поддерживается.
-https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md
+Сначала определи мою ОС и проверь необходимые инструменты.
+https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md
 ```
 
 Агент прочитает инструкцию, установит навык для вашего инструмента и проверит
@@ -69,13 +73,15 @@ https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md
 
 | Инструмент | Установка, обновление и удаление файлов | Запуск навыка в приложении |
 | --- | --- | --- |
-| Codex | Проверено в тестовом проекте на macOS | Пока не проверен |
-| Claude Code | Проверено в тестовом проекте на macOS | Пока не проверен |
-| Cursor | Проверено в тестовом проекте на macOS | Пока не проверен |
+| Codex | Проверено в CI на Windows, Linux и macOS | Пока не проверен |
+| Claude Code | Проверено в CI на Windows, Linux и macOS | Пока не проверен |
+| Cursor | Проверено в CI на Windows, Linux и macOS | Пока не проверен |
 
-Проверки охватывают собственный установщик и APM 0.31.0. Работа навыка и доступность
-других ИИ-помощников зависят от приложения, версии и настроек. Нативная установка
-на Windows в этой версии не поддерживается: обработка путей требует доработки.
+Собственный установщик проверяется в CI на Windows, Linux и macOS. Установка через
+APM 0.31.0 проверена на macOS с CEO AI 0.2.0. Для версии 0.3.0 эту проверку
+не повторяли. Работа навыка и доступность других ИИ-помощников
+зависят от приложения, версии и настроек. На Windows поддерживаются обычные локальные
+папки проекта, в том числе с пробелами и кириллицей в пути.
 Подробнее: [проверки комплекта, на английском](docs/DEVELOPMENT.md) и
 [автоматические проверки](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).
 
@@ -117,3 +123,7 @@ CEO AI использует вашу текущую модель и её обы�
 
 [Устройство и проверка комплекта](docs/DEVELOPMENT.md) ·
 [Как работает CEO](docs/CEO_GUIDE.md) · [MIT](LICENSE)
+
+## Автор
+
+[Telegram @bearatol](https://t.me/bearatol) · [LinkedIn](https://www.linkedin.com/in/mikhail-diesperov/)

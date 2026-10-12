@@ -1,5 +1,7 @@
 # Working with CEO
 
+[CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
+
 CEO helps examine a decision and coordinate work. Start with the outcome and
 constraints you know. CEO should question weak assumptions, explain alternatives,
 and correct its own advice when the evidence changes. A simple request should

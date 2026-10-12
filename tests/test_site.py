@@ -53,6 +53,18 @@ class SiteTests(unittest.TestCase):
             self.assertTrue(any('external resource' in e for e in errors))
             self.assertTrue(any('inline execution' in e for e in errors))
 
+    def test_contact_allowlist_does_not_allow_widgets_or_other_profiles(self):
+        spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'index.html').write_text('<html><a href="https://t.me/other">Other</a>'
+                '<script src="https://t.me/bearatol"></script></html>')
+            errors = module.check(root)
+            self.assertTrue(any('unexpected navigation destination' in e for e in errors))
+            self.assertTrue(any('external resource' in e for e in errors))
+
 
 if __name__ == '__main__':
     unittest.main()

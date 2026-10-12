@@ -2,15 +2,20 @@
 
 ## Unreleased
 
-- Add a three-language GitHub Pages site with tool selection, an installation
-  message, keyboard navigation and reduced-motion support.
+## 0.3.0
 
-- Add illustrative dialogues, compatibility evidence and installation help in
-  English, Russian and Simplified Chinese.
-- Document migration from the original manual installation, contribution
-  guidelines and private vulnerability reporting.
-- Add automated tests, package integrity checks and local documentation link
-  checks on Linux and macOS. Native application invocation remains unverified.
+- Support the default project installer on native Windows. Validate portable
+  paths and test junction rejection, byte locking, Unicode paths and recovery.
+- Add a three-language GitHub Pages site with readable text, a pausable workflow
+  animation, six profession scenarios, tool selection and an installation message.
+- Add illustrated website links, author contacts, installation help and migration
+  guidance in English, Russian and Simplified Chinese.
+- Add contribution guidelines and private vulnerability reporting instructions.
+- Check file installation, updates, removal, conflicts and recovery on Windows,
+  Linux and macOS. Check package integrity and documentation links in CI.
+
+Native app invocation and model behavior remain unverified. APM 0.31.0 was tested
+on macOS with CEO AI 0.2.0; that optional check has not been rerun for 0.3.0.
 
 ## 0.2.0
 

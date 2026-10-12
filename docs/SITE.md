@@ -8,7 +8,8 @@ with [INSTALL.md](../INSTALL.md).
 
 The installation button copies a message. It does not run an installer.
 The message names the selected tool, limits installation to the current project,
-stops on native Windows and points to the instructions tagged `v0.2.0`.
+asks the agent to check the operating system and prerequisites, and points to
+the instructions tagged `v0.3.0`.
 Without JavaScript, visitors can select the message manually. If clipboard
 access fails, the page selects the message and explains how to copy it.
 
@@ -39,12 +40,17 @@ protections available through response headers, such as `frame-ancestors`.
 
 ## Browser verification
 
-On 2026-10-11, Chromium checks covered all three locales at 320, 390 and
-1440 CSS pixels. All three tool choices copied the exact displayed message.
-Keyboard radio navigation, denied-clipboard fallback, no-JavaScript content
-and reduced motion passed. No external runtime requests or JavaScript errors
-were observed. These checks concern the website, not skill execution in the
-three host applications.
+On 2026-10-12, Chromium checks for the 0.3.0 site covered all three locales at
+320, 390, 768, 1024 and 1440 CSS pixels with no horizontal overflow. All nine
+language/tool combinations copied the exact displayed message. Keyboard controls,
+denied-clipboard fallback, no-JavaScript scenarios and reduced motion passed.
+The workflow animation advanced, paused, resumed and stopped outside the viewport.
+No external runtime requests or JavaScript errors were observed. These checks
+concern the website, not skill execution in the three host applications.
+
+The checked site tree has SHA-256 `f3367523510b026dc9a5f12f68cd69f1bb1100193ec2dfe4557333b8540a3c9c`.
+To reproduce this fingerprint, sort the files under `site/` by POSIX path, form
+one UTF-8 line per file as `<SHA-256>  <path>\n`, then hash the concatenated lines.
 
 ## Design and assets
 
@@ -57,8 +63,11 @@ unverified; preserve that distinction when updating the copy.
 Visual references: the [Arasaka concept by Elias Holtsmann](https://dribbble.com/shots/17141782-Arasaka-Corporation-Landing-Page)
 and [Industrial Media interface](https://hostbento.com/templates/industrial-media-portfolio-website-template).
 No images, code, logos or other assets from these references are included.
-The diagram and icon are original SVGs. Animation runs once, lasts less than
-five seconds, and respects `prefers-reduced-motion`.
+The diagram and icon are original SVGs. The workflow animation has a pause control, stops outside the viewport and in
+hidden tabs, and stays static with `prefers-reduced-motion`. The stage labels
+describe an illustration, not a live run. Six profession scenarios remain usable
+without JavaScript. Author links are explicit navigation to Telegram and LinkedIn;
+no third-party widgets are loaded.
 
 Golos Text is included unmodified from the
 [Google Fonts repository](https://github.com/google/fonts/tree/c1eda9233c33ad7775b27efd794f931095cf6133/ofl/golostext).

@@ -1,5 +1,7 @@
 # Development and verification
 
+[CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
+
 The repository ships one installable skill at `.apm/skills/ceo-ai/`. Its entry
 `SKILL.md` selects seven internal guides under `references/skills/`; `catalog.json`
 contains their relative paths along with four role prompts, the protocol and the
@@ -41,7 +43,7 @@ Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONT
 
 The [Checks workflow](../.github/workflows/checks.yml) runs the ordinary tests,
 doctor and documentation checks on Ubuntu with Python 3.10/3.12 and macOS with
-Python 3.12. See [run results](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)
+Python 3.12, plus native Windows with Python 3.10/3.12. See [run results](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)
 for evidence for a particular commit. A green run covers only that matrix.
 Actions are pinned to verified commits of the official `actions/checkout` and
 `actions/setup-python` repositories. Review upstream changes before updating pins.
@@ -68,12 +70,18 @@ The native Windows test is also skipped on POSIX; inventory, FIFO and POSIX-lock
 tests run on Linux/macOS. These are file deployment tests, not application UI
 or model-behavior tests.
 
-Native Windows installation is not supported in 0.2.0. Static review found that
-the installer's expected-directory normalization mixes Windows separators with
-POSIX-style manifest paths. The interrupted-update fixture also assumes a POSIX
-separator. A future Windows release must address those paths and pass the native
-tests before a compatibility claim is made. POSIX-only inventory checks require
-the host's own discovery mechanism on other platforms.
+Native Windows file installation is supported from 0.3.0 for ordinary local
+project folders. Windows CI covers all three host destinations, Unicode and
+spaces, update/removal, recovery, real junction rejection and cross-process
+byte locking. Network shares, device namespaces, drive-relative paths and
+reparse points are rejected. Native app invocation and APM on Windows remain
+unverified. POSIX-only inventory checks require the host's own discovery
+mechanism on Windows. File integrity checks concern normal file contents;
+NTFS alternate streams and preservation of filesystem metadata are not verified.
+
+The initial Windows candidate passed the full CI matrix in
+[this run](https://github.com/bearatol/ceo-ai/actions/runs/38214370284).
+Use the latest commit's run for release acceptance.
 
 ## Further details
 

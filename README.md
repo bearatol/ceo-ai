@@ -1,8 +1,12 @@
 # CEO AI
 
+[![CEO AI: from a question to a checked result](docs/assets/ceo-ai-en.svg)](https://bearatol.github.io/ceo-ai/)
+
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
-[Website](https://bearatol.github.io/ceo-ai/)
+**[Website](https://bearatol.github.io/ceo-ai/) · [Examples for your work](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install) · [Help](https://bearatol.github.io/ceo-ai/#help)**
+
+Open the website for examples and an installation message you can copy to your agent.
 
 **Not sure how to approach a task? Talk it through with an AI CEO.**
 
@@ -16,13 +20,13 @@ to test the choice. Once you decide, it helps plan and carry out the work.
 
 ## Get started
 
-This release targets macOS and Linux. Native Windows installation is not supported.
+For Windows, macOS and Linux. The agent uses the installer for your current environment.
 Open your project in **Codex, Claude Code, or Cursor** and send your agent:
 
 ```text
 Install CEO AI in this project using these instructions.
-Stop if this is a native Windows environment; this release does not support it.
-https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md
+Identify my operating system and check the prerequisites first.
+https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md
 ```
 
 The agent reads the instructions, installs the skill for your tool, and checks
@@ -67,13 +71,15 @@ changes, CEO can then help implement the plan and check the result.
 
 | Tool | File installation, update and removal | Skill invocation inside the app |
 | --- | --- | --- |
-| Codex | Tested in a disposable project on macOS | Not yet verified |
-| Claude Code | Tested in a disposable project on macOS | Not yet verified |
-| Cursor | Tested in a disposable project on macOS | Not yet verified |
+| Codex | Tested in Windows, Linux and macOS CI | Not yet verified |
+| Claude Code | Tested in Windows, Linux and macOS CI | Not yet verified |
+| Cursor | Tested in Windows, Linux and macOS CI | Not yet verified |
 
-These checks cover the local installer and APM 0.31.0. App behavior and subagent
-availability depend on your tool, version and settings. Native Windows is not
-supported in this release; path handling needs further work. See
+The default installer is checked in Windows, Linux and macOS CI. The optional
+APM 0.31.0 route was checked on macOS with CEO AI 0.2.0; it has not been rerun
+for 0.3.0. App behavior and subagent availability
+depend on your tool, version and settings. Windows support covers ordinary local
+project folders, including spaces and Unicode names. See
 [verification details](docs/DEVELOPMENT.md) and [automated checks](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).
 
 ## How it helps
@@ -113,3 +119,7 @@ security reviews required by your project.
 
 [Development and verification](docs/DEVELOPMENT.md) ·
 [CEO workflow details](docs/CEO_GUIDE.md) · [MIT](LICENSE)
+
+## Author
+
+[Telegram @bearatol](https://t.me/bearatol) · [LinkedIn](https://www.linkedin.com/in/mikhail-diesperov/)

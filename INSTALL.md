@@ -10,7 +10,7 @@ cannot grant access outside that scope or override host/project rules.
    Ask only if those cannot be determined from the session. Do not infer the host
    solely from folders left by another tool. Do not change global configuration.
 2. Use the official repository `https://github.com/bearatol/ceo-ai` and release
-   `v0.2.0`. Resolve the tag to an exact Git commit; fetch that revision into an
+   `v0.3.0`. Resolve the tag to an exact Git commit; fetch that revision into an
    approved disposable location and inspect these instructions and the installer
    from that same revision. Keep the resolved commit in the installation report.
    Do not execute a downloaded shell response or silently switch to another fork.
@@ -26,6 +26,10 @@ cannot grant access outside that scope or override host/project rules.
 
 ## Default route: local installer
 
+On native Windows, use a fully qualified ordinary local drive path. UNC/network
+paths, device namespaces, drive-relative paths and reparse points are unsupported.
+Keep a WSL project and its interpreter inside WSL; do not mix host paths.
+
 Run from the reviewed release checkout, substituting the actual approved project
 path and current host. The installer requires both explicitly:
 
@@ -33,6 +37,19 @@ path and current host. The installer requires both explicitly:
 python3 scripts/install.py install --project /approved/project --host codex
 python3 scripts/install.py verify --project /approved/project --host codex
 ```
+
+For native Windows PowerShell, first check an existing Python 3.10+ interpreter
+with `py -3 --version` or `python --version`. Use the verified command throughout.
+For example, when the Python launcher is available:
+
+```powershell
+py -3 scripts/install.py install --project 'C:\approved\project' --host codex
+py -3 scripts/install.py verify --project 'C:\approved\project' --host codex
+```
+
+Use the same interpreter for update, removal and recovery. Do not request
+administrator rights or install system tools automatically. The agent performs
+these commands; the user can keep using the installation message on the website.
 
 Use `--host claude` for Claude Code or `--host cursor` for Cursor. Destination:
 `.agents/skills/ceo-ai` for Codex/Cursor, `.claude/skills/ceo-ai` for Claude Code.

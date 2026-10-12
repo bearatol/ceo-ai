@@ -24,7 +24,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--ink);
-  font:16px/1.6 var(--font);
+  font:18px/1.65 var(--font);
   -webkit-font-smoothing:antialiased}
 a{
   color:inherit;
@@ -77,7 +77,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   gap:28px;
   margin-left:auto}
 .main-nav a,.repo-link{
-  font-size:13px;
+  font-size:16px;
   text-decoration:none}
 .main-nav a:hover,.repo-link:hover,.text-link:hover{
   color:var(--accent)}
@@ -85,7 +85,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   display:flex;
   gap:4px}
 .languages a{
-  font-size:12px;
+  font-size:14px;
   min-width:36px;
   min-height:44px;
   display:grid;
@@ -106,7 +106,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   align-items:center;
   padding-block:82px 76px}
 .eyebrow{
-  font:500 11px/1.6 var(--font);
+  font:500 14px/1.6 var(--font);
   letter-spacing:1.7px;
   text-transform:uppercase;
   color:var(--muted);
@@ -130,7 +130,7 @@ h1 em{
   font-style:normal;
   color:var(--accent)}
 .lead{
-  font-size:18px;
+  font-size:20px;
   color:#bfc8d1;
   line-height:1.65;
   max-width:480px;
@@ -147,7 +147,7 @@ h1 em{
   gap:28px;
   min-height:52px;
   padding:13px 20px;
-  font-size:13px;
+  font-size:16px;
   font-weight:650;
   text-decoration:none;
   border:1px solid transparent;
@@ -163,12 +163,15 @@ h1 em{
   font-size:20px;
   line-height:1}
 .text-link{
-  font-size:13px;
+  text-decoration:none;
+  border-bottom:1px solid currentColor;
+  padding-bottom:3px;
+  font-size:16px;
   display:inline-flex;
   gap:14px;
   align-items:center}
 .tool-note{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted);
   margin-top:20px}
 .command-visual{
@@ -186,7 +189,7 @@ h1 em{
   position:absolute;
   left:22px;
   right:22px;
-  font-size:10px;
+  font-size:14px;
   letter-spacing:1.3px;
   text-transform:uppercase;
   color:var(--muted)}
@@ -217,7 +220,7 @@ h1 em{
   letter-spacing:-2px;
   display:block}
 .core-label small{
-  font-size:10px;
+  font-size:14px;
   color:var(--cyan);
   text-transform:uppercase;
   letter-spacing:1.7px;
@@ -232,7 +235,7 @@ h1 em{
   justify-content:space-between;
   gap:10px}
 .visual-nodes span{
-  font-size:11px;
+  font-size:14px;
   background:var(--bg);
   border:1px solid #425362;
   padding:8px 10px;
@@ -276,7 +279,7 @@ h1 em{
   display:flex;
   justify-content:space-between;
   gap:12px;
-  font-size:10px;
+  font-size:14px;
   letter-spacing:1px;
   text-transform:uppercase;
   color:var(--muted);
@@ -288,12 +291,12 @@ h1 em{
   gap:16px;
   margin-top:19px}
 .speaker{
-  font-size:11px;
+  font-size:14px;
   color:var(--muted);
   padding-top:4px}
 .message p{
   margin:0;
-  font-size:15px;
+  font-size:18px;
   line-height:1.55}
 .message.ceo .speaker{
   color:var(--accent);
@@ -310,11 +313,11 @@ h1 em{
   border-top:1px solid var(--line);
   padding-top:17px;
   color:var(--cyan);
-  font-size:14px}
+  font-size:16px}
 .memo-result>span{
   font-size:24px}
 .memo-caption{
-  font-size:11px;
+  font-size:14px;
   color:var(--muted);
   margin-bottom:0}
 .method{
@@ -332,7 +335,7 @@ h1 em{
   border-top:1px solid #45515d;
   padding-top:18px}
 .step-number{
-  font-size:12px;
+  font-size:14px;
   color:var(--accent)}
 h3{
   font-size:20px;
@@ -341,7 +344,7 @@ h3{
   margin:18px 0 12px}
 .method-grid p{
   color:var(--muted);
-  font-size:15px;
+  font-size:18px;
   max-width:340px;
   margin-bottom:0}
 .install{
@@ -350,7 +353,7 @@ h3{
   gap:90px;
   padding-block:96px}
 .platform{
-  font-size:13px;
+  font-size:16px;
   border-left:2px solid var(--accent);
   padding-left:16px;
   margin-top:30px}
@@ -368,7 +371,7 @@ fieldset{
   border:0;
   min-width:0}
 legend,.prompt-label{
-  font-size:12px;
+  font-size:14px;
   font-weight:500;
   color:var(--muted);
   margin-bottom:10px}
@@ -390,7 +393,7 @@ legend,.prompt-label{
   place-items:center;
   border:1px solid #586879;
   min-height:48px;
-  font-size:13px;
+  font-size:16px;
   white-space:nowrap}
 .host-options input:checked+span{
   color:var(--cyan);
@@ -409,7 +412,7 @@ textarea{
   background:#0b1016;
   color:#d6dde2;
   padding:16px;
-  font-size:14px;
+  font-size:16px;
   line-height:1.7;
   border-radius:0;
   overflow-wrap:anywhere}
@@ -417,19 +420,19 @@ textarea{
   width:100%;
   margin-top:14px}
 .copy-status{
-  font-size:12px;
+  font-size:14px;
   min-height:20px;
   margin:10px 0;
   color:var(--cyan)}
 .activation{
-  font-size:14px;
+  font-size:16px;
   margin:14px 0;
   color:#ccd4db}
 code{
   color:var(--cyan);
   font-size:.95em}
 .scope{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted)}
 .apm{
   border-top:1px solid var(--line);
@@ -439,7 +442,7 @@ code{
   flex-wrap:wrap;
   gap:8px 20px;
   justify-content:space-between;
-  font-size:12px}
+  font-size:14px}
 .apm span{
   color:var(--muted)}
 .help{
@@ -458,7 +461,7 @@ summary{
   gap:22px;
   list-style:none;
   cursor:pointer;
-  font-size:16px;
+  font-size:18px;
   padding:15px 0}
 summary::-webkit-details-marker{
   display:none}
@@ -468,11 +471,11 @@ summary>span{
 details[open] summary>span{
   transform:rotate(45deg)}
 details p{
-  font-size:14px;
+  font-size:16px;
   color:var(--muted);
   margin:0 26px 24px 0}
 .limitations{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted);
   margin-top:26px}
 .footer{
@@ -483,7 +486,7 @@ details p{
   gap:36px;
   align-items:start}
 .footer p{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted);
   margin-top:10px}
 .footer-links{
@@ -494,7 +497,7 @@ details p{
   max-width:520px;
   padding-top:12px}
 .footer-links a{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted)}
 .footer-links a:hover{
   color:var(--ink)}
@@ -536,7 +539,7 @@ h1{
   left:14px;
   right:14px}
 .visual-nodes span{
-  font-size:10px;
+  font-size:14px;
   padding:8px 4px}
 .visual-nodes span:before{
   margin-right:4px}
@@ -598,7 +601,7 @@ h1{
 .method h2{
   max-width:560px}
 .method-grid h3{
-  font-size:18px}
+  font-size:20px}
 .footer{
   padding-block:30px;
   flex-direction:column;
@@ -617,16 +620,16 @@ h1{
 .wordmark span{
   font-size:28px}
 .repo-link{
-  font-size:12px;
+  font-size:14px;
   padding-left:12px}
 .languages{
   gap:0}
 .languages a{
   min-width:32px}
 .main-nav a{
-  font-size:12px}
+  font-size:14px}
 .eyebrow{
-  font-size:10px;
+  font-size:14px;
   letter-spacing:1.25px;
   margin-bottom:20px}
 .hero{
@@ -635,13 +638,13 @@ h1{
   font-size:clamp(40px,11.3vw,55px);
   letter-spacing:-2px}
 .lead{
-  font-size:16px}
+  font-size:18px}
 .hero-actions{
   align-items:flex-start;
   flex-direction:column}
 .hero-actions .button{
   width:100%;
-  font-size:13px}
+  font-size:16px}
 .command-visual{
   aspect-ratio:1/1.1}
 .core-art{
@@ -654,21 +657,21 @@ h1{
 .visual-top,.visual-bottom{
   left:14px;
   right:14px;
-  font-size:9px}
+  font-size:14px}
 .visual-nodes{
   bottom:52px;
   gap:6px}
 .core-label small{
-  font-size:9px}
+  font-size:14px}
 .conversation{
   padding:20px}
 .memo-top{
-  font-size:9px}
+  font-size:14px}
 .message{
   grid-template-columns:37px 1fr;
   gap:10px}
 .message p{
-  font-size:14px}
+  font-size:16px}
 .method-grid{
   grid-template-columns:1fr;
   gap:24px;
@@ -690,18 +693,18 @@ h1{
 .host-options{
   gap:5px}
 .host-options span{
-  font-size:12px}
+  font-size:14px}
 .copy-button{
-  font-size:12px;
+  font-size:14px;
   gap:12px}
 textarea{
   min-height:238px;
-  font-size:14px}
+  font-size:16px}
 .section-intro h2,h2{
   font-size:32px;
   letter-spacing:-1px}
 summary{
-  font-size:15px}
+  font-size:18px}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -721,3 +724,14 @@ summary{
   border:1px solid CanvasText}
 }
 
+
+
+.main-nav{gap:20px}.header{gap:24px}.repo-link{padding-left:18px}.languages a{min-width:40px}
+.lead{max-width:540px}.section-intro>p:not(.eyebrow){max-width:540px}.message{grid-template-columns:56px 1fr}.message p{font-size:18px}.speaker{font-size:14px}.memo-top{letter-spacing:.5px}.eyebrow{letter-spacing:1px}
+.command-visual{margin:0;aspect-ratio:auto;min-height:570px}.visual-top{font-size:14px;letter-spacing:.4px}.visual-top span:last-child{flex-shrink:0}.core-art,.signal-paths{position:absolute;left:3%;top:0;width:94%;height:76%;object-fit:contain}.core-art{animation:none}.signal-paths{pointer-events:none}.core-label{top:32.5%}.core-label strong{font-size:38px}.visual-nodes{bottom:142px;left:18px;right:18px;gap:8px}.visual-nodes span{font-size:14px;padding:10px 5px;transition:background .35s,color .35s,box-shadow .35s}.visual-nodes span:before{content:none}.flow-stage{position:absolute;left:22px;right:22px;bottom:70px;min-height:45px;margin:0;color:var(--cyan);font-size:16px;line-height:1.4}.motion-controls{position:absolute;bottom:18px;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted)}.motion-toggle{border:1px solid #687886;background:transparent;color:var(--ink);font:inherit;min-height:44px;padding:8px 12px;cursor:pointer}.motion-toggle:hover{border-color:var(--accent);color:var(--accent)}.signal-route{stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-dasharray:.13 .87;stroke-dashoffset:1;opacity:0}.orbit-signal{stroke:var(--accent);stroke-width:2;stroke-dasharray:60 520;opacity:.75}.motion-active .orbit-signal{animation:orbit-flow 9s linear infinite}.motion-active .signal-route{animation:task-flow 3.6s ease-in-out infinite}.command-visual[data-phase="0"] .route-0,.command-visual[data-phase="1"] .route-1,.command-visual[data-phase="2"] .route-2{opacity:1}.command-visual[data-phase="0"] .visual-nodes span:nth-child(1),.command-visual[data-phase="1"] .visual-nodes span:nth-child(2),.command-visual[data-phase="2"] .visual-nodes span:nth-child(3){background:#362417;border-color:var(--accent);color:var(--accent);box-shadow:0 0 24px #ff963f1f}.motion-active .core-label{animation:core-breathe 3.6s ease-in-out infinite}
+@keyframes task-flow{0%{stroke-dashoffset:1}48%,52%{stroke-dashoffset:0}100%{stroke-dashoffset:-1}}@keyframes orbit-flow{to{stroke-dashoffset:-1160}}@keyframes core-breathe{50%{transform:scale(1.045);text-shadow:0 0 26px #ff963f55}}
+.cases{padding-block:80px;border-bottom:1px solid var(--line)}.cases-intro{max-width:840px}.cases-intro>p:not(.eyebrow){font-size:20px;color:var(--muted);max-width:760px}.case-list{margin-top:38px;border-top:1px solid var(--line)}.case{border-bottom:1px solid var(--line)}.case summary{display:grid;grid-template-columns:52px 1fr 24px;gap:18px;padding:24px 0}.case-index{font-size:16px}.case-heading{font-size:26px;color:var(--ink)}.case-heading small{display:block;font-size:18px;color:var(--muted);font-weight:400;margin-top:4px}.case-plus{justify-self:end}.case[open] summary>.case-heading,.case[open] summary>.case-index{transform:none}.case[open] .case-heading{color:var(--accent)}.case-body{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:10px 42px 32px 70px}.case-body blockquote{margin:0;font-size:24px;line-height:1.5;letter-spacing:-.5px}.case-body .eyebrow{margin-bottom:14px}.case-body h3{font-size:18px;margin:0 0 8px;color:var(--cyan)}.case-body p{font-size:18px;margin:0 0 24px;line-height:1.65}.case-body>div>p:last-child{margin-bottom:0}.case-note{font-size:16px;max-width:940px;color:var(--muted);margin-top:28px}.footer{flex-wrap:wrap}.author{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center;width:100%;border-top:1px solid var(--line);padding-top:22px}.author p{font-size:16px;margin:0}.author nav{display:flex;gap:24px;flex-wrap:wrap}.author a{font-size:16px}.apm a,.author a{display:inline-block;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px}
+@media(max-width:1100px){.main-nav{gap:14px}.header{gap:16px}.main-nav a,.repo-link{font-size:14px}.languages a{min-width:34px}.command-visual{min-height:570px}.motion-controls{flex-direction:column;align-items:flex-start;gap:6px;bottom:14px}.flow-stage{bottom:94px}.visual-nodes{bottom:164px}.case-body{gap:36px}}
+@media(max-width:800px){.header{gap:16px}.main-nav{justify-content:flex-start;flex-wrap:wrap;gap:8px 24px}.main-nav a{min-height:36px;display:flex;align-items:center}.command-visual{max-width:580px;width:100%;min-height:570px}.motion-controls{flex-direction:row;align-items:center}.flow-stage{bottom:75px}.visual-nodes{bottom:145px}.cases{padding-block:48px}.case-body{gap:28px;padding-left:0;padding-right:0}.case-heading{font-size:24px}.case summary{grid-template-columns:32px 1fr 24px;gap:14px}.method-grid{grid-template-columns:1fr;gap:28px}.method-grid p{max-width:620px}.footer-links{gap:18px 24px}}
+@media(max-width:480px){.main-nav{gap:4px 16px}.languages a{min-width:34px}.repo-link{padding-left:10px}.header{gap:10px}.command-visual{min-height:550px}.visual-top{left:14px;right:14px;font-size:14px}.core-art,.signal-paths{height:72%;top:2%}.core-label{top:32%}.core-label strong{font-size:32px}.visual-nodes{left:12px;right:12px;gap:6px;bottom:157px}.visual-nodes span{font-size:14px;letter-spacing:-.3px}.flow-stage{left:16px;right:16px;bottom:94px;font-size:16px}.motion-controls{left:16px;right:16px;bottom:14px;flex-direction:column;align-items:flex-start;gap:6px}.motion-toggle{font-size:14px}.lead{font-size:20px}.hero-actions .button,.copy-button{font-size:16px}.text-link,.apm,.activation{font-size:16px}.message{grid-template-columns:42px 1fr;gap:10px}.message p{font-size:18px}.memo-top{flex-wrap:wrap;gap:6px}.case-body{grid-template-columns:1fr;gap:24px}.case-body blockquote{font-size:22px}.case-heading{font-size:22px}.case-heading small{font-size:18px}.case summary{padding-block:22px}.installer{padding:18px}.host-options span{font-size:14px}.copy-button{gap:8px}.footer-links a{font-size:16px}.scope,.limitations,.platform,.tool-note,.copy-status{font-size:16px}textarea{font-size:16px;min-height:246px}.cases-intro>p:not(.eyebrow){font-size:18px}}
+@media(prefers-reduced-motion:reduce){.signal-route,.orbit-signal{animation:none!important}.core-label{animation:none!important;transform:none!important}}

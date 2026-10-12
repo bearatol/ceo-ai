@@ -99,13 +99,13 @@ class InstallTests(unittest.TestCase):
         self.run_cli()
         source = self.base / 'new-package'
         shutil.copytree(PACKAGE, source)
-        (source / 'VERSION').write_bytes(b'0.2.1\n')
+        (source / 'VERSION').write_bytes(b'0.3.1\n')
         manifest = json.loads((source / 'bundle.json').read_text())
-        manifest['version'] = '0.2.1'
-        manifest['files']['VERSION'] = hashlib.sha256(b'0.2.1\n').hexdigest()
+        manifest['version'] = '0.3.1'
+        manifest['files']['VERSION'] = hashlib.sha256(b'0.3.1\n').hexdigest()
         (source / 'bundle.json').write_text(json.dumps(manifest))
         self.run_cli(source=source)
-        self.assertEqual((self.target / 'VERSION').read_text(), '0.2.1\n')
+        self.assertEqual((self.target / 'VERSION').read_text(), '0.3.1\n')
         self.run_cli('verify')
 
     @unittest.skipUnless(os.name == 'posix', 'symlink fixture needs POSIX')
@@ -227,10 +227,10 @@ module.main(["install", "--project", sys.argv[2], "--host", "codex", "--source",
 '''
         source = self.base / 'next'
         shutil.copytree(PACKAGE, source)
-        (source / 'VERSION').write_bytes(b'0.2.1\n')
+        (source / 'VERSION').write_bytes(b'0.3.1\n')
         manifest = json.loads((source / 'bundle.json').read_text())
-        manifest['version'] = '0.2.1'
-        manifest['files']['VERSION'] = hashlib.sha256(b'0.2.1\n').hexdigest()
+        manifest['version'] = '0.3.1'
+        manifest['files']['VERSION'] = hashlib.sha256(b'0.3.1\n').hexdigest()
         (source / 'bundle.json').write_text(json.dumps(manifest))
         done = subprocess.run([sys.executable, '-c', fixture, str(SCRIPT), str(self.project), str(source)], timeout=10)
         self.assertEqual(done.returncode, 77)
@@ -331,6 +331,33 @@ m.main(['remove', '--project', sys.argv[2], '--host', 'codex'])
         self.assertFalse(self.target.exists())
         self.run_cli('recover', expect=1)
         self.run_cli()
+        self.run_cli('verify')
+
+    def test_recovery_keeps_completed_install_after_promotion(self):
+        self.run_cli()
+        source = self.base / 'new-release'
+        shutil.copytree(PACKAGE, source)
+        (source / 'VERSION').write_bytes(b'0.3.1\n')
+        manifest = json.loads((source / 'bundle.json').read_text())
+        manifest['version'] = '0.3.1'
+        manifest['files']['VERSION'] = hashlib.sha256(b'0.3.1\n').hexdigest()
+        (source / 'bundle.json').write_text(json.dumps(manifest))
+        fixture = """import importlib.util, os, sys
+spec = importlib.util.spec_from_file_location('install', sys.argv[1])
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+def interrupt(parent):
+    os._exit(78)
+m.recover = interrupt
+m.main(['install', '--project', sys.argv[2], '--host', 'codex', '--source', sys.argv[3]])
+"""
+        run = subprocess.run([sys.executable, '-c', fixture, str(SCRIPT), str(self.project), str(source)], timeout=10)
+        self.assertEqual(run.returncode, 78)
+        self.assertEqual((self.target / 'VERSION').read_text(), '0.3.1\n')
+        before = snapshot(self.target)
+        self.run_cli('recover')
+        self.assertEqual(snapshot(self.target), before)
+        self.assertFalse((self.target.parent / '.ceo-ai-transaction').exists())
         self.run_cli('verify')
 
 

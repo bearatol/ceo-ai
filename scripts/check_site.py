@@ -92,7 +92,8 @@ def check(root):
             if url.scheme or url.netloc:
                 if resource:
                     raise ValueError('external resource')
-                if url.scheme != 'https' or url.hostname not in {'github.com', 'bearatol.github.io'}:
+                approved_contact = value in {'https://t.me/bearatol', 'https://www.linkedin.com/in/mikhail-diesperov/'}
+                if not approved_contact and (url.scheme != 'https' or url.hostname not in {'github.com', 'bearatol.github.io'}):
                     raise ValueError('unexpected navigation destination')
                 return
             path = unquote(url.path)
@@ -157,9 +158,9 @@ def check(root):
         if ('html', {'lang': lang}) not in doc.tags:
             errors.append(f'{name}: incorrect document language')
         templates = [a.get('data-template', '') for _, a in doc.tags if 'data-template' in a]
-        if len(templates) != 1 or any(term not in templates[0] for term in ('Windows', scope, '{host}')):
-            errors.append(f'{name}: installation scope or platform guard missing')
-        if 'https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md' not in raw:
+        if len(templates) != 1 or any(term not in templates[0] for term in (scope, '{host}')):
+            errors.append(f'{name}: installation scope missing')
+        if 'https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md' not in raw:
             errors.append(f'{name}: pinned installation URL missing')
         if {a.get('value') for t, a in doc.tags if t == 'input'} != {'Codex', 'Claude Code', 'Cursor'}:
             errors.append(f'{name}: unexpected tool choices')

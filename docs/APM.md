@@ -1,5 +1,7 @@
 # Install with Microsoft APM
 
+[CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
+
 [English](#english) · [Русский](#русский) · [简体中文](#简体中文)
 
 ## English
@@ -8,12 +10,12 @@ Use this option if Microsoft APM is already installed. Otherwise, the
 [agent-assisted installation](../README.md#get-started) needs no package manager.
 Tell your agent:
 
-> Install CEO AI in this project using my existing Microsoft APM. Follow https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md.
+> Install CEO AI in this project using my existing Microsoft APM. Follow https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md.
 
 For reference, the Codex command is:
 
 ```bash
-apm install bearatol/ceo-ai#v0.2.0 --target codex
+apm install bearatol/ceo-ai#v0.3.0 --target codex
 ```
 
 Use `--target claude` or `--target cursor` for those tools. This installs one
@@ -34,12 +36,12 @@ does not protect edits. Do not mix the Python and APM installers for one copy.
 [установкой через агента](../README.ru.md#начать-пользоваться), менеджер пакетов
 для неё не нужен. Напишите агенту:
 
-> Установи CEO AI в этот проект через уже установленный Microsoft APM. Следуй инструкции https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md.
+> Установи CEO AI в этот проект через уже установленный Microsoft APM. Следуй инструкции https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md.
 
 Для справки, команда для Codex:
 
 ```bash
-apm install bearatol/ceo-ai#v0.2.0 --target codex
+apm install bearatol/ceo-ai#v0.3.0 --target codex
 ```
 
 Для Claude Code замените последний аргумент на `claude`, для Cursor на `cursor`.
@@ -59,12 +61,12 @@ APM установит один навык `ceo-ai` со всеми нужным
 如果已经安装 Microsoft APM，可以使用此方式。否则请选择
 [让智能体安装](../README.zh-CN.md#开始使用)，无需另装包管理器。向智能体发送：
 
-> 请通过已安装的 Microsoft APM，在当前项目中安装 CEO AI。请遵循 https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md 中的说明。
+> 请通过已安装的 Microsoft APM，在当前项目中安装 CEO AI。请遵循 https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md 中的说明。
 
 以下是 Codex 的参考命令：
 
 ```bash
-apm install bearatol/ceo-ai#v0.2.0 --target codex
+apm install bearatol/ceo-ai#v0.3.0 --target codex
 ```
 
 Claude Code 使用 `--target claude`，Cursor 使用 `--target cursor`。
@@ -102,7 +104,8 @@ primitives, global rules, or MCP servers. Role prompts remain internal reference
 
 ## What was tested
 
-APM 0.31.0 was exercised through its Python CLI in disposable Codex, Claude Code,
+APM 0.31.0 was tested with CEO AI 0.2.0 on macOS; this optional check has not
+been rerun for 0.3.0. APM was exercised through its Python CLI in disposable Codex, Claude Code,
 and Cursor project layouts. The fixture relocates only APM's configuration and
 lifecycle-lock destinations to temporary storage. The macOS sandbox blocks
 network access and writes outside each fixture; `HOME` remains unchanged.

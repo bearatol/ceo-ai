@@ -1,8 +1,12 @@
 # CEO AI
 
+[![CEO AI：从问题到经过检查的结果](docs/assets/ceo-ai-zh.svg)](https://bearatol.github.io/ceo-ai/zh/)
+
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
-[网站](https://bearatol.github.io/ceo-ai/zh/)
+**[网站](https://bearatol.github.io/ceo-ai/zh/) · [各职业使用示例](https://bearatol.github.io/ceo-ai/zh/#cases) · [安装](https://bearatol.github.io/ceo-ai/zh/#install) · [帮助](https://bearatol.github.io/ceo-ai/zh/#help)**
+
+网站提供使用场景和可直接发给智能体的安装消息。
 
 **不知道怎样做更合适？先和 AI CEO 商量一下。**
 
@@ -14,13 +18,13 @@ CEO AI 为 Codex、Claude Code 和 Cursor 提供一套工作方法，帮助你�
 
 ## 开始使用
 
-本版本适用于 macOS 和 Linux，暂不支持原生 Windows 安装。
+适用于 Windows、macOS 和 Linux。智能体会选择适合当前系统的安装方式。
 在 **Codex、Claude Code 或 Cursor** 中打开你的项目，然后向智能体发送：
 
 ```text
 请按照以下说明，把 CEO AI 安装到当前项目。
-如果当前是原生 Windows 环境，请停止安装，本版本尚不支持该环境。
-https://github.com/bearatol/ceo-ai/blob/v0.2.0/INSTALL.md
+请先识别我的操作系统，并检查所需工具。
+https://github.com/bearatol/ceo-ai/blob/v0.3.0/INSTALL.md
 ```
 
 智能体会阅读说明，为当前工具安装技能并检查文件。如果应用需要授权，它会提示所需权限。
@@ -62,12 +66,12 @@ Claude Code 和 Cursor 使用 **`/ceo-ai`**，然后用自己的话描述任务�
 
 | 工具 | 文件安装、更新和卸载 | 在应用中调用技能 |
 | --- | --- | --- |
-| Codex | 已在 macOS 临时项目中验证 | 尚未验证 |
-| Claude Code | 已在 macOS 临时项目中验证 | 尚未验证 |
-| Cursor | 已在 macOS 临时项目中验证 | 尚未验证 |
+| Codex | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
+| Claude Code | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
+| Cursor | 已在 Windows、Linux 和 macOS CI 中验证 | 尚未验证 |
 
-上述检查涵盖本项目安装器和 APM 0.31.0。技能的实际行为及其他 AI 助手的可用性
-取决于应用、版本和设置。本版本不支持原生 Windows 安装，路径处理仍需改进。
+默认安装器已在 Windows、Linux 和 macOS CI 中验证。APM 0.31.0 仅在 macOS 上与 CEO AI 0.2.0 一起验证，尚未针对 0.3.0 重新测试。
+技能的实际行为及其他 AI 助手的可用性取决于应用、版本和设置。Windows 安装支持普通本地项目文件夹，包括含空格和中文的路径。
 参见[验证说明（英文）](docs/DEVELOPMENT.md)和
 [自动检查](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)。
 
@@ -99,3 +103,7 @@ CEO AI 使用你现有的模型和工具。AI 的回答需要核实，第二意�
 CEO 不会获得额外权限，也不能替代项目要求的安全审查。
 
 [开发与验证](docs/DEVELOPMENT.md) · [CEO 工作流程](docs/CEO_GUIDE.md) · [MIT 许可证](LICENSE)
+
+## 作者
+
+[Telegram @bearatol](https://t.me/bearatol) · [LinkedIn](https://www.linkedin.com/in/mikhail-diesperov/)

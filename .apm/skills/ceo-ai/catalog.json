@@ -1,7 +1,7 @@
 {
   "$schema": "./catalog.schema.json",
   "schema_version": 2,
-  "ecosystem_version": "0.2.0",
+  "ecosystem_version": "0.3.0",
   "language": "en",
   "license": "MIT",
   "components": [
