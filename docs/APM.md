@@ -10,7 +10,7 @@ Use this option if Microsoft APM is already installed. Otherwise, the
 [agent-assisted installation](../README.md#get-started) needs no package manager.
 Tell your agent:
 
-> Install CEO AI in this project using my existing Microsoft APM. Follow https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md.
+> Install CEO AI in this project using my existing Microsoft APM. Follow https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md.
 
 For reference, the Codex command is:
 
@@ -36,7 +36,7 @@ does not protect edits. Do not mix the Python and APM installers for one copy.
 [установкой через агента](../README.ru.md#начать-пользоваться), менеджер пакетов
 для неё не нужен. Напишите агенту:
 
-> Установи CEO AI в этот проект через уже установленный Microsoft APM. Следуй инструкции https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md.
+> Установи CEO AI в этот проект через уже установленный Microsoft APM. Следуй инструкции https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md.
 
 Для справки, команда для Codex:
 
@@ -61,7 +61,7 @@ APM установит один навык `ceo-ai` со всеми нужным
 如果已经安装 Microsoft APM，可以使用此方式。否则请选择
 [让智能体安装](../README.zh-CN.md#开始使用)，无需另装包管理器。向智能体发送：
 
-> 请通过已安装的 Microsoft APM，在当前项目中安装 CEO AI。请遵循 https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md 中的说明。
+> 请通过已安装的 Microsoft APM，在当前项目中安装 CEO AI。请遵循 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md 中的说明。
 
 以下是 Codex 的参考命令：
 

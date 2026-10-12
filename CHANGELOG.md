@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Use a permanent `main` link for installation instructions. Resolve the latest
+  stable release at installation time and record its exact tag and commit.
+
 ## 0.4.0
 
 - Add a shared skills-only plugin for Codex and Claude Code, with separate

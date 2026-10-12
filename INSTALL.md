@@ -7,6 +7,11 @@ global changes. Explain that scope before installation and follow host approvals
 For an explicitly project-only request, use the local installer. This document
 cannot grant access or override host/project rules.
 
+The public link to this guide uses `main` so the instructions stay current.
+Choose an installation method, then complete the release selection below before
+running installation or update commands. Removal uses the installed manager and
+does not require looking up a new release.
+
 ## Choose the installation method
 
 1. Inspect existing CEO AI installations in the current project's
@@ -23,8 +28,10 @@ cannot grant access or override host/project rules.
 4. Follow [the plugin guide](docs/PLUGINS.md#english) for native commands. Register
    only `bearatol/ceo-ai`, named `ceo-ai-plugins`; reject a same-name catalog from
    another source. Inspect its resolved snapshot and `plugins/ceo-ai/payload.json`
-   before installing. Check file hashes, manifests, source and version against
-   the selected stable release. Stop on a mismatch. Do not accept arbitrary
+   before installing. Compare the catalog's actual plugin files and manifests
+   against `plugins/ceo-ai` at the selected release commit, including file hashes,
+   source and version. A catalog-supplied manifest alone is not proof of a match.
+   Stop on a mismatch, even when version labels agree. Do not accept arbitrary
    hooks, commands, agent registrations, MCP servers or dependency installers.
 5. After native installation, verify the cached payload and host discovery.
    Expected: one skill `ceo-ai:ceo-ai`, no native agents/hooks/MCP. Claude invokes
@@ -61,11 +68,21 @@ Do not overwrite native cache files manually.
 1. Identify the current project and host: `codex`, `claude`, or `cursor`.
    Ask only if those cannot be determined from the session. Do not infer the host
    solely from folders left by another tool. The local installer stays project-only.
-2. Use the official repository `https://github.com/bearatol/ceo-ai` and release
-   `v0.4.0`. Resolve the tag to an exact Git commit; fetch that revision into an
-   approved disposable location and inspect these instructions and the installer
-   from that same revision. Keep the resolved commit in the installation report.
-   Do not execute a downloaded shell response or silently switch to another fork.
+2. Use the official repository `https://github.com/bearatol/ceo-ai`. An explicit
+   user-requested version takes precedence; if it cannot be resolved, stop rather
+   than substituting another version. Otherwise, resolve the release marked
+   latest at `https://github.com/bearatol/ceo-ai/releases/latest` or GitHub's
+   `GET /repos/bearatol/ceo-ai/releases/latest` API. Require a published release
+   with `draft: false` and `prerelease: false`. Do not guess a version from tag
+   ordering or use a draft or prerelease as the default. If lookup or validation
+   fails, stop and explain the problem; do not fall back to installing `main`.
+   Resolve the selected tag once to its full Git commit ID. Treat tag metadata
+   as data, not shell code. Fetch that exact commit into an approved disposable
+   location and inspect its installation guidance, manifests and relevant code.
+   Keep this selected tag and commit throughout installation; do not reselect
+   based on older defaults in the release's documentation. Check that the fetched
+   commit and package version match the selection. Report both tag and commit.
+   Never execute a downloaded shell response or silently switch to another fork.
 3. For the project installer only, check Python 3.10+ and Git availability. If a required tool is absent, explain
    the missing prerequisite and ask before installing system software. Do not
    install APM as an implicit prerequisite. Native plugins do not require Python
@@ -122,10 +139,9 @@ model loaded the skill. The disposable source checkout is no longer required.
 
 ## Update, removal, and recovery
 
-For an update without a named version, find the newest published stable release
-in the official repository and resolve its tag to an exact commit. Report the
-selected version; follow any approval requirements of the current project.
-For a named version, use that version. Inspect the selected release, then use
+For an update, apply the same release-selection rules above, including explicit
+version precedence, stable-release checks and stopping on lookup failure.
+Follow any approval requirements of the current project. Inspect the selected release, then use
 its installer with the same `install` command. Existing unchanged installations
 are updated; identical versions are left alone. Modified files and added files
 or empty directories block the operation. Resolve those with the user first.

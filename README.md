@@ -29,8 +29,10 @@ Open your project in **Codex, Claude Code or Cursor** and send:
 Install CEO AI for my current AI app using these instructions.
 Check existing installations and use a native plugin where supported.
 Explain the installation scope first; preserve my current project and local edits.
-https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md
+https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
+
+The agent selects the latest stable release unless you request a specific version.
 
 Codex and Claude Code can use the plugin manager. Cursor uses the project
 installer, which also remains available for Codex and Claude Code on Windows,

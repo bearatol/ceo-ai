@@ -26,8 +26,10 @@ CEO AI 正在积极开发中。我们持续测试这个协调任务的技能，�
 请按照以下说明，为我的 AI 应用安装 CEO AI。
 先检查已有安装；应用支持插件时，请使用插件方式。
 请先说明安装范围，并保留当前项目和本地修改。
-https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md
+https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
+
+除非你指定版本，否则助手会选择最新的稳定发布版本。
 
 Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安装程序，
 该程序也适用于 Windows、macOS 和 Linux 上的 Codex 与 Claude Code。

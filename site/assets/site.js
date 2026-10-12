@@ -11,7 +11,7 @@
     ['Claude Code', ['/ceo-ai:ceo-ai', '/ceo-ai']],
     ['Cursor', [null, '/ceo-ai']]
   ]);
-  const instructions = 'https://github.com/bearatol/ceo-ai/blob/v0.4.0/INSTALL.md';
+  const instructions = 'https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md';
   if (!panel || !hosts || !prompt || !copy || !status || !activation) return;
   const update = () => {
     const selected = hosts.querySelector('input:checked');
