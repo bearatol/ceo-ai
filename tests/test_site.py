@@ -1,5 +1,6 @@
 """Public site checks: installation scope, locale links and publication boundaries."""
 import importlib.util
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -26,6 +27,7 @@ class SiteTests(unittest.TestCase):
             self.assertTrue(any('external resource' in e for e in errors))
             self.assertTrue(any('outside site' in e for e in errors))
 
+    @unittest.skipUnless(os.name == 'posix', 'symlink creation needs POSIX privileges')
     def test_site_checker_rejects_symlinks_and_unexpected_files(self):
         spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
         module = importlib.util.module_from_spec(spec)

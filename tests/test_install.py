@@ -27,7 +27,7 @@ class InstallTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name).resolve()
-        self.project = self.base / 'project with spaces'
+        self.project = self.base / 'проект 项目 with spaces'
         self.project.mkdir()
         (self.project / 'AGENTS.md').write_text('Keep this user rule.\n')
         self.target = self.project / DESTINATIONS['codex']
@@ -219,7 +219,7 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 original = module.os.rename
 def interrupted(source, target):
-    if str(source).endswith("/next"):
+    if module.Path(source).name == "next":
         os._exit(77)
     return original(source, target)
 module.os.rename = interrupted
@@ -236,6 +236,101 @@ module.main(["install", "--project", sys.argv[2], "--host", "codex", "--source",
         self.assertEqual(done.returncode, 77)
         self.run_cli('recover')
         self.assertEqual(snapshot(self.target), before)
+        self.run_cli('verify')
+
+    def test_windows_ambiguous_manifest_keys_are_rejected_on_every_platform(self):
+        spec = importlib.util.spec_from_file_location('portable_installer', SCRIPT)
+        installer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(installer)
+        invalid = [
+            ['CON'], ['con.txt'], ['dir/NUL.md'], ['COM1.log'], ['LPT²'],
+            ['CONIN$'], ['file.'], ['file '], ['a/b.'], ['a?b'], ['a*b'],
+            ['file:stream'], ['a\\b'], ['/root'], ['C:/root'], ['a/../b'],
+            ['a//b'], ['a/./b'], ['a', 'A'], ['docs/a', 'Docs/b'], ['a', 'a/b'],
+        ]
+        for names in invalid:
+            with self.subTest(names=names), self.assertRaises(ValueError):
+                installer.checked_hashes({n: '0' * 64 for n in names})
+        installer.checked_hashes({'文档/план.md': '0' * 64})
+
+    def test_local_windows_path_scope(self):
+        spec = importlib.util.spec_from_file_location('windows_scope', SCRIPT)
+        installer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(installer)
+        for path in [r'C:relative', r'\\server\share\project', r'\\?\C:\project',
+                     r'\\.\C:\project', r'\project', 'relative', 'C:/project./child']:
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                installer.check_windows_path(path)
+        installer.check_windows_path('C:/Users/用户/мой проект')
+
+    @unittest.skipUnless(os.name == 'nt', 'requires native Windows byte locking')
+    def test_windows_cross_process_lock_blocks_then_releases(self):
+        import msvcrt
+        self.run_cli()
+        before = snapshot(self.project)
+        with (self.target.parent / '.ceo-ai.lock').open('r+b', buffering=0) as lock:
+            msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            try:
+                self.run_cli('remove', expect=1)
+            finally:
+                lock.seek(0)
+                msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
+        self.assertEqual(snapshot(self.project), before)
+        self.run_cli('remove')
+        self.assertFalse(self.target.exists())
+
+    @unittest.skipUnless(os.name == 'nt', 'requires native Windows junctions')
+    def test_windows_source_and_transaction_junctions_are_rejected(self):
+        self.run_cli()
+        before = snapshot(self.target)
+        for junction, target, action in [
+            (self.base / 'source-link', PACKAGE, 'install'),
+            (self.target.parent / '.ceo-ai-transaction', self.base / 'external', 'recover'),
+        ]:
+            if not target.exists():
+                target.mkdir()
+                (target / 'keep.txt').write_text('Keep')
+            outside = snapshot(target)
+            run = subprocess.run(['cmd', '/c', 'mklink', '/J', str(junction), str(target)],
+                                 capture_output=True, text=True, timeout=10)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+            try:
+                self.run_cli(action, source=junction if action == 'install' else None, expect=1)
+                self.assertEqual(snapshot(target), outside)
+                self.assertEqual(snapshot(self.target), before)
+            finally:
+                junction.rmdir()
+
+    def test_recovery_after_promotion_and_tampered_state(self):
+        self.run_cli()
+        expected = snapshot(self.target)
+        fixture = """import importlib.util, os, sys
+spec = importlib.util.spec_from_file_location('install', sys.argv[1])
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+def interrupt(parent):
+    os._exit(78)
+m.recover = interrupt
+m.main(['remove', '--project', sys.argv[2], '--host', 'codex'])
+"""
+        run = subprocess.run([sys.executable, '-c', fixture, str(SCRIPT), str(self.project)], timeout=10)
+        self.assertEqual(run.returncode, 78)
+        tx = self.target.parent / '.ceo-ai-transaction'
+        state_path = tx / 'state.json'
+        state = state_path.read_bytes()
+        tampered = json.loads(state)
+        tampered['before']['../outside'] = '0' * 64
+        state_path.write_text(json.dumps(tampered))
+        before = snapshot(self.project)
+        self.run_cli('recover', expect=1)
+        self.assertEqual(snapshot(self.project), before)
+        self.assertEqual(snapshot(tx / 'old'), expected)
+        state_path.write_bytes(state)
+        self.run_cli('recover')
+        self.assertFalse(tx.exists())
+        self.assertFalse(self.target.exists())
+        self.run_cli('recover', expect=1)
+        self.run_cli()
         self.run_cli('verify')
 
 

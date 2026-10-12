@@ -5,7 +5,7 @@ from contextlib import contextmanager
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import shutil
 import stat
@@ -26,6 +26,38 @@ def require(condition, message):
         raise ValueError(message)
 
 
+def checked_paths(names):
+    """Accept one unambiguous portable spelling for every file and parent."""
+    prefixes, files = {}, set()
+    for name in names:
+        require(isinstance(name, str) and name not in ('', '.'), 'Unsafe manifest path')
+        path = PurePosixPath(name)
+        require(not path.is_absolute() and path.as_posix() == name, 'Unsafe manifest path')
+        for part in path.parts:
+            require(part not in ('.', '..') and not part.endswith((' ', '.')) and
+                    not any(ord(c) < 32 or c in '<>:"\\|?*' for c in part),
+                    'Unsafe manifest path')
+            require(not re.fullmatch(r'(con|prn|aux|nul|com[1-9¹²³]|lpt[1-9¹²³]|conin\$|conout\$)',
+                                     part.split('.')[0], re.IGNORECASE), 'Reserved Windows name')
+        key = tuple(part.casefold() for part in path.parts)
+        files.add(key)
+        for i in range(1, len(path.parts) + 1):
+            prefix, spelling = key[:i], path.parts[:i]
+            require(prefix not in prefixes or prefixes[prefix] == spelling, 'Case-colliding paths')
+            prefixes[prefix] = spelling
+    for key in files:
+        require(not any(key[:i] in files for i in range(1, len(key))), 'File/directory path conflict')
+
+
+def check_windows_path(path):
+    """Limit Windows writes to fully qualified, ordinary local drive paths."""
+    path = PureWindowsPath(path)
+    require(path.is_absolute() and re.fullmatch(r'[A-Za-z]:', path.drive),
+            'Use an absolute local drive path; network and device paths are unsupported')
+    if len(path.parts) > 1:
+        checked_paths([PurePosixPath(*path.parts[1:]).as_posix()])
+
+
 def local_stat(path):
     info = path.lstat()
     require(not stat.S_ISLNK(info.st_mode) and
@@ -35,6 +67,8 @@ def local_stat(path):
 
 
 def safe_path(path):
+    if os.name == 'nt':
+        check_windows_path(path)
     path = Path(os.path.abspath(path))
     for part in [*reversed(path.parents), path]:
         try:
@@ -65,8 +99,9 @@ def tree(root, partial_manifest=None):
                 size += len(data)
                 require(len(files) < 1024 and size <= 16 * 1024 * 1024, 'Bundle size limit exceeded')
                 files[relative] = data
-    expected_dirs = {str(parent) for name in (files if partial_manifest is None else partial_manifest)
-                     for parent in Path(name).parents if str(parent) != '.'}
+    checked_paths(files)
+    expected_dirs = {parent.as_posix() for name in (files if partial_manifest is None else partial_manifest)
+                     for parent in PurePosixPath(name).parents if str(parent) != '.'}
     require(directories == expected_dirs if partial_manifest is None else directories <= expected_dirs,
             'Unexpected empty directory; preserve it before continuing')
     return files
@@ -84,11 +119,8 @@ def document(data):
 
 def checked_hashes(value):
     require(isinstance(value, dict) and len(value) <= 1024, 'Invalid file manifest')
-    for name, digest in value.items():
-        require(isinstance(name, str) and name not in ('', '.') and '\\' not in name and
-                not Path(name).is_absolute() and '..' not in Path(name).parts and
-                Path(name).as_posix() == name and ':' not in name,
-                'Unsafe manifest path')
+    checked_paths(value)
+    for digest in value.values():
         require(isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest), 'Invalid file hash')
     return value
 
