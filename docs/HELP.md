@@ -66,3 +66,7 @@ project content, prompts, credentials and personal paths from any examples.
 
 For a possible vulnerability, use the [private reporting instructions](../SECURITY.md).
 For contributing a fix or translation, see [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+## Memory, lessons and reusable templates
+
+[Memory, lessons and reusable templates](MEMORY.md#english).

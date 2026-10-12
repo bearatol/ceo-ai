@@ -25,3 +25,7 @@ contradictions and unsupported claims for text, and alternatives and failure
 conditions for a decision. An independent mentor means a separate AI review
 context, not a human contact or a claim that model errors are independent.
 Keep simple tasks simple. Use the workflow before creating a team.
+
+Optional learning and reusable patterns follow [project memory](references/skills/project-memory.md).
+It starts off, requires explicit scope consent, and offers visible save notices,
+view, correction, deletion and disable controls. Installation never enables it.

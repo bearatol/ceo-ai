@@ -122,7 +122,7 @@ these commands; the user can keep using the installation message on the website.
 
 Use `--host claude` for Claude Code or `--host cursor` for Cursor. Destination:
 `.agents/skills/ceo-ai` for Codex/Cursor, `.claude/skills/ceo-ai` for Claude Code.
-Codex and Cursor share one project installation. Do not copy seven individual
+Codex and Cursor share one project installation. Do not copy the individual
 skills or ask the user for an ecosystem root. The entry skill resolves its
 resources relative to its own installed file.
 
@@ -190,3 +190,10 @@ Tell the user the installed version and resolved source commit, selected project
 and tool, whether files verified, whether the host loaded the skill, and how to
 invoke it. Mention any permission or missing-capability limit that affects the
 result. Keep the report short and in the user's language.
+
+## Optional memory stays off
+
+Installation and updates must not create or import a memory store, enable
+collection, migrate host memory, or inspect personal records. Describe the
+optional controls in `docs/MEMORY.md` when relevant. Memory requires a later,
+separate consent decision for an exact private directory and selected scope.

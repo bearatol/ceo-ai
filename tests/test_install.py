@@ -48,7 +48,7 @@ class InstallTests(unittest.TestCase):
                 installed = self.project / destination
                 self.assertEqual(len(list(installed.rglob('SKILL.md'))), 1)
                 catalog = json.loads((installed / 'catalog.json').read_text())
-                self.assertEqual(len(catalog['components']), 13)
+                self.assertEqual(len(catalog['components']), 15)
                 for item in catalog['components']:
                     self.assertTrue((installed / item['path']).exists(), item['path'])
                 moved = self.base / ('relocated ' + host)

@@ -60,6 +60,19 @@ class PluginTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'allowlist'):
                 plugins.expected(root)
 
+    def test_apm_package_rejects_private_memory_even_if_rehashed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve() / 'skill'
+            shutil.copytree(ROOT / '.apm/skills/ceo-ai', root)
+            (root / 'private-memory.json').write_text('synthetic private sentinel')
+            from install import hashes
+            manifest = json.loads((root / 'bundle.json').read_text())
+            files = tree(root); files.pop('bundle.json')
+            manifest['files'] = hashes(files)
+            (root / 'bundle.json').write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, 'allowlist'):
+                package(root)
+
     def test_generation_preserves_unexpected_destination_file(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder).resolve() / 'package'
@@ -68,6 +81,21 @@ class PluginTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 plugins.write(target, plugins.expected(ROOT))
             self.assertEqual((target / 'private-notes.txt').read_text(), 'fixture')
+
+    def test_layout_addition_needs_explicit_review(self):
+        from install import hashes
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder).resolve() / 'package'
+            files = plugins.expected(ROOT)
+            removed = 'skills/ceo-ai/memory/pattern.example.json'
+            old = {k:v for k,v in files.items() if k not in {removed, 'payload.json'}}
+            old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
+                version='0.4.0', files=hashes(old)))
+            plugins.write(target, old)
+            with self.assertRaisesRegex(ValueError, 'layout'):
+                plugins.write(target, files)
+            plugins.write(target, files, allow_layout_change=True)
+            self.assertEqual(tree(target), files)
 
     def test_generation_preserves_edited_payload(self):
         with tempfile.TemporaryDirectory() as folder:

@@ -10,3 +10,8 @@ __pycache__/
 .venv/
 node_modules/
 .DS_Store
+
+# Private runtime memory is never a publication artifact.
+.ceo-ai-memory/
+*.sqlite3
+*.sqlite3-*

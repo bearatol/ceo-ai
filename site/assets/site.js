@@ -80,3 +80,13 @@
   else visible = true;
   sync();
 })();
+
+// Anchor offsets follow the actual sticky header, including translated labels.
+(() => {
+  const header = document.querySelector('.header');
+  if (!header) return;
+  const resize = () => document.documentElement.style.setProperty('--header-height', header.getBoundingClientRect().height + 'px');
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(header);
+  else window.addEventListener('resize', resize);
+  resize();
+})();

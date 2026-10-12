@@ -133,5 +133,17 @@
       "destination": "docs/CEO_GUIDE.md",
       "source_sha256": "9475f6c6c401511cf332646da8b70ad941f203b33dd9564e75dfaa18c372c457"
     }
+  ],
+  "original_additions": [
+    {
+      "path": ".apm/skills/ceo-ai/references/skills/project-memory.md",
+      "license": "MIT",
+      "note": "Original workflow for consent, verified lessons, patterns and user controls."
+    },
+    {
+      "path": ".apm/skills/ceo-ai/memory",
+      "license": "MIT",
+      "note": "Original stdlib SQLite helper, record schema and synthetic pattern example; no personal memory data."
+    }
   ]
 }

@@ -125,8 +125,22 @@ def checked_hashes(value):
     return value
 
 
+# Only original code and synthetic templates may enter any release route.
+ALLOWED = frozenset('''LICENSE SKILL.md VERSION bundle.json catalog.json catalog.schema.json
+agents/ceo.md agents/decision-mentor.md agents/engineer.md agents/qa-reviewer.md
+orchestration/project-state.schema.json orchestration/protocol.md
+orchestration/result.schema.json orchestration/task.schema.json
+orchestration/templates/result.json orchestration/templates/task.json
+profiles/core.profile references/skills/capability-discovery.md references/skills/ceo.md
+references/skills/context-engineering.md references/skills/quality-review.md
+references/skills/skill-authoring.md references/skills/skill-router.md
+references/skills/software-delivery.md scripts/catalog.py scripts/ceo_inventory.py
+tools/team/team.py tools/team/team.sh references/skills/project-memory.md
+memory/store.py memory/record.schema.json memory/pattern.example.json'''.split())
+
 def package(root):
     files = tree(root)
+    require(set(files) == ALLOWED, 'Bundle source differs from publication allowlist')
     require('bundle.json' in files, 'Bundle manifest missing')
     meta = document(files['bundle.json'])
     require(meta.get('name') == 'ceo-ai' and meta.get('schema_version') == 1, 'Unknown bundle')

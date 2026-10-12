@@ -21,6 +21,14 @@ Suppose you want to rewrite an application. CEO first helps identify the problem
 the rewrite should solve, compares it with smaller changes, and suggests a way
 to test the choice. Once you decide, it helps plan and carry out the work.
 
+## Keep what worked
+
+CEO AI checks existing solutions and relevant documented practices before
+inventing a new approach. With your permission, it can retain project lessons,
+design patterns and separately approved user preferences. Memory starts off.
+Every save is announced; you can view, correct, delete or disable it in plain
+language. [Memory and templates](docs/MEMORY.md#english).
+
 ## Get started
 
 Open your project in **Codex, Claude Code or Cursor** and send:
@@ -80,7 +88,7 @@ changes, CEO can then help implement the plan and check the result.
 | --- | --- | --- |
 | Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
-| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.4.0 |
+| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.5.0 |
 
 The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232. They confirm
 that the host finds the skill, not that the model follows every instruction.

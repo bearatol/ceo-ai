@@ -95,3 +95,13 @@ These instructions incorporate selected planning and review practices studied
 in the installed Superpowers skills. Comparative quality and cost have not been
 measured. The independent mentor assessment so far evaluated the design, not a
 benchmark of the implemented behavior.
+
+## Reuse and optional learning
+
+Before a new design, inspect existing project components and suitable documented
+practices. Compare meaningful alternatives with sources, then explain why reuse
+or an original approach fits. A minor edit needs no artificial research ceremony.
+
+[Optional memory](MEMORY.md) retains verified lessons and patterns only with scope
+consent. It is off by default. Private records never change the installed skill,
+permissions or acceptance checks. Subagents propose records to the authorized lead.

@@ -3,7 +3,7 @@
 [CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
 
 The repository ships one installable skill at `.apm/skills/ceo-ai/`. Its entry
-`SKILL.md` selects seven internal guides under `references/skills/`; `catalog.json`
+`SKILL.md` selects eight internal guides under `references/skills/`; `catalog.json`
 contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
@@ -100,3 +100,16 @@ Use the latest commit's run for release acceptance.
 Source notices remain in the MIT license. Some planning and review practices
 were informed by Superpowers. Its prompts are not bundled, and comparative
 quality or cost advantages have not been established by benchmarks.
+
+## Memory changes
+
+Private stores never belong in the bundle, site or Git checkout. The shared
+publication allowlist is checked by the installer, APM bundle builder and plugin
+builder. Only original code, schemas and synthetic examples are allowed. A reviewed
+addition to the generated plugin layout needs `scripts/plugins.py --write
+--allow-layout-change`; edited or foreign payloads still fail closed.
+
+Run `python3 -B -m unittest discover -s tests -p test_memory.py` for consent,
+namespace, stale-record, revision, deletion and filesystem checks. All fixtures
+use temporary directories and synthetic records. Do not test with personal memory.
+See [memory behavior and limitations](MEMORY.md#storage-and-verification).

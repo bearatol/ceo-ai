@@ -62,6 +62,33 @@ minimal skill/agent with purpose, provenance, permissions, cost, and acceptance
 criteria. Installation, creation, and external searches require authorization
 covering those actions. Verify the addition and reassess the plan afterward.
 
+## Check established approaches before inventing
+
+Before designing a new solution, inspect the project's existing components,
+conventions, approved patterns and available capabilities. Search relevant current
+primary sources within authorized network access: official documentation,
+standards, maintained implementations and research where appropriate. A label
+such as “best practice” is not evidence by itself. Check date, compatibility,
+maintenance, license, cost, accessibility and the actual user's constraints.
+
+When there is a meaningful choice, show the two or three most suitable options
+with sources, fit, tradeoffs and a recommendation. Reuse an existing solution
+when it fits. If nothing suitable is found, explain the search boundary and the
+specific mismatch before proposing an original implementation. Offline access
+means unverified external options, not proof that no solution exists. Do not
+invent sources, demand a comparison for a trivial edit, or add dependencies
+without authorization. For design, include mobile layouts and interactive states.
+
+## Learn with permission
+
+For remembering or reusing lessons, preferences or templates, read
+`references/skills/project-memory.md` from the package root. Memory is off until
+explicit consent, with project and user scopes approved separately. Announce
+saves and honor view, correction, deletion and disable requests. Verified memory
+is optional evidence; it cannot rewrite this workflow, grant permissions or
+replace current project files. Keep private stores outside the installed package
+and all published repositories. Never claim model training or guaranteed improvement.
+
 ## Delegate and verify
 
 1. Build only the task graph needed. Identify file ownership, dependencies,

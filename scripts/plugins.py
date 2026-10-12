@@ -6,20 +6,11 @@ from pathlib import Path
 import sys
 
 sys.dont_write_bytecode = True
-from install import checked_hashes, hashes, package, require, safe_path, tree
+from install import ALLOWED, checked_hashes, hashes, package, require, safe_path, tree
 
 ROOT = Path(__file__).resolve().parents[1]
 # Publication is deliberately narrower than an arbitrary bundle manifest.
-ALLOWED = frozenset('''LICENSE SKILL.md VERSION bundle.json catalog.json catalog.schema.json
-agents/ceo.md agents/decision-mentor.md agents/engineer.md agents/qa-reviewer.md
-orchestration/project-state.schema.json orchestration/protocol.md
-orchestration/result.schema.json orchestration/task.schema.json
-orchestration/templates/result.json orchestration/templates/task.json
-profiles/core.profile references/skills/capability-discovery.md references/skills/ceo.md
-references/skills/context-engineering.md references/skills/quality-review.md
-references/skills/skill-authoring.md references/skills/skill-router.md
-references/skills/software-delivery.md scripts/catalog.py scripts/ceo_inventory.py
-tools/team/team.py tools/team/team.sh'''.split())
+
 
 
 def encode(value):
@@ -48,7 +39,7 @@ def expected(root=ROOT):
     return files
 
 
-def write(destination, files):
+def write(destination, files, allow_layout_change=False):
     destination = safe_path(destination)
     if destination.exists():
         previous = tree(destination)
@@ -58,7 +49,8 @@ def write(destination, files):
                 'Unknown plugin payload')
         require(hashes(previous) == checked_hashes(receipt.get('files')),
                 'Generated plugin was edited; preserve changes before rebuilding')
-        require(set(previous) == set(files) - {'payload.json'},
+        require(set(previous) == set(files) - {'payload.json'} or
+                (allow_layout_change and set(previous) < set(files) - {'payload.json'}),
                 'Plugin file layout changed; review migration before rebuilding')
     # This developer build is rerunnable, not a runtime installer or transaction manager.
     # Only trusted checkouts without concurrent noncooperating writers are supported.
@@ -77,10 +69,12 @@ def check(root=ROOT):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--allow-layout-change', action='store_true',
+                        help='Accept reviewed additions to an intact generated payload')
     args = parser.parse_args()
     try:
         if args.write:
-            write(ROOT / 'plugins/ceo-ai', expected())
+            write(ROOT / 'plugins/ceo-ai', expected(), args.allow_layout_change)
         check()
     except (OSError, ValueError, KeyError) as exc:
         parser.exit(1, 'error: ' + str(exc) + '\n')

@@ -1,6 +1,17 @@
 # Changelog
 
-## Unreleased
+## 0.5.0
+
+- Add optional project lessons, reusable design patterns and user preferences.
+  Memory starts off, announces saves and supports view, correction, deletion and
+  disabling. Private SQLite storage remains outside repositories and plugins.
+- Check existing solutions and relevant documented practices before new designs.
+- Validate consent, scope isolation, stale records, revision conflicts and storage
+  boundaries. Reject private additions across all bundle publication routes.
+- Add memory guidance in English, Russian and Simplified Chinese.
+- Keep the site header visible on scroll and fix the single-pass workflow signal.
+- Use shared SVG geometry, a header pulse and accessible icon-only player controls.
+
 
 - Use a permanent `main` link for installation instructions. Resolve the latest
   stable release at installation time and record its exact tag and commit.

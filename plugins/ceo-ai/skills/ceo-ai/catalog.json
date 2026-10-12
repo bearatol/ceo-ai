@@ -1,7 +1,7 @@
 {
   "$schema": "./catalog.schema.json",
   "schema_version": 2,
-  "ecosystem_version": "0.3.0",
+  "ecosystem_version": "0.5.0",
   "language": "en",
   "license": "MIT",
   "components": [
@@ -268,6 +268,38 @@
         "handoff",
         "efficiency",
         "compression"
+      ]
+    },
+    {
+      "id": "skill:project-memory",
+      "type": "skill",
+      "name": "project-memory",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "references/skills/project-memory.md",
+      "tags": [
+        "memory",
+        "patterns",
+        "consent"
+      ]
+    },
+    {
+      "id": "tool:memory",
+      "type": "tool",
+      "name": "memory",
+      "profile": [
+        "core"
+      ],
+      "origin": "original",
+      "license": "MIT",
+      "path": "memory",
+      "tags": [
+        "memory",
+        "local",
+        "consent"
       ]
     }
   ]
