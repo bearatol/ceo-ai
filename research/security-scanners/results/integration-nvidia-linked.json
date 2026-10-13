@@ -1,0 +1,50 @@
+{
+  "bindings": {
+    "adapter_sha256": "ba41f0e1650b20f46c9c9f13e74aefdd1148e73bd9f427bba0547c1baedbd465",
+    "adapter_version": "1.0.0",
+    "bundle_sha256": "86ccd752cf55bc893ae34ce5bc3673d34182dc690fafe3d0829de68876bb679a",
+    "coverage_analyzer_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+    "image": "sha256:eb866dc01e678024c313b37371650fe015db786d9d5e3f00b8d3da090c7fb88b",
+    "observed_bundle_sha256": "86ccd752cf55bc893ae34ce5bc3673d34182dc690fafe3d0829de68876bb679a",
+    "package_kind": "skill",
+    "scanner": "skillspector",
+    "scanner_version": "2.12.0"
+  },
+  "coverage": {
+    "complete": false,
+    "files": 2,
+    "limitations": [
+      "No LLM or runtime behavior analysis.",
+      "Static findings can miss threats or flag benign text.",
+      "Vendor output is unverified metadata; no execution authority is granted."
+    ],
+    "mode": "static-lexical",
+    "reasons": [
+      "external-reference"
+    ],
+    "vendor_complete": true
+  },
+  "decision": "incomplete",
+  "engine": "nvidia-skillspector",
+  "findings": [
+    {
+      "end_line": 3,
+      "id": "PE3",
+      "line": 3,
+      "path": "references/extra.md",
+      "severity": "HIGH"
+    },
+    {
+      "end_line": 5,
+      "id": "EA2",
+      "line": 5,
+      "path": "references/extra.md",
+      "severity": "MEDIUM"
+    }
+  ],
+  "reason": "coverage_incomplete",
+  "schema_version": 1,
+  "severity": "HIGH",
+  "status": "INCOMPLETE",
+  "trust": "unverified"
+}

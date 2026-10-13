@@ -1,0 +1,9 @@
+{
+  "source": "https://codeload.github.com/NVIDIA/SkillSpector/tar.gz/c7958a3268d9498644b22edb75d0f051bbc8cbfc",
+  "commit": "c7958a3268d9498644b22edb75d0f051bbc8cbfc",
+  "sha256": "ea6f4e5d40d9ba0d73a801515772962f1c7cc8ab8932a4de41a573b46411070d",
+  "bytes": 1548486,
+  "version": "2.12.0",
+  "acquisition_mode": "pinned source tree; no upstream build hooks executed",
+  "installation": "Wheel built offline with Hatchling 1.31.0; no custom build hooks declared in reviewed pyproject.toml"
+}

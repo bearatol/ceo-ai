@@ -42,24 +42,41 @@ inspect those guides. This scanner is for the native metadata layout below.
 An inventory of source files does
 not establish that components are installed or callable in a host.
 
-The scanner reads `skills/*/SKILL.md` and `agents/*.md`, fingerprints those files,
-and reports missing, fresh, or stale cache state. Freshness covers those files,
-not referenced scripts or resources. Entries remain `present-unverified` until
+The scanner discovers `skills/*/SKILL.md`, `agents/*.md` and `agents/*.toml`, fingerprints admitted
+files throughout each skill package (including hidden and nested resources), and
+computes advisory security observations. Flat agents have file-only scope.
+Freshness is missing, fresh, stale, or unverifiable. Excluded sensitive/runtime
+resources prevent a full-package hash and make freshness unverifiable. Findings
+are recomputed rather than trusted from a writable cache. Owned schema-1 caches
+are stale and migrate to schema 2 only on explicit refresh.
+Entries remain `present-unverified` until
 the host, permissions, compatibility, and required resources are checked.
-Malformed metadata, duplicates, symlinks, nonregular files, and scan limits
-produce an error. A failed scan leaves the previous cache untouched and it must
+Malformed Markdown metadata, duplicate identities, unsupported symlinks, hard
+links, nonregular files and scan limits produce an error. Oversized supporting
+files leave partial results; oversized entry files remain errors. A failed scan leaves the previous cache untouched and it must
 be treated as stale. Refresh writers use a nonblocking directory lock; a second
 cooperating writer is refused. Keep the selected directory trusted against
 noncooperating writers: advisory locking cannot protect cache ownership from
 another process that can replace files there.
 
-This utility requires POSIX descriptor and no-follow operations. It deliberately
-refuses symlinked roots and components. Other layouts, linked installations,
-native host inventories, and Windows require the host's approved read-only
-discovery mechanism. CEO should report this limitation instead of widening the
-scan or pretending that no capability exists. The scanner does not parse full
-YAML or native TOML agent wrappers; it extracts simple frontmatter identity and
-declared access without executing package content.
+This utility requires POSIX descriptor and no-follow operations. Roots and parent
+components must be real directories. Package-root aliases require an explicit
+`--allow-alias-root`; nested links and targets outside the approved roots remain
+refused. Other layouts and Windows require approved host discovery. The scanner
+extracts simple Markdown frontmatter or bounded native TOML declarations without
+executing content. TOML remains partial and its declared permissions are not an
+attestation of the host's effective restrictions.
+
+The builtin check uses Python's standard library, without Docker, LLM calls or
+external APIs. The separate, opt-in **CEO AI Security** plugin provides
+`ceo-ai-security:security-scan` for local NVIDIA checks. It requires its own
+Docker setup and reviewed scanner image; indexing never invokes it automatically.
+It can be installed independently of CEO AI. The optional module is available
+from version 0.6.0.
+
+[Security scanning](SECURITY_SCANNING.md) explains T0–T4 observations, partial
+coverage, module prerequisites, costs and the disabled future API. No result
+grants execution authority. Actual restrictions must be enforced by the host.
 
 ## Code and evidence
 

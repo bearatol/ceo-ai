@@ -1,0 +1,11 @@
+{
+  "uid": 501,
+  "no_new_privileges": true,
+  "effective_capabilities": 0,
+  "write_probes": {
+    "/__ceo_write_probe__": "EROFS",
+    "/fixtures/__ceo_write_probe__": "EROFS"
+  },
+  "external_connection": "ENETUNREACH",
+  "limitations": "Point-in-time probe, not a container escape assessment."
+}

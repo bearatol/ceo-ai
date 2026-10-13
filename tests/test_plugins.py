@@ -21,7 +21,8 @@ class PluginTests(unittest.TestCase):
     def test_both_catalogs_resolve_to_same_skills_only_payload(self):
         for path in ('.agents/plugins/marketplace.json', '.claude-plugin/marketplace.json'):
             catalog = json.loads((ROOT / path).read_text())
-            entry, = catalog['plugins']
+            self.assertEqual({p['name'] for p in catalog['plugins']}, {'ceo-ai', 'ceo-ai-security'})
+            entry, = [p for p in catalog['plugins'] if p['name'] == 'ceo-ai']
             source = entry['source']
             self.assertEqual(source if isinstance(source, str) else source['path'], './plugins/ceo-ai')
         files = plugins.expected(ROOT)
@@ -91,7 +92,11 @@ class PluginTests(unittest.TestCase):
             old = {k:v for k,v in files.items() if k not in {removed, 'payload.json'}}
             old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
                 version='0.4.0', files=hashes(old)))
-            plugins.write(target, old)
+            target.mkdir()
+            for name, raw in old.items():
+                path = target / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(raw)
             with self.assertRaisesRegex(ValueError, 'layout'):
                 plugins.write(target, files)
             plugins.write(target, files, allow_layout_change=True)

@@ -135,6 +135,7 @@ profiles/core.profile references/skills/capability-discovery.md references/skill
 references/skills/context-engineering.md references/skills/quality-review.md
 references/skills/skill-authoring.md references/skills/skill-router.md
 references/skills/software-delivery.md scripts/catalog.py scripts/ceo_inventory.py
+scripts/ceo_security.py
 tools/team/team.py tools/team/team.sh references/skills/project-memory.md
 memory/store.py memory/record.schema.json memory/pattern.example.json'''.split())
 

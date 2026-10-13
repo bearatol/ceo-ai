@@ -49,6 +49,17 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 [插件安装、更新与迁移](docs/PLUGINS.md#简体中文) ·
 [Microsoft APM](docs/APM.md#简体中文)
 
+## 可选安全检查
+
+CEO AI 0.6.0 在技能和代理索引过程中提供本地筛查。它只使用 Python 标准库，
+不需要 Docker、LLM 或外部 API。检查结果仅供评估；没有发现问题并不证明可信或安全。
+
+独立的 **CEO AI Security** 插件提供 `ceo-ai-security:security-scan`，
+用于更深入的本地检查。它需要 POSIX 系统上的 Python 3.10+、Docker，以及
+单独准备的扫描器镜像。该插件按需安装，不会随 CEO AI 一起安装。
+该模块从 0.6.0 版本起提供，目前没有云服务或订阅。
+参见[要求与限制](docs/SECURITY_SCANNING.md)。
+
 ## 可以这样问
 
 > 我想推出一个新产品。帮我判断开发之前应该先验证什么。
@@ -82,7 +93,7 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 | --- | --- | --- |
 | Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 模型调用；Windows/Linux 原生管理器 |
 | 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
-| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | 0.5.0 的重新验证 |
+| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | 0.6.0 的重新验证 |
 
 插件检查使用 Codex CLI 0.147.0 和 Claude Code 2.1.232。
 应用发现了技能，但这不能证明模型会遵守所有指令。

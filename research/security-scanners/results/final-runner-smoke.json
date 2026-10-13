@@ -1,0 +1,25 @@
+{
+  "purpose": "Final runner payload-directory relocation verification; not part of the 42-probe comparison",
+  "raw_report": ".runtime/reports/relocation-smoke.json",
+  "sha256": "48eeb91edd2b885f164ee1a8f3e568e712d7ace77c27134bb32bb86ef09debfc",
+  "runs": [
+    {
+      "engine": "cisco",
+      "status": "execution_finished",
+      "exitcode": 0,
+      "structured_result": true
+    },
+    {
+      "engine": "nvidia",
+      "status": "execution_finished",
+      "exitcode": 0,
+      "structured_result": true
+    },
+    {
+      "engine": "agentverus",
+      "status": "execution_finished",
+      "exitcode": 0,
+      "structured_result": true
+    }
+  ]
+}

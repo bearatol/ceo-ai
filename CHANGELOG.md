@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.6.0
+
+- Add local static security observations during skill and agent indexing, with
+  separate findings, capability tiers, coverage and unverified trust. Core uses
+  only Python standard-library analysis; no Docker, LLM or external API calls.
+- Preserve partial results for oversized resources and add bounded, explicitly
+  approved alias roots and native TOML agent declarations.
+- Ship `ceo-ai-security` as a separate opt-in plugin with one `security-scan`
+  skill. Local deep scans require POSIX, Docker and a separately prepared
+  immutable NVIDIA SkillSpector image; the plugin installs none of these.
+- Keep scanner output advisory and incomplete coverage visible. No cloud
+  service, paid API client or subscription is implemented.
+- Publish synthetic scanner comparisons, regression tests and aligned English,
+  Russian and Simplified Chinese installation and website guidance.
+
+
 ## 0.5.0
 
 - Add optional project lessons, reusable design patterns and user preferences.

@@ -2,13 +2,17 @@
 
 [CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
 
-The repository ships one installable skill at `.apm/skills/ceo-ai/`. Its entry
+The main skill lives at `.apm/skills/ceo-ai/`. Its entry
 `SKILL.md` selects eight internal guides under `references/skills/`; `catalog.json`
 contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
-committed `plugins/ceo-ai` copy for both native plugin managers. Edit only the
-canonical APM source; the doctor rejects drift between it and the generated copy.
+committed `plugins/ceo-ai` copy for both native plugin managers. From version 0.6.0 the
+catalog also has the separate, opt-in `ceo-ai-security` plugin. Its canonical entry and NVIDIA adapter live at
+`modules/ceo-ai-security/`. The builder produces
+`plugins/ceo-ai-security/skills/security-scan/`, including copies of the core safe
+reader and builtin scanner. It is standalone and does not depend on a core plugin
+installation. Edit canonical sources only; the doctor rejects generated drift.
 The plugin builder uses an explicit publication allowlist, verifies source hashes,
 rejects symlinks and refuses to overwrite edited or unmanaged generated payloads.
 It is a developer build for a trusted checkout, not a concurrent runtime installer.
@@ -46,6 +50,20 @@ accepting new hashes. `doctor.sh` checks catalog/profile consistency, JSON, and
 the manifest. It does not establish native skill loading or agent sandboxing.
 Machine-facing instructions stay in English. Keep the English, Russian and
 Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+`package.py` continues to build only the core APM bundle. `plugins.py` builds and
+checks both native plugins. For the reviewed split, use `python3 -B
+scripts/plugins.py --write --allow-layout-change`; without that flag, removing
+the NVIDIA adapter from an existing generated core payload is refused. The flag
+allows only that known removal from an intact owned layout, not arbitrary deletion
+or adoption of edited files. The core project/APM installer still installs only
+CEO AI; a native catalog with two entries never means both should be installed.
+
+The optional module does not bundle third-party scanner code or an image. Its
+actual local scan requires Python 3.10+, POSIX, Docker and a separately prepared
+reviewed immutable NVIDIA image. The module performs no installation, pulls or
+LLM/API calls. Core indexing requires no Docker. Cloud execution, accounts and
+subscriptions are not implemented.
 
 The [Checks workflow](../.github/workflows/checks.yml) runs the ordinary tests,
 doctor and documentation checks on Ubuntu with Python 3.10/3.12 and macOS with
@@ -93,6 +111,7 @@ Use the latest commit's run for release acceptance.
 
 - [Native plugins, migration and actual host verification](PLUGINS.md)
 - [CEO behavior and evidence](CEO_GUIDE.md)
+- [Security scanning and optional engine boundaries](SECURITY_SCANNING.md)
 - [Agent installation procedure](../INSTALL.md)
 - [APM integration](APM.md)
 - [Original source records](PROVENANCE.json)

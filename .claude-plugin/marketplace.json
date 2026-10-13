@@ -8,6 +8,11 @@
       "name": "ceo-ai",
       "source": "./plugins/ceo-ai",
       "description": "Discuss decisions, challenge assumptions, and coordinate verified work."
+    },
+    {
+      "name": "ceo-ai-security",
+      "source": "./plugins/ceo-ai-security",
+      "description": "Optional local deep scans. Requires Python, Docker and a prepared scanner image; not needed by CEO AI."
     }
   ],
   "metadata": {

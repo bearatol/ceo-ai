@@ -54,6 +54,18 @@ use **`$ceo-ai`** in Codex or **`/ceo-ai`** in Claude Code and Cursor.
 [Plugin setup, updates and migration](docs/PLUGINS.md#english) ·
 [Microsoft APM](docs/APM.md#english)
 
+## Optional security checks
+
+CEO AI 0.6.0 includes a local screening check during skill and agent
+indexing. It uses Python's standard library, with no Docker, LLM or external API.
+Findings are advisory; missing findings do not establish trust.
+
+For deeper local checks, the separate **CEO AI Security** plugin adds
+`ceo-ai-security:security-scan`. It requires Python 3.10+ on a POSIX host, Docker
+and a separately prepared scanner image. It is opt-in and is not installed with
+CEO AI. The optional module is available from version 0.6.0.
+There is no cloud service or subscription yet. [Requirements and limits](docs/SECURITY_SCANNING.md).
+
 ## Things to ask
 
 > I want to launch a product. Help me decide what to check before building it.
@@ -88,7 +100,7 @@ changes, CEO can then help implement the plan and check the result.
 | --- | --- | --- |
 | Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
-| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.5.0 |
+| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.6.0 |
 
 The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232. They confirm
 that the host finds the skill, not that the model follows every instruction.

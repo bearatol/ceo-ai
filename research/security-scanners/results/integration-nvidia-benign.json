@@ -1,0 +1,33 @@
+{
+  "bindings": {
+    "adapter_sha256": "ba41f0e1650b20f46c9c9f13e74aefdd1148e73bd9f427bba0547c1baedbd465",
+    "adapter_version": "1.0.0",
+    "bundle_sha256": "03630ceaa998a7711d9b952c70297c1b576e27ec482e3ae168ef835d18c0f3d6",
+    "coverage_analyzer_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+    "image": "sha256:eb866dc01e678024c313b37371650fe015db786d9d5e3f00b8d3da090c7fb88b",
+    "observed_bundle_sha256": "03630ceaa998a7711d9b952c70297c1b576e27ec482e3ae168ef835d18c0f3d6",
+    "package_kind": "skill",
+    "scanner": "skillspector",
+    "scanner_version": "2.12.0"
+  },
+  "coverage": {
+    "complete": true,
+    "files": 1,
+    "limitations": [
+      "No LLM or runtime behavior analysis.",
+      "Static findings can miss threats or flag benign text.",
+      "Vendor output is unverified metadata; no execution authority is granted."
+    ],
+    "mode": "static-lexical",
+    "reasons": [],
+    "vendor_complete": true
+  },
+  "decision": "no-findings",
+  "engine": "nvidia-skillspector",
+  "findings": [],
+  "reason": "completed",
+  "schema_version": 1,
+  "severity": "NONE",
+  "status": "COMPLETE",
+  "trust": "unverified"
+}

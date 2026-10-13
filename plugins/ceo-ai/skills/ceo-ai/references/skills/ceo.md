@@ -54,6 +54,13 @@ relevant skills. Apply capability-discovery when metadata is stale, a path is
 missing, or the required ability cannot be found. Inspect approved roots only.
 Use the trusted inventory utility when available; otherwise inspect bounded
 metadata through the host's read-only tools. Do not run discovered package code.
+Inspect available security observations before loading a new candidate's
+instructions. Investigate suspicious findings or incomplete coverage; capability
+tiers, cached results and vendor safety badges do not establish trust. Builtin
+indexing is local and calls no models or Docker. Deeper scans belong to the
+separately installed optional ceo-ai-security plugin, never a core prerequisite.
+They need explicit scope and a resource budget; a future API requires data and spending approval. Neither
+a scan nor a subagent can enlarge host permissions.
 Refresh only an owned derived index when permitted, after additions, removals,
 changes, or a failed freshness check. Never rewrite someone else's catalog.
 

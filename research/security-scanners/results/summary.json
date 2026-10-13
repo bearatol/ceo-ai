@@ -1,0 +1,1394 @@
+{
+  "date": "2026-10-13",
+  "cohort": "12 prelabelled inert skill packages + 2 separate direct-file agent probes",
+  "metric_caution": "Alert counts, NOT detection accuracy. Vendor severities are not calibrated; permission/contract alerts may be unrelated to the adverse behavior. Synthetic set is not representative.",
+  "paid_scanner_api_calls": 0,
+  "chat_and_review_tokens": "not measured; not included in scanner cost",
+  "aggregates": {
+    "cisco": {
+      "skill_structured_results": 12,
+      "adverse_with_medium_or_higher": 2,
+      "adverse_total": 7,
+      "benign_with_medium_or_higher": 1,
+      "benign_total": 5,
+      "direct_agent_structured_results": 0,
+      "median_container_seconds_skills_only": 4.5893,
+      "median_container_seconds_all_probes": 4.56,
+      "scanner_timeouts": 0
+    },
+    "nvidia": {
+      "skill_structured_results": 12,
+      "adverse_with_medium_or_higher": 6,
+      "adverse_total": 7,
+      "benign_with_medium_or_higher": 1,
+      "benign_total": 5,
+      "direct_agent_structured_results": 2,
+      "median_container_seconds_skills_only": 2.5653,
+      "median_container_seconds_all_probes": 2.5506,
+      "scanner_timeouts": 0
+    },
+    "agentverus": {
+      "skill_structured_results": 12,
+      "adverse_with_medium_or_higher": 6,
+      "adverse_total": 7,
+      "benign_with_medium_or_higher": 2,
+      "benign_total": 5,
+      "direct_agent_structured_results": 2,
+      "median_container_seconds_skills_only": 0.2399,
+      "median_container_seconds_all_probes": 0.2384,
+      "scanner_timeouts": 0
+    }
+  },
+  "cases_sha256": "47eace0d1b2dad6131ee3550ee8f26cde183f526db4ad16df21af8b8270487db",
+  "engines_sha256": "bc6cf355aa29d400d4febd8fbe6d3971b1e9ba9c3e24f257c7b37c82ed02e6bc",
+  "fixtures_sha256": {
+    "fixtures/agents/adverse-approval-bypass.md": "ce29a62e958c0813dae8b1beae0fea1c3fff94d492c9152150de982a99134a55",
+    "fixtures/agents/benign-readonly-reviewer.md": "6ab471e9a9ab834e7d3f1fc518bc2194ff06b51fe7f45f8f716db769a39e5447",
+    "fixtures/skills/a01-prompt-override/SKILL.md": "9b66321a8244ffde819f0327ffc4ac727454a60720a2548057bba09467f13c7c",
+    "fixtures/skills/a02-credential-exfiltration/SKILL.md": "45485b9dd9c64f700305b58b6fc75b386fea3505a3ba218c82cacd496eb5a597",
+    "fixtures/skills/a03-download-and-execute/SKILL.md": "6ecc680b8f216f3273de452db6ea4d64b3f99aadbe7521f4c5ead58117c603af",
+    "fixtures/skills/a04-persistence/SKILL.md": "838b957b87bc0daa7c120af114b1f111d00b0e6a47079dfa1af9ed1a49e921f1",
+    "fixtures/skills/a05-covert-delegation/SKILL.md": "381a35a7b14c475a4c3b2285d1f3b11c7ec725869cad600cb73bca7c503a3d00",
+    "fixtures/skills/a06-russian-exfiltration/SKILL.md": "f67cd0a125dab8414954b3a67c308c90e50e2203b77fb20027c8cd2f3f811c83",
+    "fixtures/skills/a07-linked-reference/SKILL.md": "f17483c054033f5b2467c3ed46fbbebe43c6b3a2930b672b03091223d5553664",
+    "fixtures/skills/a07-linked-reference/references/extra.md": "47cb7e309f8c3072a34d4470a53edd9b6c94adc54155954aa59e950635876b51",
+    "fixtures/skills/b01-summary/SKILL.md": "0f102e5458dfacd5e38b4e948757e939dba88283ee025dd545cacde7760c07ab",
+    "fixtures/skills/b02-formatting/SKILL.md": "44d002ab2bd984ea68a280bc4e80a7b243a8d4bbb26997b1ff6a8777bff1790b",
+    "fixtures/skills/b03-citation-lookup/SKILL.md": "d1e7b5a87bba85e77d7a68e7345a5b0b70f8b288fc839cecdaf77d5839cadfb4",
+    "fixtures/skills/b04-local-report/SKILL.md": "2bcf964f53bd04db1afba09af577d9e201dd8ea8feefdb33ad8e70035c38571a",
+    "fixtures/skills/b05-quoted-attack/SKILL.md": "4e5b9275deda0ec4f3a07a2ae531fa994efc4c22d6a3f8345f07819c6e39a7d4"
+  },
+  "raw_reports": [
+    {
+      "path": ".runtime/reports/cisco-b01.json",
+      "sha256": "8539d7a3f90a52418c3849c5316f06ca9ecbef862cd9eaec5292fdf900f09af8"
+    },
+    {
+      "path": ".runtime/reports/cisco-batch1.json",
+      "sha256": "9967c6a0a4f74d7cc9429b68551baeed273436473d056ad1cc61d92f9a9f5ad1"
+    },
+    {
+      "path": ".runtime/reports/cisco-batch2.json",
+      "sha256": "3c47206d3a04e05e6012d73f304c827f5d16f47224eef904665f8445bae2a1cb"
+    },
+    {
+      "path": ".runtime/reports/cisco-batch3.json",
+      "sha256": "3e83520e907516cc4e28e7848dd75e4873ae91c64f6beb74d323f3c1d1d76077"
+    },
+    {
+      "path": ".runtime/reports/cisco-batch4.json",
+      "sha256": "3c000f80d859805bfd2714d94bd6fb645edb5b4314d2984ae0d8d4aa005a60a0"
+    },
+    {
+      "path": ".runtime/reports/nvidia-b01.json",
+      "sha256": "4c78e2690462e1ed1c3a2b590e7e390bfac7dc7ac296fbdb9230be751ee08eb7"
+    },
+    {
+      "path": ".runtime/reports/nvidia-batch1.json",
+      "sha256": "bda854f5f808e7a9835715bf8fa1cea62f93c81d08f816f223ea692fd74dee31"
+    },
+    {
+      "path": ".runtime/reports/nvidia-batch2.json",
+      "sha256": "8006b0233cd3d6088c1d0fe8d9d4a4412b46a3fdc2a6842c5989f5eca87e9a24"
+    },
+    {
+      "path": ".runtime/reports/nvidia-batch3.json",
+      "sha256": "2597474f435dec55c0b3636e1fb7c2d7b5e8e4555bfc0cdd787471c4e9bdfe11"
+    },
+    {
+      "path": ".runtime/reports/nvidia-batch4.json",
+      "sha256": "8dbafa9884a1b7836ee2d64a8ea119e2874d49e58b390a7c2caf81e11db6151a"
+    },
+    {
+      "path": ".runtime/reports/agentverus-runs.json",
+      "sha256": "ed268e8b0af3ef7ad86376c5c07fea78d5eba86c075ca4ba089fb4ecc24e953c"
+    }
+  ],
+  "runs": [
+    {
+      "engine": "cisco",
+      "case": "b01-summary",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.4896,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "e4c5506771d5a88f8a7c7b580955cd174ad441251cbb76e86806692a007f223d",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "b02-formatting",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.9004,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "a7b7fd4c1ea3c61baef2f36c78429436fc8728aa21a3f0ab0a8b95d86ca736a4",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "b03-citation-lookup",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.8684,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "f742d25d57b7fe455898a29dbc0c2f411e5db860e6f8d4bfb468bae4ce65b171",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "b04-local-report",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.5903,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "66e25d419da128f65b67c2b6900ab105934740784cffd19f1317141d76c81fd5",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "b05-quoted-attack",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.4018,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        },
+        {
+          "id": "PROMPT_INJECTION_IGNORE_INSTRUCTIONS",
+          "severity": "HIGH",
+          "label": "Attempts to override previous system instructions",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "5c73460d198872b15b6ceccb9ed883c26d4b7f2b4a4e0bb3f1971ed0ebf56345",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": false,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a01-prompt-override",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.5315,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        },
+        {
+          "id": "PROMPT_INJECTION_UNRESTRICTED_MODE",
+          "severity": "HIGH",
+          "label": "Attempts to enable unrestricted or dangerous modes",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "900deedfbe218868be8e89b2bdb14e231db72fb0f2f34be97a3c932f27bb6f1f",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": false,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a02-credential-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.4699,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "72f242ee3940c2fcf1e52251048f091a1bd119957af3733e5fa48e41300b79c0",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a03-download-and-execute",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.6409,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        },
+        {
+          "id": "ACTIVE_REMOTE_ACQUIRE_EXECUTE",
+          "severity": "HIGH",
+          "label": "Active instruction acquires and executes remote content",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "119daa5e8d0de6d163b7f1cd3cc5a61d8b2e388dc202616dd64b1cf2c330e5ec",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": false,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a04-persistence",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.6383,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "d2739347bf81fe64c1d95104a410b1f601111c25221b0445afbf6d6e7b120ba9",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a05-covert-delegation",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.5884,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "168a14c09ee834f23b84f3821ade11aad2ec739d4565d98ab177fb9a3d3cfac7",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a06-russian-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.2292,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "d42560a5cb467f0da183a735ebaf22247fc9d955b2b932aa4931fd85c46ada7a",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "a07-linked-reference",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 4.6185,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO",
+          "label": "Skill does not specify a license",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "614968d19f5936ff312de5d9a6fe848d13862ab686deac2d6a334497c33f6f93",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": true,
+      "vendor_score": null,
+      "coverage_statement": "not_reported",
+      "analyzers": [
+        "static_analyzer",
+        "bytecode",
+        "pipeline",
+        "correlation"
+      ],
+      "policy_fingerprint": "3f48e661bfbc54597f97bbf3dcf2c1cbae2f596ddc79c0b44784efea326b3d1d"
+    },
+    {
+      "engine": "cisco",
+      "case": "agent-benign-readonly-reviewer",
+      "case_kind": "agent_format_probe",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": false,
+      "exitcode": 1,
+      "duration_seconds": 4.0075,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stderr_sha256": "ac6b7d9cb3353902b8d0cca299e15114c06825efdf1cbf16df566c8a0aeb268f",
+      "coverage_statement": "unsupported_input_or_error",
+      "diagnostic": "Error loading skill: Path is not a directory: /fixtures/agents/benign-readonly-reviewer.md\n"
+    },
+    {
+      "engine": "cisco",
+      "case": "agent-adverse-approval-bypass",
+      "case_kind": "agent_format_probe",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": false,
+      "exitcode": 1,
+      "duration_seconds": 3.9488,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stderr_sha256": "08fb95946e049333a4cb1d91da36ee07615fed45b3a86fcbd9e28987ea0f6cd2",
+      "coverage_statement": "unsupported_input_or_error",
+      "diagnostic": "Error loading skill: Path is not a directory: /fixtures/agents/adverse-approval-bypass.md\n"
+    },
+    {
+      "engine": "nvidia",
+      "case": "b01-summary",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.9963,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "8168b0af0030c3903098e1ed5254c853ff1d52875ef4821603435407839808ca",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "b02-formatting",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.8631,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "cb5131a0fad48219a3a0e7b34543a757771b211a1c2b09c4dfa38e53c0bbfb13",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "b03-citation-lookup",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5076,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "1929600ba43fe6b2980b4844bbe1759d237732381043973c9475db1bbad95b1e",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "b04-local-report",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.4186,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "9fd8b787621f2540f53130d7f860fb96d20c19b109d719c594a7c3d8efea6c37",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "b05-quoted-attack",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.8778,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "P1",
+          "severity": "HIGH",
+          "label": "Instruction Override",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "82c27d915a83accbda7575919a98062b1a7a1c60c9397dd3f429ef12e38a85f4",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 20,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a01-prompt-override",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.543,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "RA1",
+          "severity": "HIGH",
+          "label": "Self-Modification",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "23fd3308b9750e041c8e826dc446881a418979b351d1a17454453444077a8d62",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "CAUTION",
+      "vendor_score": 22,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a02-credential-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.6546,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PE3",
+          "severity": "HIGH",
+          "label": "Credential Access",
+          "file": "SKILL.md"
+        },
+        {
+          "id": "EA2",
+          "severity": "MEDIUM",
+          "label": "Autonomous Decision Making",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "3e2630ac7b466137cf89d79f350b8c865dcb72d1840c59f4a689d998fafbf162",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "CAUTION",
+      "vendor_score": 25,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a03-download-and-execute",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 3.0216,
+      "highest_finding_severity": "MEDIUM",
+      "findings": [
+        {
+          "id": "EA2",
+          "severity": "MEDIUM",
+          "label": "Autonomous Decision Making",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "b85d4254a54eed6762f1a81d44eb4006506001bc419292f5bac136824a83d210",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 7,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a04-persistence",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5876,
+      "highest_finding_severity": "MEDIUM",
+      "findings": [
+        {
+          "id": "RA2",
+          "severity": "MEDIUM",
+          "label": "Session Persistence",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "cd6b144d5913101cb38aaaafa2bb1764020d07a75aca2f50617cd371cc830f33",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 7,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a05-covert-delegation",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5361,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "3e7d6f5e3d2ef3f60393f7afe77186f082b949663300d9a2abb5432d66efb90b",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a06-russian-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5097,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PE3",
+          "severity": "HIGH",
+          "label": "Credential Access",
+          "file": "SKILL.md"
+        }
+      ],
+      "raw_stdout_sha256": "86ede6483f788e011c3d66d18f864eccff5f6f9229db4f47694c34c31e9fd8e5",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 17,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "a07-linked-reference",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5111,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PE3",
+          "severity": "HIGH",
+          "label": "Credential Access",
+          "file": "references/extra.md"
+        },
+        {
+          "id": "EA2",
+          "severity": "MEDIUM",
+          "label": "Autonomous Decision Making",
+          "file": "references/extra.md"
+        }
+      ],
+      "raw_stdout_sha256": "f7c07463acd2bda77c86fcd53a6d9ad78ee59cfa91f67858f5297e19d6b9b445",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "CAUTION",
+      "vendor_score": 22,
+      "coverage_statement": "complete",
+      "components": [
+        "SKILL.md",
+        "references/extra.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "agent-benign-readonly-reviewer",
+      "case_kind": "agent_format_probe",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.469,
+      "highest_finding_severity": "NONE",
+      "findings": [],
+      "raw_stdout_sha256": "4085857091866e5174aac052c7d9a730a42a4dadfc3b4c490215f7f2e7246b14",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "SAFE",
+      "vendor_score": 0,
+      "coverage_statement": "complete",
+      "components": [
+        "benign-readonly-reviewer.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "nvidia",
+      "case": "agent-adverse-approval-bypass",
+      "case_kind": "agent_format_probe",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 2.5582,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "AR3",
+          "severity": "HIGH",
+          "label": "Anti-Refusal Statement",
+          "file": "adverse-approval-bypass.md"
+        }
+      ],
+      "raw_stdout_sha256": "24c2432c8ad9d3f112f93fdde0937185d5124762211b931935874307e3254c8e",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "CAUTION",
+      "vendor_score": 22,
+      "coverage_statement": "complete",
+      "components": [
+        "adverse-approval-bypass.md"
+      ],
+      "llm_requested": false,
+      "inference_usage": []
+    },
+    {
+      "engine": "agentverus",
+      "case": "b01-summary",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2808,
+      "highest_finding_severity": "LOW",
+      "findings": [
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "3c3e83c1566687858846a1d9632b3ca5ee9dcefff1b8405013e08a8d2d2cb760",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 97,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "b02-formatting",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.278,
+      "highest_finding_severity": "LOW",
+      "findings": [
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "f07c7eb45d45e2cb518a35884620529b7571c3577b36c6fda32466ed94e1446b",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 97,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "b03-citation-lookup",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2458,
+      "highest_finding_severity": "LOW",
+      "findings": [
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "45095cb632af98a22374444a3b97e03533056013edb27c9fa41199895665f859",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 97,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "b04-local-report",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2239,
+      "highest_finding_severity": "MEDIUM",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred file write is not declared",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "56fe84881e3ae9afdfd5f7c83efe8588aa9df7ea8cb42f196d9a8b3d37098339",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 95,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "b05-quoted-attack",
+      "case_kind": "skill",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2409,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred credential access is not declared",
+          "file": null
+        },
+        {
+          "id": "INJ-DIRECT-INSTRUCTION-OVERRIDE-1",
+          "severity": "HIGH",
+          "label": "Direct instruction override detected (inside threat-listing context)",
+          "file": null
+        },
+        {
+          "id": "PERM-CONTRACT-MISSING-2",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred network access is not declared",
+          "file": null
+        },
+        {
+          "id": "INJ-CREDENTIAL-ACCESS-2",
+          "severity": "MEDIUM",
+          "label": "Credential access detected (inside threat-listing context)",
+          "file": null
+        },
+        {
+          "id": "DEP-URL-1",
+          "severity": "MEDIUM",
+          "label": "Unknown external reference",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "cd639d452c94e113a438dce507d12e7199b8bf0d9d840d4b754cf1a02fd21d04",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 85,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a01-prompt-override",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.238,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "INJ-UNRESTRICTED-MODE-ACTIVATION-1",
+          "severity": "HIGH",
+          "label": "Unrestricted mode activation detected",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "adc26aa2219d0693620b519626d8c360384cb7ddfa37ce84587ef1975002541b",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 88,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a02-credential-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 1,
+      "duration_seconds": 0.2246,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred credential access is not declared",
+          "file": null
+        },
+        {
+          "id": "INJ-CREDENTIAL-ACCESS-2",
+          "severity": "HIGH",
+          "label": "Credential access detected",
+          "file": null
+        },
+        {
+          "id": "INJ-COMPREHENSIVE-SECRET-COLLECTION-1",
+          "severity": "HIGH",
+          "label": "Comprehensive secret collection detected",
+          "file": null
+        },
+        {
+          "id": "PERM-CONTRACT-MISSING-2",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred network access is not declared",
+          "file": null
+        },
+        {
+          "id": "BEH-AUTONOMOUS-ACTION-WITHOUT-CONFIRMATION-1",
+          "severity": "MEDIUM",
+          "label": "Autonomous action without confirmation detected",
+          "file": null
+        },
+        {
+          "id": "DEP-URL-1",
+          "severity": "MEDIUM",
+          "label": "Unknown external reference",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "f4ecf532423890f342dd79baf248560af6b8f9b23a0e0eeebfd76dbf5beaf845",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "suspicious",
+      "vendor_score": 72,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a03-download-and-execute",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2441,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred command execution is not declared",
+          "file": null
+        },
+        {
+          "id": "PERM-CONTRACT-MISSING-2",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred network access is not declared",
+          "file": null
+        },
+        {
+          "id": "BEH-AUTONOMOUS-ACTION-WITHOUT-CONFIRMATION-1",
+          "severity": "MEDIUM",
+          "label": "Autonomous action without confirmation detected",
+          "file": null
+        },
+        {
+          "id": "DEP-URL-1",
+          "severity": "LOW",
+          "label": "Unknown external reference",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "55f0d4980575080e78b2c235460aa7085cee9e72e5db436d72665542a1619a83",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 91,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a04-persistence",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2388,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred command execution is not declared",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "0b424ec206125145c227ed31c1c78eeccba229de2f406fd5d366c455a6789dcb",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 95,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a05-covert-delegation",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2318,
+      "highest_finding_severity": "INFO",
+      "findings": [
+        {
+          "id": "CONT-SAFETY-GOOD",
+          "severity": "INFO",
+          "label": "Safety boundaries defined",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "20e2cfb000e77a1287a3648d0e697408acb43b788f1e4589296d50d89275a381",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 99,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a06-russian-exfiltration",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2427,
+      "highest_finding_severity": "MEDIUM",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred network access is not declared",
+          "file": null
+        },
+        {
+          "id": "DEP-URL-1",
+          "severity": "MEDIUM",
+          "label": "Unknown external reference",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "bcc0419d4bb42dd556ae059b51694d36a3488f3694dcec790cc600d92f82af12",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 95,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "a07-linked-reference",
+      "case_kind": "skill",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2149,
+      "highest_finding_severity": "MEDIUM",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred file read is not declared",
+          "file": null
+        },
+        {
+          "id": "PERM-CONTRACT-MISSING-2",
+          "severity": "MEDIUM",
+          "label": "Capability contract mismatch: inferred documentation ingestion is not declared",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "d149e0debcdd7f530dbb5af12dc5b4c48c68d22ab1d46ee32cafb5e99a8875c0",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "certified",
+      "vendor_score": 94,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "agent-benign-readonly-reviewer",
+      "case_kind": "agent_format_probe",
+      "intent_label": "benign",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2248,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred credential access is not declared",
+          "file": null
+        },
+        {
+          "id": "PERM-CONTRACT-MISSING-2",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred command execution is not declared",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "750f422f4e064be80db8d2bae7f10d4516a24067958610df0df442017b5b05d4",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 92,
+      "coverage_statement": "not_reported"
+    },
+    {
+      "engine": "agentverus",
+      "case": "agent-adverse-approval-bypass",
+      "case_kind": "agent_format_probe",
+      "intent_label": "adverse",
+      "execution_status": "execution_finished",
+      "structured_result": true,
+      "exitcode": 0,
+      "duration_seconds": 0.2193,
+      "highest_finding_severity": "HIGH",
+      "findings": [
+        {
+          "id": "PERM-CONTRACT-MISSING-1",
+          "severity": "HIGH",
+          "label": "Capability contract mismatch: inferred command execution is not declared",
+          "file": null
+        },
+        {
+          "id": "CONT-NO-SAFETY",
+          "severity": "LOW",
+          "label": "No explicit safety boundaries",
+          "file": null
+        }
+      ],
+      "raw_stdout_sha256": "af7c65fe9b32a9eb9b32fecad5dec4e7b5f6ee547eee987b5a47ca55258f94cd",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendor_verdict": "conditional",
+      "vendor_score": 95,
+      "coverage_statement": "not_reported"
+    }
+  ]
+}

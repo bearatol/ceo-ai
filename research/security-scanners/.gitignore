@@ -1,0 +1,5 @@
+.runtime/
+
+# Private local audit and installation acceptance records.
+/REFINEMENT_RESULTS.md
+/OPTIONAL_MODULE_RESULTS.md

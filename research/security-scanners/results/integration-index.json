@@ -1,0 +1,854 @@
+{
+  "owner": "ceo-inventory-v1",
+  "schema_version": 2,
+  "fingerprint": "7d57af73734cf44923f53cb93ef2f8b8b73220feef8766b139e99484f7482f43",
+  "entries": [
+    {
+      "id": "agent:adverse-approval-bypass",
+      "path": "agents/adverse-approval-bypass.md",
+      "sha256": "896a639b15e41e16170246100b4ffcc86a0e97b22b5d3e397629cc4e5eedff9b",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "0ee23626624d90f10fcb0a78f89d49c41dac45afa2b16cf74382f98c8c1bbc2e",
+        "observed_bundle_sha256": "0ee23626624d90f10fcb0a78f89d49c41dac45afa2b16cf74382f98c8c1bbc2e",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T0",
+          "basis": "heuristic"
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "COVERT_DELEGATION",
+            "severity": "HIGH",
+            "path": "adverse-approval-bypass.md",
+            "line": 8
+          }
+        ],
+        "coverage": {
+          "status": "complete",
+          "scope": "agent-file-only",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 421,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "review-required",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent:benign-readonly-reviewer",
+      "path": "agents/benign-readonly-reviewer.md",
+      "sha256": "8ec74ed8a4daff1cbbc8b4470a1561d64a80ef6f47ca072fc2a85ad00cc26330",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "02c5351883fc8029e1326fa1e995ca09f864f8b4c38bd800af97936c4dbf6ea3",
+        "observed_bundle_sha256": "02c5351883fc8029e1326fa1e995ca09f864f8b4c38bd800af97936c4dbf6ea3",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic"
+        },
+        "severity": "NONE",
+        "findings": [],
+        "coverage": {
+          "status": "complete",
+          "scope": "agent-file-only",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 423,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "no-findings",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a01-prompt-override",
+      "path": "skills/a01-prompt-override/SKILL.md",
+      "sha256": "9b66321a8244ffde819f0327ffc4ac727454a60720a2548057bba09467f13c7c",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "a7c56ee65dbbce9cfbac7bc893960c061c4002e507638cfdaa82200314563409",
+        "observed_bundle_sha256": "a7c56ee65dbbce9cfbac7bc893960c061c4002e507638cfdaa82200314563409",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T0",
+          "basis": "heuristic"
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "PROMPT_OVERRIDE",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 8
+          },
+          {
+            "rule_id": "APPROVAL_BYPASS",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 9
+          }
+        ],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 475,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "review-required",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a02-credential-exfiltration",
+      "path": "skills/a02-credential-exfiltration/SKILL.md",
+      "sha256": "45485b9dd9c64f700305b58b6fc75b386fea3505a3ba218c82cacd496eb5a597",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "2f4b9e1ad122f493f575e7e53adf9cd078d95d58f30096bb02e9a03e65e75865",
+        "observed_bundle_sha256": "2f4b9e1ad122f493f575e7e53adf9cd078d95d58f30096bb02e9a03e65e75865",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "EXFILTRATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 9
+          },
+          {
+            "rule_id": "EXFILTRATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 10
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 571,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "external-reference",
+              "path": "SKILL.md"
+            },
+            {
+              "reason": "out-of-package-reference",
+              "path": "SKILL.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a03-download-and-execute",
+      "path": "skills/a03-download-and-execute/SKILL.md",
+      "sha256": "6ecc680b8f216f3273de452db6ea4d64b3f99aadbe7521f4c5ead58117c603af",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "2afef147650bcaa9485fff89e53702625d364c2c169972c034ced73e75b883bf",
+        "observed_bundle_sha256": "2afef147650bcaa9485fff89e53702625d364c2c169972c034ced73e75b883bf",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T4",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "CRITICAL",
+        "findings": [
+          {
+            "rule_id": "RUNTIME_CODE_ACQUISITION",
+            "severity": "CRITICAL",
+            "path": "SKILL.md",
+            "line": 2
+          },
+          {
+            "rule_id": "RUNTIME_CODE_ACQUISITION",
+            "severity": "CRITICAL",
+            "path": "SKILL.md",
+            "line": 8
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 526,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "external-reference",
+              "path": "SKILL.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a04-persistence",
+      "path": "skills/a04-persistence/SKILL.md",
+      "sha256": "838b957b87bc0daa7c120af114b1f111d00b0e6a47079dfa1af9ed1a49e921f1",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "0df98a568b63f90b95d1dce8605977336be7197173ac85b1d9173a28c81b13a8",
+        "observed_bundle_sha256": "0df98a568b63f90b95d1dce8605977336be7197173ac85b1d9173a28c81b13a8",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "PERSISTENCE_CHANGE",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 8
+          },
+          {
+            "rule_id": "PERSISTENCE_CHANGE",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 10
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 521,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "out-of-package-reference",
+              "path": "SKILL.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a05-covert-delegation",
+      "path": "skills/a05-covert-delegation/SKILL.md",
+      "sha256": "381a35a7b14c475a4c3b2285d1f3b11c7ec725869cad600cb73bca7c503a3d00",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "4708f989154fd76699a99322a630af1a6f61805568b9b1a6858beefa61570b4b",
+        "observed_bundle_sha256": "4708f989154fd76699a99322a630af1a6f61805568b9b1a6858beefa61570b4b",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T0",
+          "basis": "heuristic"
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "COVERT_DELEGATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 2
+          },
+          {
+            "rule_id": "COVERT_DELEGATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 10
+          },
+          {
+            "rule_id": "CONCEALED_ACTION",
+            "severity": "MEDIUM",
+            "path": "SKILL.md",
+            "line": 12
+          }
+        ],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 558,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "review-required",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a06-russian-exfiltration",
+      "path": "skills/a06-russian-exfiltration/SKILL.md",
+      "sha256": "f67cd0a125dab8414954b3a67c308c90e50e2203b77fb20027c8cd2f3f811c83",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "e95fafdc0dfc8c166af34e867a494e202fc682a0f5dff9f71e83c197556c47cc",
+        "observed_bundle_sha256": "e95fafdc0dfc8c166af34e867a494e202fc682a0f5dff9f71e83c197556c47cc",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "EXFILTRATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 9
+          },
+          {
+            "rule_id": "EXFILTRATION",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 10
+          },
+          {
+            "rule_id": "APPROVAL_BYPASS",
+            "severity": "HIGH",
+            "path": "SKILL.md",
+            "line": 11
+          },
+          {
+            "rule_id": "CONCEALED_ACTION",
+            "severity": "MEDIUM",
+            "path": "SKILL.md",
+            "line": 11
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 923,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "external-reference",
+              "path": "SKILL.md"
+            },
+            {
+              "reason": "out-of-package-reference",
+              "path": "SKILL.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:a07-linked-reference",
+      "path": "skills/a07-linked-reference/SKILL.md",
+      "sha256": "f17483c054033f5b2467c3ed46fbbebe43c6b3a2930b672b03091223d5553664",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "86ccd752cf55bc893ae34ce5bc3673d34182dc690fafe3d0829de68876bb679a",
+        "observed_bundle_sha256": "86ccd752cf55bc893ae34ce5bc3673d34182dc690fafe3d0829de68876bb679a",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "HIGH",
+        "findings": [
+          {
+            "rule_id": "EXFILTRATION",
+            "severity": "HIGH",
+            "path": "references/extra.md",
+            "line": 4
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 2,
+          "files_analyzed": 2,
+          "analysis_bytes": 746,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "external-reference",
+              "path": "references/extra.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:b01-summary",
+      "path": "skills/b01-summary/SKILL.md",
+      "sha256": "0f102e5458dfacd5e38b4e948757e939dba88283ee025dd545cacde7760c07ab",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "03630ceaa998a7711d9b952c70297c1b576e27ec482e3ae168ef835d18c0f3d6",
+        "observed_bundle_sha256": "03630ceaa998a7711d9b952c70297c1b576e27ec482e3ae168ef835d18c0f3d6",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T0",
+          "basis": "heuristic"
+        },
+        "severity": "NONE",
+        "findings": [],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 350,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "no-findings",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:b02-formatting",
+      "path": "skills/b02-formatting/SKILL.md",
+      "sha256": "44d002ab2bd984ea68a280bc4e80a7b243a8d4bbb26997b1ff6a8777bff1790b",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "b30a763e0bd4d703587701eb9d804821c00d8ed534efba5230597b1814f96892",
+        "observed_bundle_sha256": "b30a763e0bd4d703587701eb9d804821c00d8ed534efba5230597b1814f96892",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T0",
+          "basis": "heuristic"
+        },
+        "severity": "NONE",
+        "findings": [],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 326,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "no-findings",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:b03-citation-lookup",
+      "path": "skills/b03-citation-lookup/SKILL.md",
+      "sha256": "d1e7b5a87bba85e77d7a68e7345a5b0b70f8b288fc839cecdaf77d5839cadfb4",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "f99f190d9dd50c393608dcff3f855d7d9fa36667e28bd827e86d1bf076d60bc2",
+        "observed_bundle_sha256": "f99f190d9dd50c393608dcff3f855d7d9fa36667e28bd827e86d1bf076d60bc2",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic"
+        },
+        "severity": "LOW",
+        "findings": [
+          {
+            "rule_id": "CONTEXT_UNCERTAIN",
+            "severity": "LOW",
+            "path": "SKILL.md",
+            "line": 11
+          }
+        ],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 534,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "review-required",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:b04-local-report",
+      "path": "skills/b04-local-report/SKILL.md",
+      "sha256": "2bcf964f53bd04db1afba09af577d9e201dd8ea8feefdb33ad8e70035c38571a",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "119178f036db834f62c89680bbcbaabe7a595db0fbc6d50de3caa71bd779c74e",
+        "observed_bundle_sha256": "119178f036db834f62c89680bbcbaabe7a595db0fbc6d50de3caa71bd779c74e",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T2",
+          "basis": "heuristic"
+        },
+        "severity": "NONE",
+        "findings": [],
+        "coverage": {
+          "status": "complete",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 504,
+          "analysis_byte_limit": 1048576,
+          "reasons": []
+        },
+        "decision": "no-findings",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    },
+    {
+      "id": "skill:b05-quoted-attack",
+      "path": "skills/b05-quoted-attack/SKILL.md",
+      "sha256": "4e5b9275deda0ec4f3a07a2ae531fa994efc4c22d6a3f8345f07819c6e39a7d4",
+      "declared_access": null,
+      "availability": "present-unverified",
+      "security": {
+        "engine": "ceo-local-static",
+        "engine_version": "1.0.0",
+        "scanner_sha256": "d1543bd02ff46a040fdab7e1cc50b25984ee14b1b840f09fa5151c27fd4c26b4",
+        "rules_sha256": "014d5ec56cd9b67cd3b5564fb005fb1f23f32c1e2b1e97f3b87ce1dde093dad6",
+        "policy_sha256": "e101fd5b3413ac5fe8a01e3ebe19b9ac96fc50bd7d023b28d1d36774ea8af5d0",
+        "identity_sha256": "02345b75d395d589f030266fdf7f2fc024193bb918ea82b6a3ca207410314e65",
+        "bundle_sha256": "2eb41305344e521ba72ca6d8ed7462d8ea256abb8ef1cf5fc6a0595f39a8f0cc",
+        "observed_bundle_sha256": "2eb41305344e521ba72ca6d8ed7462d8ea256abb8ef1cf5fc6a0595f39a8f0cc",
+        "source": {
+          "type": "local",
+          "verified": false
+        },
+        "trust": "unverified",
+        "capability": {
+          "observed_tier": "T3",
+          "basis": "heuristic",
+          "lower_bound": true
+        },
+        "severity": "LOW",
+        "findings": [
+          {
+            "rule_id": "CONTEXT_UNCERTAIN",
+            "severity": "LOW",
+            "path": "SKILL.md",
+            "line": 13
+          },
+          {
+            "rule_id": "CONTEXT_UNCERTAIN",
+            "severity": "LOW",
+            "path": "SKILL.md",
+            "line": 14
+          }
+        ],
+        "coverage": {
+          "status": "partial",
+          "scope": "admitted-bundle-text",
+          "method": "lexical-rules-no-ast-or-runtime-assurance",
+          "files_received": 1,
+          "files_analyzed": 1,
+          "analysis_bytes": 816,
+          "analysis_byte_limit": 1048576,
+          "reasons": [
+            {
+              "reason": "external-reference",
+              "path": "SKILL.md"
+            }
+          ]
+        },
+        "decision": "incomplete",
+        "semantic_api": {
+          "enabled": false,
+          "implemented": false,
+          "requires": [
+            "explicit-opt-in",
+            "data-approval",
+            "hard-budget"
+          ]
+        }
+      }
+    }
+  ],
+  "freshness": "missing"
+}

@@ -1,12 +1,33 @@
 {
   "name": "ceo-ai-plugins",
-  "interface": {"displayName": "CEO AI"},
+  "interface": {
+    "displayName": "CEO AI"
+  },
   "plugins": [
     {
       "name": "ceo-ai",
-      "source": {"source": "local", "path": "./plugins/ceo-ai"},
-      "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+      "source": {
+        "source": "local",
+        "path": "./plugins/ceo-ai"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
+    },
+    {
+      "name": "ceo-ai-security",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ceo-ai-security"
+      },
+      "description": "Optional local deep scans. Requires Python, Docker and a prepared scanner image; not needed by CEO AI.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
     }
   ]
 }

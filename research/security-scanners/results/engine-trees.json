@@ -1,0 +1,20 @@
+{
+  "cisco": {
+    "sha256": "a52d1f84b28766699d4ead3c2b1224e7dabfdd78ae6ae541af33d93b217e5700",
+    "files": 22330,
+    "bytes": 524771830,
+    "hash_algorithm": "SHA256 of sorted relative-path + NUL + file-SHA256 + LF"
+  },
+  "nvidia": {
+    "sha256": "687440c12a069ed33a58580dcca3d2486d8190d3986e6f1f8cccd39ac7b65543",
+    "files": 17007,
+    "bytes": 223932442,
+    "hash_algorithm": "SHA256 of sorted relative-path + NUL + file-SHA256 + LF"
+  },
+  "agentverus": {
+    "sha256": "629a9172405214793134c2fcc51e9c1b616b5ecf8d9e1694d5f44ae72b5a7830",
+    "files": 175,
+    "bytes": 1626708,
+    "hash_algorithm": "SHA256 of sorted relative-path + NUL + file-SHA256 + LF"
+  }
+}

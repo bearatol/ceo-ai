@@ -12,6 +12,11 @@ Choose an installation method, then complete the release selection below before
 running installation or update commands. Removal uses the installed manager and
 does not require looking up a new release.
 
+The default request installs only `ceo-ai`. From version 0.6.0 the catalog also
+contains the separate, opt-in `ceo-ai-security` module. Never install every catalog entry or add the optional module implicitly.
+It requires an explicit request and an approved snapshot containing the module;
+do not substitute a development checkout when stable-release selection fails.
+
 ## Choose the installation method
 
 1. Inspect existing CEO AI installations in the current project's
@@ -27,9 +32,11 @@ does not require looking up a new release.
    permission. Never edit unrelated settings or install a host CLI implicitly.
 4. Follow [the plugin guide](docs/PLUGINS.md#english) for native commands. Register
    only `bearatol/ceo-ai`, named `ceo-ai-plugins`; reject a same-name catalog from
-   another source. Inspect its resolved snapshot and `plugins/ceo-ai/payload.json`
-   before installing. Compare the catalog's actual plugin files and manifests
-   against `plugins/ceo-ai` at the selected release commit, including file hashes,
+   another source. Inspect its resolved snapshot and the selected plugin's
+   `payload.json` before installing (`plugins/ceo-ai` by default;
+   `plugins/ceo-ai-security` only when explicitly requested). Compare the catalog's
+   actual plugin files and manifests against that plugin directory at the selected
+   release commit, including file hashes,
    source and version. A catalog-supplied manifest alone is not proof of a match.
    Stop on a mismatch, even when version labels agree. Do not accept arbitrary
    hooks, commands, agent registrations, MCP servers or dependency installers.
@@ -41,6 +48,30 @@ does not require looking up a new release.
    For plugin updates/removal use the same native manager and installed scope.
    Removing a user-level plugin affects all projects using that registration;
    explain this effect before applying a project-worded removal request.
+
+## Optional module: CEO AI Security
+
+This is a separate native plugin, not a prerequisite for CEO AI. Before the user
+opts in, explain that actual scanning needs Python 3.10+ on a POSIX host, a Docker
+client and working daemon, and a separately prepared, reviewed immutable NVIDIA
+SkillSpector image. The plugin does not install those prerequisites, pull images,
+call an LLM/API or provide a cloud service. Missing prerequisites leave the
+optional scan unavailable; do not install system software as a fallback.
+
+For an explicitly approved catalog snapshot that contains the module, follow
+the [optional native-plugin commands](docs/PLUGINS.md#optional-ceo-ai-security).
+Verify `plugins/ceo-ai-security/payload.json` and the full optional payload against
+the selected source commit, then verify the installed cache and host discovery.
+Expect one skill `ceo-ai-security:security-scan`, no native agents/hooks/MCP.
+Claude invokes `/ceo-ai-security:security-scan`; Codex selects the namespaced skill.
+Its package root is its own cached `skills/security-scan` directory. It includes
+its required reader and static scanner and does not require the core plugin.
+
+Installing or updating the module does not authorize a scan. Establish approved
+input paths, private workspace, image identity and resource scope before running
+it. Both scanners use local compute; conversation/model tokens remain governed by
+the user's AI app. There is no paid API or subscription to configure. The project
+installer and APM install the main `ceo-ai` skill only.
 
 ## Migration between installation methods
 
