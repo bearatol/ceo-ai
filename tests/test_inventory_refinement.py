@@ -72,7 +72,13 @@ class RefinementTests(unittest.TestCase):
         result = self.cli()
         self.assertEqual(result.returncode, 0, result.stderr)
         item = next(item for item in json.loads(result.stdout)['entries'] if item['id'] == 'agent:reviewer')
-        self.assertEqual(item['declared_permissions'], {'sandbox_mode': 'read-only', 'approval_policy': 'never', 'network_access': False})
+        if INV.tomllib is None:
+            self.assertEqual(item['declared_permissions'], {})
+            self.assertIsNone(item['declared_access'])
+            self.assertEqual(item['configuration_issues'], ['toml-parser-unavailable'])
+        else:
+            self.assertEqual(item['declared_permissions'], {'sandbox_mode': 'read-only', 'approval_policy': 'never', 'network_access': False})
+            self.assertEqual(item['configuration_issues'], [])
         self.assertEqual(item['availability'], 'present-unverified')
         self.assertEqual(item['security']['decision'], 'incomplete')
         self.assertNotIn('developer_instructions', json.dumps(item))
@@ -88,6 +94,9 @@ class RefinementTests(unittest.TestCase):
         with mock.patch.object(INV, 'tomllib', None):
             item = INV.metadata(b'name = "reviewer"', 'agent', 'agents/reviewer.toml')
         self.assertIn('toml-parser-unavailable', item['configuration_issues'])
+        self.assertEqual(item['declared_permissions'], {})
+        self.assertIsNone(item['declared_access'])
+        self.assertEqual(item['availability'], 'present-unverified')
 
     def test_alias_is_opt_in_and_same_target_is_deduplicated(self):
         alias = self.home / 'skills/copy'
