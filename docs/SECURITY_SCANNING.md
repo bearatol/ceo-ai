@@ -5,6 +5,11 @@ bounded bytes used for each package fingerprint. It never executes package
 content, fetches links, installs dependencies, invokes a model or reads API keys.
 This is an advisory screening layer, not a system antivirus or runtime gate.
 
+Start with the [first-scan guide](QUICKSTART.md). For the optional engine, use the
+[Docker walkthrough](DOCKER_SCAN.md) ([Русский](DOCKER_SCAN.ru.md),
+[简体中文](DOCKER_SCAN.zh-CN.md)). Its current recipe requires native ARM64 Docker,
+Buildx/BuildKit and Linux ARM64 containers; it does not cover every Docker host.
+
 ## Indexing
 
 ```sh

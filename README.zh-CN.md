@@ -4,7 +4,7 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
-**[网站](https://bearatol.github.io/ceo-ai/zh/) · [各职业使用示例](https://bearatol.github.io/ceo-ai/zh/#cases) · [安装](https://bearatol.github.io/ceo-ai/zh/#install) · [帮助](https://bearatol.github.io/ceo-ai/zh/#help)**
+**[网站](https://bearatol.github.io/ceo-ai/zh/) · [各职业使用示例](https://bearatol.github.io/ceo-ai/zh/#cases) · [安全](https://bearatol.github.io/ceo-ai/zh/#security) · [安装](https://bearatol.github.io/ceo-ai/zh/#install) · [帮助](https://bearatol.github.io/ceo-ai/zh/#help)**
 
 网站提供使用场景和可直接发给智能体的安装消息。
 
@@ -17,6 +17,27 @@ CEO AI 正在积极开发中。我们持续测试这个协调任务的技能，�
 
 比如，你想重写一个应用。CEO 会先帮你明确重写要解决的问题，与小范围修改作比较，
 再建议如何验证这个选择。决定之后，它会帮你制定计划并推进工作。
+
+CEO 将提出的方案视为实现目标的一项假设。它检查关键前提、比较替代方案，
+并在提出重要建议前查阅适用的成熟实践和权威一手资料。
+它区分事实与推测，说明证据缺口，尊重用户知情后的偏好。
+[如何检验方案](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome)。
+
+[想要闪光效果、还想公开密钥的客户：一段虚构对话](docs/DIALOGUE.zh-CN.md).
+
+## 索引时进行安全检查
+
+CEO AI 在索引时本地检查选定的技能和代理，不执行其中的内容。内置扫描器需要
+macOS 或 Linux（POSIX）上的 Python 3.10+，不需要 Docker，也不调用 LLM 或 API。
+报告分别显示风险信号、未检查部分及未验证的信任状态。没有发现问题并不证明安全。
+
+**[第一次扫描：安装 → “检查我的技能” → 理解结果](docs/QUICKSTART.zh-CN.md)。**
+原生 Windows 上需要单独获批的兼容环境才能扫描。
+
+另一个引擎由独立的 **CEO AI Security** 插件提供。该插件按需单独安装，
+需要 Docker 和准备好的扫描器镜像。
+[ARM64 Docker 分步指南](docs/DOCKER_SCAN.zh-CN.md) ·
+[技术限制](docs/SECURITY_SCANNING.md)
 
 ## 保留有用的经验
 
@@ -48,17 +69,6 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 
 [插件安装、更新与迁移](docs/PLUGINS.md#简体中文) ·
 [Microsoft APM](docs/APM.md#简体中文)
-
-## 可选安全检查
-
-CEO AI 0.6.0 在技能和代理索引过程中提供本地筛查。它只使用 Python 标准库，
-不需要 Docker、LLM 或外部 API。检查结果仅供评估；没有发现问题并不证明可信或安全。
-
-独立的 **CEO AI Security** 插件提供 `ceo-ai-security:security-scan`，
-用于更深入的本地检查。它需要 POSIX 系统上的 Python 3.10+、Docker，以及
-单独准备的扫描器镜像。该插件按需安装，不会随 CEO AI 一起安装。
-该模块从 0.6.0 版本起提供，目前没有云服务或订阅。
-参见[要求与限制](docs/SECURITY_SCANNING.md)。
 
 ## 可以这样问
 

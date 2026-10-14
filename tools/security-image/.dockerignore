@@ -1,0 +1,6 @@
+**
+!Dockerfile
+!.dockerignore
+!requirements.lock
+!extract_source.py
+!build_wheel.py

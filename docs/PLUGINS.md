@@ -57,6 +57,9 @@ a Docker client and working daemon, and a separately prepared, reviewed immutabl
 NVIDIA SkillSpector image. The plugin supplies the adapter, not Docker or the
 scanner image. It has no LLM/API calls or cloud service and works independently
 of the main plugin. See [scan limits and costs](SECURITY_SCANNING.md).
+The [Docker walkthrough](DOCKER_SCAN.md) covers prerequisites, the pinned image
+build and a synthetic smoke check. Its recipe requires a native ARM64 Docker host
+and Buildx/BuildKit; it is separate from installing the plugin.
 
 With the approved catalog snapshot already registered, explicitly install only
 the module requested by the user:
@@ -183,6 +186,9 @@ codex plugin add ceo-ai@ceo-ai-plugins
 SkillSpector. Плагин содержит адаптер, но не устанавливает Docker и образ.
 Основной CEO AI ему не требуется. Облачного сервиса и вызовов LLM/API нет.
 [Ограничения и затраты](SECURITY_SCANNING.md).
+В [инструкции Docker](DOCKER_SCAN.ru.md) разобраны требования, сборка образа и
+пробная проверка. Рецепт требует Docker-хост с родной архитектурой ARM64 и
+Buildx/BuildKit. Это отдельные шаги после установки плагина.
 
 Когда одобренная копия каталога уже подключена, установите модуль явно:
 
@@ -303,6 +309,8 @@ codex plugin add ceo-ai@ceo-ai-plugins
 以及单独准备并审查的不可变 NVIDIA SkillSpector 镜像。插件提供适配器，
 不会安装 Docker 或镜像，也不依赖主插件。没有云服务或 LLM/API 调用。
 参见[扫描限制与成本](SECURITY_SCANNING.md)。
+[Docker 分步指南](DOCKER_SCAN.zh-CN.md)介绍前提条件、固定镜像的构建及合成示例检查。
+该方案需要原生 ARM64 Docker 主机和 Buildx/BuildKit，与插件安装是不同步骤。
 
 注册已批准的目录快照后，单独安装用户请求的模块：
 

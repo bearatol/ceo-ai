@@ -4,7 +4,7 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
-**[Website](https://bearatol.github.io/ceo-ai/) · [Examples for your work](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install) · [Help](https://bearatol.github.io/ceo-ai/#help)**
+**[Website](https://bearatol.github.io/ceo-ai/) · [Examples for your work](https://bearatol.github.io/ceo-ai/#cases) · [Security](https://bearatol.github.io/ceo-ai/#security) · [Install](https://bearatol.github.io/ceo-ai/#install) · [Help](https://bearatol.github.io/ceo-ai/#help)**
 
 Open the website for examples and an installation message you can copy to your agent.
 
@@ -20,6 +20,29 @@ based on test results and feedback.
 Suppose you want to rewrite an application. CEO first helps identify the problem
 the rewrite should solve, compares it with smaller changes, and suggests a way
 to test the choice. Once you decide, it helps plan and carry out the work.
+
+CEO treats a proposed solution as a hypothesis about the result you want. It
+checks material assumptions, compares alternatives and consults applicable
+established practices and authoritative primary sources before consequential
+recommendations. It separates facts from guesses, flags missing evidence and
+respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome).
+
+[A fictional customer, ambitious ideas and a more useful plan](docs/DIALOGUE.md).
+
+## Security checks during indexing
+
+CEO AI checks selected skills and agents locally during indexing, without running
+their content. The builtin scanner needs Python 3.10+ on macOS or Linux (POSIX),
+with no Docker, LLM or API calls. Reports show risk signals, unchecked content
+and unverified trust. No findings does not mean safe.
+
+**[First scan: install → “Check my skills” → read the result](docs/QUICKSTART.md).**
+On native Windows, the scanner needs a separately approved compatible environment.
+
+An optional **CEO AI Security** plugin adds another engine. It is installed
+separately and requires Docker plus a prepared scanner image.
+[Advanced ARM64 Docker walkthrough](docs/DOCKER_SCAN.md) ·
+[Technical limits](docs/SECURITY_SCANNING.md)
 
 ## Keep what worked
 
@@ -53,18 +76,6 @@ use **`$ceo-ai`** in Codex or **`/ceo-ai`** in Claude Code and Cursor.
 
 [Plugin setup, updates and migration](docs/PLUGINS.md#english) ·
 [Microsoft APM](docs/APM.md#english)
-
-## Optional security checks
-
-CEO AI 0.6.0 includes a local screening check during skill and agent
-indexing. It uses Python's standard library, with no Docker, LLM or external API.
-Findings are advisory; missing findings do not establish trust.
-
-For deeper local checks, the separate **CEO AI Security** plugin adds
-`ceo-ai-security:security-scan`. It requires Python 3.10+ on a POSIX host, Docker
-and a separately prepared scanner image. It is opt-in and is not installed with
-CEO AI. The optional module is available from version 0.6.0.
-There is no cloud service or subscription yet. [Requirements and limits](docs/SECURITY_SCANNING.md).
 
 ## Things to ask
 

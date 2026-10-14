@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Add three-language first-scan walkthroughs, a pinned optional Docker image
+  recipe and fictional dialogue showing how assumptions become testable plans.
+  Simplify website copy and link the complete walkthroughs.
+
+- Make builtin security indexing prominent on the website and in all three
+  READMEs, with explicit scope, platform requirements and advisory limits.
+- Treat proposed solutions as hypotheses about desired outcomes. Require
+  applicable established practices and authoritative primary evidence for
+  consequential recommendations, distinguish unknowns and respect informed choice.
+
 ## 0.6.0
 
 - Add local static security observations during skill and agent indexing, with
