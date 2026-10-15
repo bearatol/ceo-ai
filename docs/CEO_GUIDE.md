@@ -85,10 +85,12 @@ cooperating writer is refused. Keep the selected directory trusted against
 noncooperating writers: advisory locking cannot protect cache ownership from
 another process that can replace files there.
 
-This utility requires POSIX descriptor and no-follow operations. Roots and parent
-components must be real directories. Package-root aliases require an explicit
+This utility uses POSIX no-follow descriptors or pinned Windows handles on fixed
+local NTFS volumes. Roots and parent
+components must be real directories. On POSIX, package-root aliases require an explicit
 `--allow-alias-root`; nested links and targets outside the approved roots remain
-refused. Other layouts and Windows require approved host discovery. The scanner
+refused. Windows aliases and reparse points are rejected. Other layouts require
+approved host discovery. The scanner
 extracts simple Markdown frontmatter or bounded native TOML declarations without
 executing content. TOML remains partial and its declared permissions are not an
 attestation of the host's effective restrictions.

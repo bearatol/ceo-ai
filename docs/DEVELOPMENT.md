@@ -98,8 +98,8 @@ project folders. Windows CI covers all three host destinations, Unicode and
 spaces, update/removal, recovery, real junction rejection and cross-process
 byte locking. Network shares, device namespaces, drive-relative paths and
 reparse points are rejected. Native app invocation and APM on Windows remain
-unverified. POSIX-only inventory checks require the host's own discovery
-mechanism on Windows. File integrity checks concern normal file contents;
+unverified. Native Windows inventory has separate tests for pinned NTFS handles, rejected
+links and cache refresh. See [scope](SECURITY_SCANNING.md#windows). File integrity checks concern normal file contents;
 NTFS alternate streams and preservation of filesystem metadata are not verified.
 
 The initial Windows candidate passed the full CI matrix in

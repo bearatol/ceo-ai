@@ -8,7 +8,7 @@ Install one plugin, `ceo-ai`, in Codex or Claude Code. It contains three skills:
 
 | Skill | Use it for | Requirements |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | Discuss decisions, coordinate work, check skills during indexing | Python 3.10+ and POSIX for the local indexing check |
+| `ceo-ai:ceo-ai` | Discuss decisions, coordinate work, check skills during indexing | Python 3.10+ on macOS, Linux or Windows (fixed local NTFS) for indexing |
 | `ceo-ai:writer` | Draft and edit in your voice | No Docker; Python 3.10+ only for optional persistent memory |
 | `ceo-ai:security-scan` | An explicitly requested additional local scan | Python 3.10+, POSIX, Docker and a prepared scanner image |
 
@@ -108,7 +108,7 @@ host. Windows/Linux CI checks packaging and the project installer. See
 
 | Навык | Для чего | Что нужно |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | Обсуждение задач, координация, проверка при индексации | Для локальной проверки Python 3.10+ и POSIX |
+| `ceo-ai:ceo-ai` | Обсуждение задач, координация, проверка при индексации | Для локальной проверки Python 3.10+ и macOS, Linux или Windows (локальный NTFS) |
 | `ceo-ai:writer` | Тексты и редактура в твоём стиле | Без Docker; Python нужен только для сохранения предпочтений |
 | `ceo-ai:security-scan` | Дополнительная проверка по запросу | Python 3.10+, POSIX, Docker и подготовленный образ |
 
@@ -201,7 +201,7 @@ codex plugin add ceo-ai@ceo-ai-plugins
 
 | 技能 | 用途 | 要求 |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | 讨论决策、协调任务、索引时检查 | 本地检查需要 Python 3.10+ 和 POSIX |
+| `ceo-ai:ceo-ai` | 讨论决策、协调任务、索引时检查 | 本地检查需要 Python 3.10+，支持 macOS、Linux 及 Windows（本地固定 NTFS） |
 | `ceo-ai:writer` | 按你的风格写作和编辑 | 无需 Docker；持久偏好需要 Python |
 | `ceo-ai:security-scan` | 按请求进行额外扫描 | Python、POSIX、Docker 和已准备的镜像 |
 

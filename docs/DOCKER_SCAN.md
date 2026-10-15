@@ -7,43 +7,73 @@ SkillSpector 2.12.0 through Security Scan inside the CEO AI plugin. It uses loca
 CPU, RAM and disk, without paid APIs or LLM calls; your assistant's chat tokens
 are separate. There is no cloud fallback.
 
-Send this request to your agent; the manual steps follow below:
+Send this request to your agent, replacing the path:
 
 ```text
-Help me set up and run one optional local CEO AI Security check using this guide.
-Check the platform, Python, Docker and Buildx first. Before installing tools,
-downloading/building an image or accessing files, explain the exact scope;
-reuse existing approvals and ask for any missing permission.
-Use the reviewed tools/security-image recipe, verify the immutable image ID
-and version 2.12.0, then test the synthetic skill through the real adapter.
-Scan only the approved skill, with approved private workspace/report paths and Unix socket.
-Do not use external APIs or run the skill's code. Keep gaps visible and trust unverified.
+Prepare and run an additional security check for the skill at /path/to/skill.
+Check my system and prepare the required local scanner if supported.
+Reuse existing permissions and ask only for missing access or installation approval.
+Explain findings and anything the check could not cover.
 ```
 
-## 1. Check prerequisites and install the optional plugin
+The agent checks prerequisites, prepares the reviewed image, tests it on a
+synthetic fixture and scans the selected package. You do not need to find image
+IDs, engine versions or Docker socket addresses yourself. Preparation uses local
+CPU, RAM and disk, and downloads build inputs. The scan itself has no network,
+LLM or paid API calls. A request only to scan does not authorize installing tools
+or fetching/building an image. The commands below are the manual alternative.
+
+## 1. Check the system and local Docker endpoint
 
 Use macOS or Linux (POSIX), host Python 3.10+, and a local **native ARM64 Docker
 host running Linux ARM64 containers**. The image uses Python 3.12. This recipe
 does not cover Intel/AMD64, emulation, native Windows or remote Docker daemons.
-You need a reviewed CEO AI checkout containing `tools/security-image/` and the
-generated optional adapter. Run the following commands from that checkout.
+The image recipe is not shipped in the installed skill. Read its `VERSION`, then
+use a trusted [upstream CEO AI checkout](https://github.com/bearatol/ceo-ai) at the
+release commit matching that version. Record and verify the commit before reading
+`tools/security-image/`, this guide and the synthetic fixture. Fetching needs
+approved network and destination access. Do not use a latest branch or an
+unreviewed working tree. Run the manual commands from that pinned checkout, but
+use the installed skill's bundled adapter. Missing bundled runtime files mean an
+incomplete installation, not permission to fetch substitutes.
 
 If Docker is missing, follow the [official Docker installation guide](https://docs.docker.com/get-started/get-docker/)
 for your system and start the daemon. Installation and system permission changes
-need separate approval; the plugin does not perform them. Check:
+need authorization. Reuse existing approval and ask only for missing scope;
+loading the plugin never triggers installation. Check:
 
 ```sh
 python3 --version
-docker version
-docker buildx version
-docker info --format '{{.OSType}}/{{.Architecture}}'
 docker context inspect --format '{{.Endpoints.docker.Host}}'
+docker buildx version
 ```
+
+Before any daemon command, resolve the context endpoint locally and verify that
+it is an approved local Unix socket with a trusted owner and location. Stop on
+TCP, SSH, remote or unexplained endpoints. Do not run `docker version` or `info`
+to discover whether an unknown endpoint is local.
+
+Set `CEO_SCAN_SOCKET` to that verified endpoint. Inspect the local Buildx builder
+configuration and every node endpoint before using the builder. Choose an
+existing builder with the `docker` driver bound to this same socket. Stop if that
+cannot be established. Do not bootstrap an unknown builder or trust the currently
+selected builder merely because the Docker context is local. Set
+`CEO_SCAN_BUILDER` to its verified name. Then run:
+
+```sh
+CEO_SCAN_SOCKET='unix:///replace-with-the-approved/docker.sock'
+CEO_SCAN_BUILDER='replace-with-the-verified-local-docker-builder'
+docker --host "$CEO_SCAN_SOCKET" version
+docker --host "$CEO_SCAN_SOCKET" info --format '{{.OSType}}/{{.Architecture}}'
+docker --host "$CEO_SCAN_SOCKET" buildx inspect "$CEO_SCAN_BUILDER"
+```
+
+Keep this explicit endpoint for building, inspecting, version checks and scanning.
 
 Require Linux `aarch64`/`arm64` and a local `unix:///…` socket. Record that socket
 for the adapter. BuildKit must support `ADD --checksum` and `RUN --network=none`.
 If Buildx is missing, follow the [official installation instructions](https://github.com/docker/buildx#installing)
-only after separate approval; do not fall back to the legacy builder.
+within approved scope; do not fall back to the legacy builder.
 Install `ceo-ai`, which includes Security Scan, using the [plugin steps](PLUGINS.md#optional-ceo-ai-security).
 Installation itself does not authorize a scan or an image build.
 
@@ -56,7 +86,7 @@ access. The scanner's build/install stage then runs without network as a non-roo
 user. The entire initial build is therefore **not offline**.
 
 ```sh
-DOCKER_BUILDKIT=1 docker build -t ceo-ai-skillspector:2.12.0 tools/security-image
+docker --host "$CEO_SCAN_SOCKET" buildx build --builder "$CEO_SCAN_BUILDER" --load -t ceo-ai-skillspector:2.12.0 tools/security-image
 ```
 
 The recipe pins the base digest and source checksum, and uses hashed binary
@@ -69,7 +99,7 @@ Do not remove hash checks or enable build network as a workaround.
 ## 3. Record the image ID and check its version
 
 ```sh
-docker image inspect --format '{{.Id}}' ceo-ai-skillspector:2.12.0
+docker --host "$CEO_SCAN_SOCKET" image inspect --format '{{.Id}}' ceo-ai-skillspector:2.12.0
 ```
 
 Copy the full returned `sha256:…` into the variable below. Replace the socket with
@@ -77,8 +107,7 @@ the approved local one from step 1. A tag alone is not accepted by the adapter.
 
 ```sh
 CEO_SCAN_IMAGE='sha256:replace-with-the-full-image-ID'
-CEO_SCAN_SOCKET='unix:///replace-with-the-approved/docker.sock'
-docker run --rm --pull=never --network none --read-only --cap-drop ALL \
+docker --host "$CEO_SCAN_SOCKET" run --rm --pull=never --network none --read-only --cap-drop ALL \
   --security-opt no-new-privileges --user 65534:65534 --pids-limit 64 \
   --memory 512m --cpus 1 "$CEO_SCAN_IMAGE"
 ```
@@ -92,9 +121,13 @@ Choose a **new**, approved private directory outside the scanned package. Its
 ancestors must be trusted and not writable by other users. Replace the example
 path; do not change permissions on an existing directory to force acceptance.
 
+Set `CEO_SCAN_ADAPTER` to `scripts/ceo_security_nvidia.py` inside the loaded
+installed `security-scan` skill, not to a guessed cache or downloaded substitute.
+
 ```sh
+CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security-scan/scripts/ceo_security_nvidia.py'
 mkdir -m 700 /approved/private-scan-workspace
-python3 -I -B plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
   --workspace /approved/private-scan-workspace \
   --image "$CEO_SCAN_IMAGE" --version 2.12.0 --docker-host "$CEO_SCAN_SOCKET"

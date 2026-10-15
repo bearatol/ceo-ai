@@ -15,7 +15,7 @@ Tell your agent:
 For reference, the Codex command is:
 
 ```bash
-apm install bearatol/ceo-ai#v0.7.0 --target codex
+apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
 
 Use `--target claude` or `--target cursor` for those tools. This installs one
@@ -41,7 +41,7 @@ does not protect edits. Do not mix the Python and APM installers for one copy.
 Для справки, команда для Codex:
 
 ```bash
-apm install bearatol/ceo-ai#v0.7.0 --target codex
+apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
 
 Для Claude Code замените последний аргумент на `claude`, для Cursor на `cursor`.
@@ -66,7 +66,7 @@ APM установит один навык `ceo-ai` со всеми нужным
 以下是 Codex 的参考命令：
 
 ```bash
-apm install bearatol/ceo-ai#v0.7.0 --target codex
+apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
 
 Claude Code 使用 `--target claude`，Cursor 使用 `--target cursor`。

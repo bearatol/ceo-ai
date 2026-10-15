@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "name": "ceo-ai",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "files": {
     "LICENSE": "f3332f2609f5727debc8f943ded03e5f35243d6ed58fd4dba7d291c052af2d7e",
     "SKILL.md": "3ca49d27a88c011009a5ade60cadd2b3a21ec052efaad876cd0d4f607f7141e7",
-    "VERSION": "967d9afb101346667166f2e76e81910bc190488d7d41d50ca0072e9d92f00e32",
+    "VERSION": "a66780da23103beaf12432b418508966b31a2a3a787f9468a5b6cdaa8667c1ef",
     "agents/ceo.md": "304551e01a580635f29992cc8ed6d2aa9c97f71b262919ad3aec5dbc80766834",
     "agents/decision-mentor.md": "e0fce00ba4dedbe66e7194f96746676f74ff00f40768cc6ccb59ee1f5c1f5033",
     "agents/engineer.md": "47bcae2ce771ab5e9f68c3769bf3940c65f023ba8f153b4fb2b4475fb454f534",
@@ -31,7 +31,8 @@
     "references/skills/skill-router.md": "2211fe9a674af5b04e247b84aec796d90447ae32c3015e1ad7a7aa3d448620f9",
     "references/skills/software-delivery.md": "8288e3cd330dee55ae563fa62675b65c028c43f3c1293685481b1e81c514e027",
     "scripts/catalog.py": "19aee9b4b0d4de5306ff61cc4a4751001f44ae1dd9317ab66bf7f3f5bd165173",
-    "scripts/ceo_inventory.py": "1072ceac7e9c6593346bec3453f670d9582fdf97390ec087afd6f8b88d28cea1",
+    "scripts/ceo_inventory.py": "518f216866124235d57ee3871215d4ff609f6bca5eae31996e037c7a2959af96",
+    "scripts/ceo_inventory_windows.py": "e031f9fa567435ab3309e8f3eeba2cdb64e8de6cf9534b798f7d171407594482",
     "scripts/ceo_security.py": "b0409c22019e3bce3ce39ea9bd8d2bd2f493c6f7ee1b86f1b01c8d00698ea191",
     "tools/team/team.py": "19679de4c6cb3252b281332836aba9eaf0a7e963c8273020b222dc8d32d0df72",
     "tools/team/team.sh": "1d0995e40bd937951c11ab8266a2a8abecc350067a7cbca89c1bbcf9b5416a4c"

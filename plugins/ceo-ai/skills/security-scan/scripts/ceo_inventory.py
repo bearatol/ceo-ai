@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Inspect approved skill/agent metadata; refresh a separate cache on request.
 
-No discovered code is executed. The descriptor-based scanner requires POSIX
-no-follow operations. Other hosts should use their native read-only inventory.
+No discovered code is executed. POSIX uses no-follow descriptors. Native Windows
+uses pinned handles on fixed local NTFS volumes and refuses reparse points.
 """
 import argparse
 import hashlib
@@ -14,6 +14,7 @@ import re
 import stat
 import sys
 import time
+import types
 import uuid
 
 try:
@@ -40,6 +41,7 @@ SECRET_NAMES = frozenset({'.env', 'auth.json', 'credentials', 'credentials.json'
 EXCLUDED_DIRS = frozenset({'.git', '.ssh', '.aws', '.gnupg', '.azure', '.kube',
                            '.venv', 'node_modules', '__pycache__'})
 _security_module = None
+_windows_module = None
 
 
 class InventoryError(Exception):
@@ -187,6 +189,10 @@ def collect_bundle(root, budget):
 
 def snapshot_package(path, kind='skill', *, approved_alias_roots=()):
     """Return bytes for one explicitly approved package; never search other roots."""
+    if os.name == 'nt':
+        if approved_alias_roots:
+            raise InventoryError('Windows package aliases are unsupported')
+        return load_windows_module().snapshot_package(types.SimpleNamespace(**globals()), path, kind)
     if approved_alias_roots:
         files, excluded, _ = capture_alias_package(path, kind, approved_alias_roots, ScanBudget())
         return files, excluded
@@ -227,6 +233,18 @@ def load_security_module():
         exec(compile(source.read_bytes(), str(source), 'exec'), module.__dict__)
         _security_module = module
     return _security_module
+
+
+def load_windows_module():
+    """Load only the bundled backend source, never cwd imports or cached bytecode."""
+    global _windows_module
+    if _windows_module is None:
+        source = pathlib.Path(__file__).with_name('ceo_inventory_windows.py')
+        spec = importlib.util.spec_from_file_location('ceo_windows_inventory', source)
+        module = importlib.util.module_from_spec(spec)
+        exec(compile(source.read_bytes(), str(source), 'exec'), module.__dict__)
+        _windows_module = module
+    return _windows_module
 
 
 def security_report(files, kind, excluded):
@@ -579,6 +597,8 @@ def main(argv=None):
                         help='Opt in to package-root aliases within home and these explicit real roots (repeatable)')
     args = parser.parse_args(argv)
     try:
+        if os.name == 'nt':
+            return load_windows_module().run(types.SimpleNamespace(**globals()), args)
         root = open_root(args.home)
         try:
             previous = read_cache(root)

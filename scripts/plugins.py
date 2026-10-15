@@ -55,7 +55,8 @@ def security_files(root=ROOT):
     source, _ = package(root / '.apm/skills/ceo-ai')
     module = tree(root / 'modules/ceo-ai-security')
     require(set(module) == OPTIONAL_SOURCE, 'Security module differs from publication allowlist')
-    for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py'):
+    for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
+                 'scripts/ceo_inventory_windows.py'):
         module[name] = source[name]
     return {'skills/security-scan/' + name: data for name, data in sorted(module.items())}
 
@@ -70,7 +71,8 @@ def writer_files(root=ROOT):
 
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
-    security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py'}
+    security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
+                                  'scripts/ceo_inventory_windows.py'}
     return (PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
             | {'skills/security-scan/' + name for name in security})
