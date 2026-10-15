@@ -51,6 +51,11 @@ class Rename(ctypes.Structure):
                 ('name', w.WCHAR * 1)]
 
 
+class IOStatus(ctypes.Structure):
+    # IO_STATUS_BLOCK starts with a pointer-sized union (NTSTATUS / pointer).
+    _fields_ = [('status', ctypes.c_void_p), ('information', ctypes.c_size_t)]
+
+
 if k32 is not None:
     def bind(name, args, result):
         func = getattr(k32, name)
@@ -63,7 +68,7 @@ if k32 is not None:
     get_info = bind('GetFileInformationByHandle', [w.HANDLE, ctypes.POINTER(Info)], w.BOOL)
     get_ex = bind('GetFileInformationByHandleEx', [w.HANDLE, ctypes.c_int,
                                                   ctypes.c_void_p, w.DWORD], w.BOOL)
-    set_info = bind('SetFileInformationByHandle', [w.HANDLE, ctypes.c_int,
+    win_set_info = bind('SetFileInformationByHandle', [w.HANDLE, ctypes.c_int,
                                                   ctypes.c_void_p, w.DWORD], w.BOOL)
     read_file = bind('ReadFile', [w.HANDLE, ctypes.c_void_p, w.DWORD,
                                  ctypes.POINTER(w.DWORD), ctypes.c_void_p], w.BOOL)
@@ -79,6 +84,29 @@ if k32 is not None:
                                             ctypes.POINTER(Stream), w.DWORD], w.HANDLE)
     next_stream = bind('FindNextStreamW', [w.HANDLE, ctypes.POINTER(Stream)], w.BOOL)
     find_close = bind('FindClose', [w.HANDLE], w.BOOL)
+    ntdll = ctypes.WinDLL('ntdll', use_last_error=True)
+    nt_set_info = ntdll.NtSetInformationFile
+    nt_set_info.argtypes = [w.HANDLE, ctypes.POINTER(IOStatus), ctypes.c_void_p,
+                           w.ULONG, ctypes.c_int]
+    nt_set_info.restype = ctypes.c_int32
+    nt_error = ntdll.RtlNtStatusToDosError
+    nt_error.argtypes, nt_error.restype = [ctypes.c_int32], w.ULONG
+
+
+def set_info(handle, info_class, value, size):
+    if info_class != 3:
+        return win_set_info(handle, info_class, value, size)
+    # Native same-directory rename (basename + NULL RootDirectory) binds the
+    # destination to the source handle's parent. The Win32 wrapper resolves
+    # pathnames and reopens that parent for write, conflicting with its pin.
+    status_block = IOStatus()
+    status = nt_set_info(handle, ctypes.byref(status_block), value, size, 10)
+    if status < 0:
+        ctypes.set_last_error(nt_error(status))
+        return False
+    if status == 0x103:  # STATUS_PENDING is unexpected on our synchronous handle.
+        raise WindowsInventoryError('unexpected asynchronous cache rename')
+    return True
 
 
 def check(ok):
@@ -412,12 +440,11 @@ def publish(inv, root, document, previous):
         # Cooperating writers hold the lock. This is not a compare-and-swap
         # against an unrelated same-user writer. Rename replaces the entry,
         # never follows its target, and the source remains bound to this handle.
-        # Use the frozen absolute device path. Win32 rename handling need not
-        # interpret a relative name against a non-null RootDirectory. Every
-        # target ancestor remains pinned throughout this operation.
-        encoded = ntpath.join(root.path, inv.CACHE).encode('utf-16-le')
-        buffer = ctypes.create_string_buffer(max(ctypes.sizeof(Rename),
-                                                   Rename.name.offset + len(encoded) + 2))
+        # Native simple-name rename stays in the source handle's own parent.
+        # No target-parent reopening or current-directory resolution is needed.
+        checked_name(inv.CACHE)
+        encoded = inv.CACHE.encode('utf-16-le')
+        buffer = ctypes.create_string_buffer(ctypes.sizeof(Rename) + len(encoded))
         header = ctypes.cast(buffer, ctypes.POINTER(Rename)).contents
         header.flags, header.root, header.length = int(previous is not None), None, len(encoded)
         ctypes.memmove(ctypes.addressof(buffer) + Rename.name.offset, encoded, len(encoded))

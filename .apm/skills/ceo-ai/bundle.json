@@ -32,7 +32,7 @@
     "references/skills/software-delivery.md": "8288e3cd330dee55ae563fa62675b65c028c43f3c1293685481b1e81c514e027",
     "scripts/catalog.py": "19aee9b4b0d4de5306ff61cc4a4751001f44ae1dd9317ab66bf7f3f5bd165173",
     "scripts/ceo_inventory.py": "518f216866124235d57ee3871215d4ff609f6bca5eae31996e037c7a2959af96",
-    "scripts/ceo_inventory_windows.py": "f3f7f800b95cfbd01d0075414ecc44cc31f043690b562fc49f27a79a0a6d6d7f",
+    "scripts/ceo_inventory_windows.py": "e031f9fa567435ab3309e8f3eeba2cdb64e8de6cf9534b798f7d171407594482",
     "scripts/ceo_security.py": "b0409c22019e3bce3ce39ea9bd8d2bd2f493c6f7ee1b86f1b01c8d00698ea191",
     "tools/team/team.py": "19679de4c6cb3252b281332836aba9eaf0a7e963c8273020b222dc8d32d0df72",
     "tools/team/team.sh": "1d0995e40bd937951c11ab8266a2a8abecc350067a7cbca89c1bbcf9b5416a4c"

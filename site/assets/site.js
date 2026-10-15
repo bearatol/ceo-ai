@@ -90,3 +90,22 @@
   else window.addEventListener('resize', resize);
   resize();
 })();
+
+// The setup prompt is static text; copying does not start setup or grant access.
+(() => {
+  const prompt = document.getElementById('deep-scan-prompt');
+  const button = document.getElementById('copy-deep-scan');
+  const status = document.getElementById('deep-scan-status');
+  if (!prompt || !button || !status) return;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(prompt.value);
+      status.textContent = button.dataset.copied;
+    } catch {
+      prompt.focus();
+      prompt.select();
+      status.textContent = button.dataset.fallback;
+    }
+  });
+  button.hidden = false;
+})();
