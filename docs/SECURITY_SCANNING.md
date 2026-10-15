@@ -19,8 +19,8 @@ python3 .apm/skills/ceo-ai/scripts/ceo_inventory.py --home /approved/root --refr
 
 Use the installed bundle's actual path on another host. Roots contain
 `skills/<name>/SKILL.md`, `agents/<name>.md` and/or `agents/<name>.toml`. The first command only reads;
-refresh needs permission to write `.ceo-inventory.json`. POSIX no-follow
-descriptor operations are required. Other layouts are not silently expanded into a broader scan. TOML declarations
+refresh needs permission to write `.ceo-inventory.json` (and a lock file on Windows).
+POSIX uses no-follow descriptors; Windows uses pinned handles on fixed local NTFS. Other layouts are not silently expanded into a broader scan. TOML declarations
 are metadata only: supported name, sandbox, approval and network fields use
 strict types/enums; instructions and arbitrary values are never echoed. Unknown
 fields, malformed TOML or an unavailable stdlib parser yield fixed issue codes.
@@ -170,3 +170,37 @@ separate Security Scan skill with the Docker adapter; scanner engines remain sep
 prepared tools. No cloud server, subscription, API client or account system is
 implemented. The host must enforce read/write/network restrictions and approval
 inheritance independently.
+
+## Windows
+
+Builtin indexing runs natively with Python 3.10+ on fixed local NTFS drives.
+No WSL, Docker or third-party Python packages are required for this check.
+Use an explicitly approved absolute local path in PowerShell, substituting the
+installed bundle location and the approved inventory root:
+
+```powershell
+py -3 "C:\approved\ceo-ai\scripts\ceo_inventory.py" --home "C:\approved\inventory"
+py -3 "C:\approved\ceo-ai\scripts\ceo_inventory.py" --home "C:\approved\inventory" --refresh
+```
+
+The first command is read-only. Refresh creates an owned cache and a lock file
+inside the approved root. Directory handles remain pinned without write/delete
+sharing during traversal. Reparse points (including junctions and cloud
+placeholders), hardlinked files, alternate data streams, UNC/device paths, mapped
+network drives and non-NTFS volumes are refused. Windows package aliases are not
+supported, including when `--allow-alias-root` is supplied. Sharing violations
+fail closed rather than retrying with weaker access rules.
+
+The root must have trusted access permissions. Cache files inherit that root's
+ACL. Locking coordinates cooperating refreshers, not malicious processes running
+as the same user. Cache replacement is atomic but not a compare-and-swap against
+arbitrary concurrent writers. First creation never overwrites an existing cache.
+Limits are checked between filesystem operations, not a hard timeout on a blocked
+OS call. The scanner never elevates privileges to work around access denial.
+
+This support applies to builtin indexing only. The optional NVIDIA Docker adapter
+still requires POSIX; native Windows deep scanning is not claimed.
+
+Implementation references: [CreateFileW](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew),
+[handle-based rename](https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info),
+and [reparse points](https://learn.microsoft.com/en-us/windows/win32/fileio/reparse-points).

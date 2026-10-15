@@ -31,11 +31,11 @@ CEO 将提出的方案视为实现目标的一项假设。它检查关键前提�
 ## 索引时进行安全检查
 
 CEO AI 在索引时本地检查选定的技能和代理，不执行其中的内容。内置扫描器需要
-macOS 或 Linux（POSIX）上的 Python 3.10+，不需要 Docker，也不调用 LLM 或 API。
+macOS、Linux 或原生 Windows（本地固定 NTFS 磁盘）上的 Python 3.10+，不需要 Docker，也不调用 LLM 或 API。
 报告分别显示风险信号、未检查部分及未验证的信任状态。没有发现问题并不证明安全。
 
 **[第一次扫描：安装 → “检查我的技能” → 理解结果](docs/QUICKSTART.zh-CN.md)。**
-原生 Windows 上需要单独获批的兼容环境才能扫描。
+Windows 扫描拒绝网络驱动器、重解析点和包别名。参见 [Windows 范围与命令](docs/SECURITY_SCANNING.md#windows)。
 
 同一插件包含 **`ceo-ai:security-scan`**，仅在主动运行额外扫描时
 需要 Docker 和准备好的扫描器镜像。

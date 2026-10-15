@@ -32,12 +32,13 @@ respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md
 ## Security checks during indexing
 
 CEO AI checks selected skills and agents locally during indexing, without running
-their content. The builtin scanner needs Python 3.10+ on macOS or Linux (POSIX),
+their content. The builtin scanner needs Python 3.10+ on macOS, Linux or native Windows (fixed local NTFS),
 with no Docker, LLM or API calls. Reports show risk signals, unchecked content
 and unverified trust. No findings does not mean safe.
 
 **[First scan: install → “Check my skills” → read the result](docs/QUICKSTART.md).**
-On native Windows, the scanner needs a separately approved compatible environment.
+Windows scanning refuses network drives, reparse points and package aliases. See
+[Windows scope and commands](docs/SECURITY_SCANNING.md#windows).
 
 The same plugin includes **Security Scan** for an optional additional check.
 Only running this scan requires Docker and a prepared scanner image.

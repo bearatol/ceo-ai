@@ -14,9 +14,10 @@ https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
 Installation does not start an audit. The builtin scanner needs Python 3.10+
-on macOS or Linux (POSIX), without Docker or additional Python packages. On native
-Windows, this scanner is unsupported; use a separately approved compatible
-environment or keep using CEO AI without scanning. Do not install tools implicitly.
+on macOS, Linux or native Windows, without Docker or additional Python packages.
+Windows requires a fixed local NTFS drive and refuses reparse points and package
+aliases. See [Windows commands and limits](SECURITY_SCANNING.md#windows).
+Do not install tools implicitly.
 
 ## 2. Ask for the first scan
 

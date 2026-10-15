@@ -13,9 +13,9 @@
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-安装不会启动审计。内置扫描器需要 macOS 或 Linux（POSIX）上的 Python 3.10+，
-不需要 Docker 或额外的 Python 包。原生 Windows 不支持该扫描器；需要单独获批的
-兼容环境，或者继续使用 CEO AI 的其他功能。不要自动安装工具。
+安装不会启动审计。内置扫描器需要 macOS、Linux 或原生 Windows 上的 Python 3.10+，
+不需要 Docker 或额外的 Python 包。Windows 仅支持本地固定 NTFS 磁盘，拒绝重解析点及包别名。
+参见 [Windows 命令与限制](SECURITY_SCANNING.md#windows)。不要自动安装工具。
 
 ## 2. 请求第一次扫描
 
