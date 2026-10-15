@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.8.0
+
+- Support builtin security indexing on native Windows with fixed local NTFS.
+  Reject unsupported paths and retain bounded reads and handle-based cache writes.
+  Add native Windows CI coverage on Python 3.10 and 3.12.
+- Guide optional Docker scan preparation through a ready-to-copy request.
+  The agent checks compatibility, prepares the pinned image and runs a smoke test.
+  The reviewed recipe remains ARM64 macOS/Linux only.
+- Align the website and documentation in English, Russian and Simplified Chinese.
+- Prefer periods over semicolons in Writer narrative text.
+
 ## 0.7.0
 
 - Check existing implementation and suitable components before the first technical
