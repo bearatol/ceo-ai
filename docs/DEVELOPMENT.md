@@ -7,12 +7,12 @@ The main skill lives at `.apm/skills/ceo-ai/`. Its entry
 contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
-committed `plugins/ceo-ai` copy for both native plugin managers. From version 0.6.0 the
-catalog also has the separate, opt-in `ceo-ai-security` plugin. Its canonical entry and NVIDIA adapter live at
-`modules/ceo-ai-security/`. The builder produces
-`plugins/ceo-ai-security/skills/security-scan/`, including copies of the core safe
-reader and builtin scanner. It is standalone and does not depend on a core plugin
-installation. Edit canonical sources only; the doctor rejects generated drift.
+committed `plugins/ceo-ai` package for both native plugin managers. It contains
+`skills/ceo-ai/`, `skills/writer/` and `skills/security-scan/` with one manifest
+and one receipt. Writer and Security source files live in `modules/ceo-ai-writer/`
+and `modules/ceo-ai-security/`. Each generated skill has its own required shared
+resources, copied from the canonical core files. Docker is a scan-time prerequisite,
+not an install-time dependency. Edit canonical sources only; the doctor rejects generated drift.
 The plugin builder uses an explicit publication allowlist, verifies source hashes,
 rejects symlinks and refuses to overwrite edited or unmanaged generated payloads.
 It is a developer build for a trusted checkout, not a concurrent runtime installer.
@@ -51,13 +51,12 @@ the manifest. It does not establish native skill loading or agent sandboxing.
 Machine-facing instructions stay in English. Keep the English, Russian and
 Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
-`package.py` continues to build only the core APM bundle. `plugins.py` builds and
-checks both native plugins. For the reviewed split, use `python3 -B
-scripts/plugins.py --write --allow-layout-change`; without that flag, removing
-the NVIDIA adapter from an existing generated core payload is refused. The flag
-allows only that known removal from an intact owned layout, not arbitrary deletion
-or adoption of edited files. The core project/APM installer still installs only
-CEO AI; a native catalog with two entries never means both should be installed.
+`package.py` builds only the core APM bundle. `plugins.py` builds and checks one
+native plugin with three skill directories. To add the reviewed directories to
+an intact generated package, use `python3 -B scripts/plugins.py --write
+--allow-layout-change`. The flag permits additions and the known historical core
+adapter removal, never arbitrary deletion or adoption of edited files. The
+project/APM installer still installs only the core entry.
 
 The optional module does not bundle third-party scanner code or an image. Its
 actual local scan requires Python 3.10+, POSIX, Docker and a separately prepared

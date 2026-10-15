@@ -28,8 +28,8 @@ and permitted entries. Do not infer quality from presence.
    cache entries without re-verifying the selected component. Do not follow
    symlinks out of scope, execute package code, or repair foreign metadata.
    Excluded secret/auth resources are not read and prevent a full-package hash.
-   Deeper NVIDIA scanning belongs to the separately installed optional
-   ceo-ai-security plugin. It requires Docker, an explicit invocation, a reviewed
+   Deeper NVIDIA scanning uses the `ceo-ai:security-scan` skill included in
+   the native CEO AI plugin. It requires Docker, an explicit invocation, a reviewed
    immutable local image and private workspace. The core bundle has no adapter
    and works without Docker; never install the optional module implicitly. Indexing never starts it or
    downloads engines. Report CPU/time/disk cost before bulk scans. The future API

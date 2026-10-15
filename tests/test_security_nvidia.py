@@ -17,7 +17,7 @@ from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.dont_write_bytecode = True
-sys.path.insert(0, str(ROOT / "plugins/ceo-ai-security/skills/security-scan/scripts"))
+sys.path.insert(0, str(ROOT / "plugins/ceo-ai/skills/security-scan/scripts"))
 import ceo_security_nvidia as adapter
 
 FILES = {"SKILL.md": b"# Synthetic\nRead the local notes.\n"}
@@ -260,7 +260,7 @@ class CommandTests(unittest.TestCase):
     def run_copied_cli(self, *, stale_bytecode=False, expect_snapshot=True):
         scripts = self.workspace / "scripts"
         scripts.mkdir()
-        source_scripts = ROOT / "plugins/ceo-ai-security/skills/security-scan/scripts"
+        source_scripts = ROOT / "plugins/ceo-ai/skills/security-scan/scripts"
         for name in ("ceo_security_nvidia", "ceo_inventory", "ceo_security"):
             destination = scripts / (name + ".py")
             shutil.copyfile(source_scripts / (name + ".py"), destination)
@@ -337,7 +337,7 @@ class CommandTests(unittest.TestCase):
             "    active.unlink()",
         ]) + "\n", encoding="utf-8")
         docker.chmod(0o700)
-        command = [sys.executable, str(ROOT / "plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_nvidia.py"),
+        command = [sys.executable, str(ROOT / "plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py"),
                    "--package", str(self.package), "--workspace", str(self.workspace),
                    "--image", IMAGE, "--version", "2.12.0"]
         process = subprocess.Popen(command, env={"PATH": str(fake_bin)}, stdin=subprocess.DEVNULL,

@@ -1,6 +1,22 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
+
+- Check existing implementation and suitable components before the first technical
+  recommendation. Resolve material evidence gaps with official sources, explain
+  the choice and label assumptions. Add eight behavioral acceptance scenarios;
+  these are specifications, not a completed model benchmark.
+
+- Combine CEO, Writer and Security Scan into one native `ceo-ai` plugin.
+  Docker remains necessary only for an explicit deep scan; memory stays opt-in.
+
+- Present included Writer and optional Security Scan beside website installation in three languages.
+- Replace the README banner with the supplied optimized PNG.
+
+- Add `writer-how-me` for writing in the user's voice, plain keyboard punctuation
+  and optional correction-based preferences through existing private memory.
+  Ship it as `ceo-ai:writer` inside the single native CEO AI plugin.
+  No personal profile, additional service or background learning is shipped.
 
 - Add three-language first-scan walkthroughs, a pinned optional Docker image
   recipe and fictional dialogue showing how assumptions become testable plans.

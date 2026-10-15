@@ -1,5 +1,8 @@
 # CEO AI
 
+写作可选择插件内的 **`ceo-ai:writer`**，使用你的风格和普通键盘标点。
+不需要 Docker，持久偏好需要单独启用。[安装与使用](docs/WRITER.md#简体中文)。
+
 <a href="https://bearatol.github.io/ceo-ai/zh/"><img src="docs/assets/ceo-ai-banner.png" alt="CEO AI：讨论决策，协调工作" width="1280"></a>
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
@@ -34,7 +37,7 @@ macOS 或 Linux（POSIX）上的 Python 3.10+，不需要 Docker，也不调用 
 **[第一次扫描：安装 → “检查我的技能” → 理解结果](docs/QUICKSTART.zh-CN.md)。**
 原生 Windows 上需要单独获批的兼容环境才能扫描。
 
-另一个引擎由独立的 **CEO AI Security** 插件提供。该插件按需单独安装，
+同一插件包含 **`ceo-ai:security-scan`**，仅在主动运行额外扫描时
 需要 Docker 和准备好的扫描器镜像。
 [ARM64 Docker 分步指南](docs/DOCKER_SCAN.zh-CN.md) ·
 [技术限制](docs/SECURITY_SCANNING.md)

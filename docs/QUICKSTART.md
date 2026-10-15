@@ -53,7 +53,7 @@ contain findings. A report does not approve execution or change permissions.
 For example, “remote code pattern; coverage partial; trust unverified” means
 review the code source and the unchecked parts—not “malware confirmed”.
 
-Need an additional engine? The separate CEO AI Security module has an
+Need an additional engine? The included Security Scan skill has an
 [optional Docker walkthrough](DOCKER_SCAN.md). Its prepared recipe is limited
 to a native ARM64 Docker host with Linux ARM64 containers. It is not part of the
 first scan; no cloud service is available.

@@ -94,15 +94,11 @@ caches and creating none in the installed bundle.
 
 ## Optional CEO AI Security module
 
-The normal `ceo-ai` plugin contains only the builtin indexing check. It neither
-ships the NVIDIA adapter nor requires Docker. The separate `ceo-ai-security`
-plugin contains one skill, `ceo-ai-security:security-scan`, and its adapter. It
-has its own generated copies of the safe package reader and builtin scanner, so
-it does not require the main CEO AI plugin to be installed.
-
-This split is available from version 0.6.0. Do not assume an older release contains the optional module. See the
-[plugin guide](PLUGINS.md#optional-ceo-ai-security) for explicit
-installation. Adding the catalog or installing CEO AI does not install this module.
+The native `ceo-ai` plugin includes the builtin indexing check and a separate
+`ceo-ai:security-scan` skill for optional deeper checks. The latter has its own
+bounded reader, static scanner and NVIDIA adapter. Installing the plugin does
+not start a scan or install Docker. Use the [plugin guide](PLUGINS.md#optional-ceo-ai-security)
+to verify the selected snapshot; older releases used a separate security plugin.
 
 Before opting in, check these prerequisites: Python 3.10 or newer, a POSIX host
 with descriptor/no-follow support, a Docker client and working daemon, and a
@@ -117,15 +113,15 @@ workspace must already exist, be owned by the invoking user, and have trusted
 ancestors and no group/world write permission.
 
 ```sh
-python3 plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
   --package /approved/skill-package --workspace /approved/private-workspace \
   --image "$SCANNER_IMAGE_DIGEST" --version 2.12.0
 ```
 
 In a native installation, use `scripts/ceo_security_nvidia.py` relative to the
 loaded `security-scan/SKILL.md`, not the source checkout or the core skill. Select
-`ceo-ai-security:security-scan` in Codex or invoke
-`/ceo-ai-security:security-scan` in Claude Code. The skill checks scope and
+`ceo-ai:security-scan` in Codex or invoke
+`/ceo-ai:security-scan` in Claude Code. The skill checks scope and
 prerequisites before running an explicitly requested scan; it does not install
 Docker, build/download the scanner image, or fall back to an online provider.
 
@@ -169,8 +165,8 @@ and a hard budget. There is no endpoint, client, credential store or provider.
 Environment keys cannot activate it. A future implementation must show an
 estimate, stop at the budget and report incomplete work without a paid fallback.
 
-The lightweight check stays in the regular bundle. Only the separately installed
-`ceo-ai-security` plugin ships the Docker adapter; scanner engines remain separately
+The lightweight check stays in the regular bundle. The native plugin also ships the
+separate Security Scan skill with the Docker adapter; scanner engines remain separately
 prepared tools. No cloud server, subscription, API client or account system is
 implemented. The host must enforce read/write/network restrictions and approval
 inheritance independently.

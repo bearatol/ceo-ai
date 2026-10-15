@@ -29,3 +29,9 @@ Keep simple tasks simple. Use the workflow before creating a team.
 Optional learning and reusable patterns follow [project memory](references/skills/project-memory.md).
 It starts off, requires explicit scope consent, and offers visible save notices,
 view, correction, deletion and disable controls. Installation never enables it.
+
+The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks and
+`ceo-ai:security-scan` for explicitly requested deeper scans. Load the relevant
+skill only when needed through the host's discovery mechanism. Installation does
+not run a scan, install Docker or enable memory. Project/APM installs contain only
+this core entry; do not assume native sibling skills exist in those installations.

@@ -15,7 +15,7 @@ import plugins
 from install import tree
 
 CORE = ROOT / 'plugins/ceo-ai'
-OPTIONAL = ROOT / 'plugins/ceo-ai-security'
+OPTIONAL = ROOT / 'plugins/ceo-ai/skills/security-scan'
 
 class SecurityModuleTests(unittest.TestCase):
     def write_fixture(self, root, files):
@@ -41,15 +41,15 @@ class SecurityModuleTests(unittest.TestCase):
         self.assertIn('skills/ceo-ai/scripts/ceo_security.py', files)
         self.assertNotIn('scripts/ceo_security_nvidia.py', tree(ROOT / '.apm/skills/ceo-ai'))
 
-    def test_catalogs_offer_two_independent_plugins_without_dependencies(self):
+    def test_catalogs_offer_one_plugin_without_runtime_dependencies(self):
         for name in ('.agents/plugins/marketplace.json', '.claude-plugin/marketplace.json'):
             data = json.loads((ROOT / name).read_text())
-            self.assertEqual({p['name'] for p in data['plugins']}, {'ceo-ai','ceo-ai-security'})
+            self.assertEqual({p['name'] for p in data['plugins']}, {'ceo-ai'})
             for plugin in data['plugins']:
                 self.assertNotIn('dependencies', plugin)
 
     @unittest.skipUnless(os.name == 'posix', 'Descriptor-based scanning requires POSIX')
-    def test_core_index_works_without_docker_or_optional_plugin(self):
+    def test_core_index_works_without_docker(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary).resolve()
             shutil.copytree(CORE, base / 'core')
@@ -63,24 +63,23 @@ class SecurityModuleTests(unittest.TestCase):
             self.assertFalse((base/'home/.ceo-inventory.json').exists())
 
     def test_optional_has_only_one_self_contained_skill_and_shared_bytes_match(self):
-        files = plugins.expected_security(ROOT)
-        self.assertEqual(tree(OPTIONAL),files)
+        files = plugins.security_files(ROOT)
+        self.assertEqual({'skills/security-scan/'+n:d for n,d in tree(OPTIONAL).items()},files)
         self.assertEqual([n for n in files if n.endswith('/SKILL.md')],['skills/security-scan/SKILL.md'])
         for name in ('ceo_inventory.py','ceo_security.py'):
             self.assertEqual(files['skills/security-scan/scripts/'+name],
                              (ROOT/'.apm/skills/ceo-ai/scripts'/name).read_bytes())
         for name in ('.codex-plugin/plugin.json','.claude-plugin/plugin.json'):
-            manifest = json.loads(files[name])
-            self.assertEqual(manifest['name'],'ceo-ai-security')
+            manifest = json.loads(plugins.expected(ROOT)[name])
+            self.assertEqual(manifest['name'],'ceo-ai')
             self.assertFalse({'agents','hooks','mcpServers','apps','dependencies','commands'} & manifest.keys())
-            self.assertIn('Docker',manifest['description'])
 
     @unittest.skipUnless(os.name == 'posix', 'Descriptor-based scanning requires POSIX')
     def test_optional_cli_survives_relocation_without_core_or_docker(self):
         with tempfile.TemporaryDirectory(prefix='security cache ') as temporary:
             base = Path(temporary).resolve()
             shutil.copytree(OPTIONAL, base/'插件')
-            scripts = base/'插件/skills/security-scan/scripts'
+            scripts = base/'插件/scripts'
             command = [sys.executable,'-I','-B',str(scripts/'ceo_security_nvidia.py')]
             help_result = subprocess.run(command+['--help'],env={'PATH':''},capture_output=True,text=True,timeout=10)
             self.assertEqual(help_result.returncode,0,help_result.stderr)
@@ -151,7 +150,7 @@ class SecurityModuleTests(unittest.TestCase):
             shutil.copyfile(ROOT/'VERSION',root/'VERSION')
             (root/'modules/ceo-ai-security/private.txt').write_text('Never publish')
             with self.assertRaisesRegex(ValueError,'allowlist'):
-                plugins.expected_security(root)
+                plugins.security_files(root)
 
     def test_altered_generated_shared_runtime_fails_verification(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -159,35 +158,39 @@ class SecurityModuleTests(unittest.TestCase):
             for directory in ('.apm','modules','plugins'):
                 shutil.copytree(ROOT/directory,root/directory)
             shutil.copyfile(ROOT/'VERSION',root/'VERSION')
-            (root/'plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security.py').write_text('altered')
-            with self.assertRaisesRegex(ValueError,'Optional'):
+            (root/'plugins/ceo-ai/skills/security-scan/scripts/ceo_security.py').write_text('altered')
+            with self.assertRaisesRegex(ValueError,'stale'):
                 plugins.check(root)
 
-    def test_both_destinations_are_validated_before_core_is_replaced(self):
+    def test_all_module_sources_validated_before_core_is_replaced(self):
         import contextlib
         import io
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary).resolve();(root/'plugins').mkdir()
+            for directory in ('.apm', 'modules'):
+                shutil.copytree(ROOT/directory,root/directory)
+            shutil.copyfile(ROOT/'VERSION',root/'VERSION')
             old=self.legacy_payload();self.write_fixture(root/'plugins/ceo-ai',old)
-            optional=root/'plugins/ceo-ai-security';optional.mkdir()
-            (optional/'private.txt').write_text('preserve')
-            with mock.patch.object(plugins,'ROOT',root),mock.patch.object(sys,'argv',['plugins.py','--write','--allow-layout-change']),contextlib.redirect_stderr(io.StringIO()):
+            private=root/'modules/ceo-ai-security/private.txt';private.write_text('preserve')
+            with mock.patch.object(plugins,'ROOT',root),mock.patch.object(plugins,'expected',lambda: plugins_expected(root)),mock.patch.object(sys,'argv',['plugins.py','--write','--allow-layout-change']),contextlib.redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit):plugins.main()
             self.assertEqual(tree(root/'plugins/ceo-ai'),old)
-            self.assertEqual((optional/'private.txt').read_text(),'preserve')
+            self.assertEqual(private.read_text(),'preserve')
 
-    def test_core_legacy_removal_exception_does_not_apply_to_optional(self):
+    def test_unrelated_skill_removal_is_never_authorized_by_layout_flag(self):
         from install import hashes
         with tempfile.TemporaryDirectory() as temporary:
-            target=Path(temporary).resolve()/'ceo-ai-security'
-            old=plugins.expected_security(ROOT)
-            old[plugins.LEGACY_ADAPTER]=b'foreign core file'
-            old['payload.json']=plugins.encode(dict(name='ceo-ai-security-plugin',schema_version=1,
-                version='0.5.0',files=hashes({n:d for n,d in old.items() if n!='payload.json'})))
+            target=Path(temporary).resolve()/'ceo-ai'
+            old=plugins.expected(ROOT)
+            old['skills/custom/SKILL.md']=b'Keep this user skill'
+            old['payload.json']=plugins.encode(dict(name='ceo-ai-plugin',schema_version=1,
+                version='0.6.0',files=hashes({n:d for n,d in old.items() if n!='payload.json'})))
             self.write_fixture(target,old)
             with self.assertRaisesRegex(ValueError,'layout'):
-                plugins.write(target,plugins.expected_security(ROOT),True,plugin='ceo-ai-security')
+                plugins.write(target,plugins.expected(ROOT),True)
             self.assertEqual(tree(target),old)
+
+plugins_expected = plugins.expected
 
 if __name__ == '__main__':
     unittest.main()

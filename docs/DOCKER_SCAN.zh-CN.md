@@ -2,7 +2,7 @@
 
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
-先做[内置检查](QUICKSTART.zh-CN.md)。本指南通过独立的 CEO AI Security 插件追加
+先做[内置检查](QUICKSTART.zh-CN.md)。本指南通过CEO AI 内的 Security Scan 技能追加
 NVIDIA SkillSpector 2.12.0 检查，消耗本地 CPU、内存和磁盘，不调用付费 API 或 LLM。
 助手的对话 token 单独计算，没有云端备用服务。
 
@@ -37,7 +37,7 @@ docker context inspect --format '{{.Endpoints.docker.Host}}'
 
 需要 Linux `aarch64`/`arm64` 和本地 `unix:///…` 套接字。记录该套接字供适配器使用。
 BuildKit 必须支持 `ADD --checksum` 和 `RUN --network=none`。按
-[可选插件说明](PLUGINS.md#可选-ceo-ai-security)安装 `ceo-ai-security`。
+[插件说明](PLUGINS.md#可选-ceo-ai-security)安装包含扫描技能的 `ceo-ai`。
 安装本身不授权扫描或构建镜像。
 如果缺少 Buildx，须单独获批后才可遵循[官方安装说明](https://github.com/docker/buildx#installing)，
 不要回退到旧版构建器。
@@ -85,7 +85,7 @@ docker run --rm --pull=never --network none --read-only --cap-drop ALL \
 
 ```sh
 mkdir -m 700 /approved/private-scan-workspace
-python3 -I -B plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 -I -B plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
   --package research/security-scanners/fixtures/skills/b01-summary \
   --workspace /approved/private-scan-workspace \
   --image "$CEO_SCAN_IMAGE" --version 2.12.0 --docker-host "$CEO_SCAN_SOCKET"
@@ -102,8 +102,8 @@ python3 -I -B plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_
 从加载的 `security-scan/SKILL.md` 所在目录找到 `scripts/ceo_security_nvidia.py`，
 不要猜测缓存路径。保存 JSON 前先批准私密报告位置。
 
-如需通过技能操作，请开启新会话，在 Codex 中选择 `ceo-ai-security:security-scan`，
-或在 Claude Code 中调用 `/ceo-ai-security:security-scan`。
+如需通过技能操作，请开启新会话，在 Codex 中选择 `ceo-ai:security-scan`，
+或在 Claude Code 中调用 `/ceo-ai:security-scan`。
 
 适配器检查只读副本，不联网、不调用 LLM，也不运行技能代码。不支持的资源会导致拒绝
 或不完整结果。退出码 `2` 表示检查不完整，不表示没有发现问题。

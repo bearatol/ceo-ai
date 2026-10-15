@@ -94,11 +94,10 @@ executing content. TOML remains partial and its declared permissions are not an
 attestation of the host's effective restrictions.
 
 The builtin check uses Python's standard library, without Docker, LLM calls or
-external APIs. The separate, opt-in **CEO AI Security** plugin provides
-`ceo-ai-security:security-scan` for local NVIDIA checks. It requires its own
-Docker setup and reviewed scanner image; indexing never invokes it automatically.
-It can be installed independently of CEO AI. The optional module is available
-from version 0.6.0.
+external APIs. The native plugin includes `ceo-ai:security-scan` for explicitly
+requested local NVIDIA checks. It needs Docker and a reviewed scanner image only
+when run; indexing never invokes it automatically. The same plugin includes
+`ceo-ai:writer` for writing and editing. No separate plugin installation is needed.
 
 [Security scanning](SECURITY_SCANNING.md) explains T0–T4 observations, partial
 coverage, module prerequisites, costs and the disabled future API. No result

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify the core plugin and separately installed security module."""
+"""Build or verify one CEO AI plugin with three self-contained skills."""
 import argparse
 import json
 import os
@@ -13,10 +13,13 @@ sys.dont_write_bytecode = True
 from install import ALLOWED, checked_hashes, hashes, package, require, safe_path, tree
 
 ROOT = Path(__file__).resolve().parents[1]
-RECEIPTS = {'ceo-ai': 'ceo-ai-plugin', 'ceo-ai-security': 'ceo-ai-security-plugin'}
+RECEIPTS = {'ceo-ai': 'ceo-ai-plugin'}
 OPTIONAL_SOURCE = frozenset({'SKILL.md', 'scripts/ceo_security_nvidia.py'})
 LEGACY_ADAPTER = 'skills/ceo-ai/scripts/ceo_security_nvidia.py'
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
+WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
+WRITER_SHARED = frozenset({'LICENSE', 'VERSION', 'references/skills/project-memory.md',
+                           'memory/store.py', 'memory/record.schema.json', 'memory/pattern.example.json'})
 
 
 
@@ -34,6 +37,8 @@ def expected(root=ROOT):
                     homepage='https://bearatol.github.io/ceo-ai/',
                     repository='https://github.com/bearatol/ceo-ai', license='MIT')
     files = {'skills/ceo-ai/' + name: data for name, data in sorted(source.items())}
+    files.update(security_files(root))
+    files.update(writer_files(root))
     files['LICENSE'] = source['LICENSE']
     files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
@@ -46,39 +51,29 @@ def expected(root=ROOT):
     return files
 
 
-def expected_security(root=ROOT):
-    source, meta = package(root / '.apm/skills/ceo-ai')
-    require(meta['version'] == (root / 'VERSION').read_text().strip(), 'Release version mismatch')
+def security_files(root=ROOT):
+    source, _ = package(root / '.apm/skills/ceo-ai')
     module = tree(root / 'modules/ceo-ai-security')
-    require(set(module) == OPTIONAL_SOURCE, 'Optional module differs from publication allowlist')
-    # Shared code has one source of truth; the relocated plugin never searches
-    # another installed cache or the development checkout at runtime.
+    require(set(module) == OPTIONAL_SOURCE, 'Security module differs from publication allowlist')
     for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py'):
         module[name] = source[name]
-    files = {'skills/security-scan/' + name: data for name, data in sorted(module.items())}
-    manifest = dict(name='ceo-ai-security', version=meta['version'],
-                    description='Optional local deep scans. Requires Python, Docker and a prepared scanner image.',
-                    author={'name': 'Mikhail Diesperov'}, homepage='https://bearatol.github.io/ceo-ai/',
-                    repository='https://github.com/bearatol/ceo-ai', license='MIT')
-    files['LICENSE'] = source['LICENSE']
-    files['.claude-plugin/plugin.json'] = encode(manifest)
-    files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
-        'displayName': 'CEO AI Security (optional)',
-        'shortDescription': 'Local deep scans; requires Docker and a prepared image.',
-        'developerName': 'Mikhail Diesperov', 'category': 'Developer tools',
-        'websiteURL': 'https://bearatol.github.io/ceo-ai/', 'brandColor': '#FF963F',
-        'defaultPrompt': ['Check prerequisites and scope for an optional local deep skill scan.']}))
-    files['payload.json'] = encode(dict(name=RECEIPTS['ceo-ai-security'], schema_version=1,
-                                        version=meta['version'], files=hashes(files)))
-    return files
+    return {'skills/security-scan/' + name: data for name, data in sorted(module.items())}
+
+
+def writer_files(root=ROOT):
+    source, _ = package(root / '.apm/skills/ceo-ai')
+    module = tree(root / 'modules/ceo-ai-writer')
+    require(set(module) == WRITER_SOURCE, 'Writer module differs from publication allowlist')
+    module.update({name: source[name] for name in WRITER_SHARED})
+    return {'skills/writer/' + name: data for name, data in sorted(module.items())}
 
 
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
-    if plugin == 'ceo-ai':
-        return PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
-    resources = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py'}
-    return PLUGIN_METADATA | {'skills/security-scan/' + name for name in resources}
+    security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py'}
+    return (PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
+            | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
+            | {'skills/security-scan/' + name for name in security})
 
 
 def preflight(destination, files, allow_layout_change=False, *, plugin='ceo-ai'):
@@ -141,8 +136,6 @@ def write(destination, files, allow_layout_change=False, *, plugin='ceo-ai'):
 def check(root=ROOT):
     require(tree(root / 'plugins/ceo-ai') == expected(root),
             'Plugin is stale; review source changes and run scripts/plugins.py --write')
-    require(tree(root / 'plugins/ceo-ai-security') == expected_security(root),
-            'Optional security plugin is stale; review sources and rebuild')
 
 
 def main():
@@ -153,8 +146,8 @@ def main():
     args = parser.parse_args()
     try:
         if args.write:
-            outputs = {'ceo-ai': expected(), 'ceo-ai-security': expected_security()}
-            # Validate both sources and existing destinations before the first write.
+            outputs = {'ceo-ai': expected()}
+            # Validate all sources and existing destinations before the first write.
             for plugin, files in outputs.items():
                 preflight(ROOT / 'plugins' / plugin, files, args.allow_layout_change, plugin=plugin)
             for plugin, files in outputs.items():

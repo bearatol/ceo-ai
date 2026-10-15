@@ -15,7 +15,7 @@ Tell your agent:
 For reference, the Codex command is:
 
 ```bash
-apm install bearatol/ceo-ai#v0.6.0 --target codex
+apm install bearatol/ceo-ai#v0.7.0 --target codex
 ```
 
 Use `--target claude` or `--target cursor` for those tools. This installs one
@@ -41,7 +41,7 @@ does not protect edits. Do not mix the Python and APM installers for one copy.
 Для справки, команда для Codex:
 
 ```bash
-apm install bearatol/ceo-ai#v0.6.0 --target codex
+apm install bearatol/ceo-ai#v0.7.0 --target codex
 ```
 
 Для Claude Code замените последний аргумент на `claude`, для Cursor на `cursor`.
@@ -66,7 +66,7 @@ APM установит один навык `ceo-ai` со всеми нужным
 以下是 Codex 的参考命令：
 
 ```bash
-apm install bearatol/ceo-ai#v0.6.0 --target codex
+apm install bearatol/ceo-ai#v0.7.0 --target codex
 ```
 
 Claude Code 使用 `--target claude`，Cursor 使用 `--target cursor`。
@@ -105,7 +105,7 @@ primitives, global rules, or MCP servers. Role prompts remain internal reference
 ## What was tested
 
 APM 0.31.0 was tested with CEO AI 0.2.0 on macOS; this optional check has not
-been rerun for 0.6.0. APM was exercised through its Python CLI in disposable Codex, Claude Code,
+been rerun for 0.7.0. APM was exercised through its Python CLI in disposable Codex, Claude Code,
 and Cursor project layouts. The fixture relocates only APM's configuration and
 lifecycle-lock destinations to temporary storage. The macOS sandbox blocks
 network access and writes outside each fixture; `HOME` remains unchanged.

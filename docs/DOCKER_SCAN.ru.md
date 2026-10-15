@@ -3,7 +3,7 @@
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
 Начни со [встроенной проверки](QUICKSTART.ru.md). Этот необязательный вариант
-добавляет NVIDIA SkillSpector 2.12.0 через отдельный плагин CEO AI Security.
+добавляет NVIDIA SkillSpector 2.12.0 через навык Security Scan внутри CEO AI.
 Он использует процессор, память и диск, без платных API и вызовов LLM. Токены
 чата с помощником учитываются отдельно. Облачной замены нет.
 
@@ -45,7 +45,7 @@ docker context inspect --format '{{.Endpoints.docker.Host}}'
 адаптера. BuildKit должен поддерживать `ADD --checksum` и `RUN --network=none`.
 Если Buildx отсутствует, следуй [официальной инструкции установки](https://github.com/docker/buildx#installing)
 только после отдельного согласия. Не переходи на старый сборщик.
-Установи `ceo-ai-security` по [инструкции плагина](PLUGINS.md#опциональный-ceo-ai-security).
+Установи `ceo-ai` со встроенным навыком Security Scan по [инструкции плагина](PLUGINS.md#опциональный-ceo-ai-security).
 Сама установка не разрешает сканирование или сборку образа.
 
 ## 2. Собери образ с закреплёнными версиями
@@ -95,7 +95,7 @@ docker run --rm --pull=never --network none --read-only --cap-drop ALL \
 
 ```sh
 mkdir -m 700 /approved/private-scan-workspace
-python3 -I -B plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 -I -B plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
   --package research/security-scanners/fixtures/skills/b01-summary \
   --workspace /approved/private-scan-workspace \
   --image "$CEO_SCAN_IMAGE" --version 2.12.0 --docker-host "$CEO_SCAN_SOCKET"
@@ -114,8 +114,8 @@ python3 -I -B plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_
 загруженного `security-scan/SKILL.md`, не угадывай путь кэша. До сохранения JSON
 согласуй приватный путь отчёта.
 
-Для работы через навык начни новый чат: выбери `ceo-ai-security:security-scan`
-в Codex или вызови `/ceo-ai-security:security-scan` в Claude Code.
+Для работы через навык начни новый чат: выбери `ceo-ai:security-scan`
+в Codex или вызови `/ceo-ai:security-scan` в Claude Code.
 
 Адаптер проверяет копию только для чтения, без сети и LLM. Код скилла он не
 исполняет. Неподдерживаемые ресурсы приводят к отказу или неполному результату.

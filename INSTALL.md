@@ -12,10 +12,11 @@ Choose an installation method, then complete the release selection below before
 running installation or update commands. Removal uses the installed manager and
 does not require looking up a new release.
 
-The default request installs only `ceo-ai`. From version 0.6.0 the catalog also
-contains the separate, opt-in `ceo-ai-security` module. Never install every catalog entry or add the optional module implicitly.
-It requires an explicit request and an approved snapshot containing the module;
-do not substitute a development checkout when stable-release selection fails.
+Install one native plugin, `ceo-ai`, containing the CEO, Writer and Security Scan
+skills. No separate Writer/Security installation is required. Installation does
+not authorize a scan, install Docker or enable memory. Verify that the reviewed
+snapshot has this layout; older releases may differ. Never silently substitute
+a development checkout when stable release selection fails.
 
 ## Choose the installation method
 
@@ -33,15 +34,15 @@ do not substitute a development checkout when stable-release selection fails.
 4. Follow [the plugin guide](docs/PLUGINS.md#english) for native commands. Register
    only `bearatol/ceo-ai`, named `ceo-ai-plugins`; reject a same-name catalog from
    another source. Inspect its resolved snapshot and the selected plugin's
-   `payload.json` before installing (`plugins/ceo-ai` by default;
-   `plugins/ceo-ai-security` only when explicitly requested). Compare the catalog's
+   `payload.json` before installing (`plugins/ceo-ai`). Compare the catalog's
    actual plugin files and manifests against that plugin directory at the selected
    release commit, including file hashes,
    source and version. A catalog-supplied manifest alone is not proof of a match.
    Stop on a mismatch, even when version labels agree. Do not accept arbitrary
    hooks, commands, agent registrations, MCP servers or dependency installers.
 5. After native installation, verify the cached payload and host discovery.
-   Expected: one skill `ceo-ai:ceo-ai`, no native agents/hooks/MCP. Claude invokes
+   Expected: `ceo-ai:ceo-ai`, `ceo-ai:writer` and `ceo-ai:security-scan`,
+   with no native agents/hooks/MCP. Claude invokes
    `/ceo-ai:ceo-ai`; in Codex select that entry from the skill picker. The package
    root is its cached `skills/ceo-ai` directory, not the source checkout.
    Report package verification, host discovery and model invocation separately.
@@ -49,31 +50,28 @@ do not substitute a development checkout when stable-release selection fails.
    Removing a user-level plugin affects all projects using that registration;
    explain this effect before applying a project-worded removal request.
 
-## Optional module: CEO AI Security
+## Included skills and runtime requirements
 
-This is a separate native plugin, not a prerequisite for CEO AI. Before the user
-opts in, explain that actual scanning needs Python 3.10+ on a POSIX host, a Docker
-client and working daemon, and a separately prepared, reviewed immutable NVIDIA
-SkillSpector image. The plugin does not install those prerequisites, pull images,
-call an LLM/API or provide a cloud service. Missing prerequisites leave the
-optional scan unavailable; do not install system software as a fallback.
+`ceo-ai:writer` uses the host model for writing. Python 3.10+ is needed only for
+optional persistent preferences. Installation never enables memory.
 
-For an explicitly approved catalog snapshot that contains the module, follow
-the [optional native-plugin commands](docs/PLUGINS.md#optional-ceo-ai-security).
-Verify `plugins/ceo-ai-security/payload.json` and the full optional payload against
-the selected source commit, then verify the installed cache and host discovery.
-Expect one skill `ceo-ai-security:security-scan`, no native agents/hooks/MCP.
-Claude invokes `/ceo-ai-security:security-scan`; Codex selects the namespaced skill.
-Its package root is its own cached `skills/security-scan` directory. It includes
-its required reader and static scanner and does not require the core plugin.
+`ceo-ai:security-scan` runs only on explicit request. It needs Python 3.10+, POSIX,
+Docker and a separately prepared, reviewed immutable SkillSpector image. Establish
+approved input paths, a private workspace, image identity and resource scope first.
+No Docker or image is installed automatically. Missing prerequisites leave only
+this extra scan unavailable; CEO and Writer remain usable. The scanner has no
+LLM/API calls or cloud fallback. Host conversation tokens still apply.
 
-Installing or updating the module does not authorize a scan. Establish approved
-input paths, private workspace, image identity and resource scope before running
-it. Both scanners use local compute; conversation/model tokens remain governed by
-the user's AI app. There is no paid API or subscription to configure. The project
-installer and APM install the main `ceo-ai` skill only.
+Each skill resolves resources from its own directory inside the installed package.
+Verify all three directories against the reviewed payload. Project/APM installs
+continue to provide the core skill only. See [Writer](docs/WRITER.md) and
+[scan setup](docs/DOCKER_SCAN.md).
 
 ## Migration between installation methods
+
+For old separate `ceo-ai-writer` or `ceo-ai-security` installations, verify the
+combined plugin first, then remove only the approved old registrations through
+their manager. Preserve private preferences and local edits.
 
 Migration must preserve edits and keep one intended active entry per host.
 Record existing paths, versions, manager and enabled scope before changing them.

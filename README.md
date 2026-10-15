@@ -39,12 +39,16 @@ and unverified trust. No findings does not mean safe.
 **[First scan: install → “Check my skills” → read the result](docs/QUICKSTART.md).**
 On native Windows, the scanner needs a separately approved compatible environment.
 
-An optional **CEO AI Security** plugin adds another engine. It is installed
-separately and requires Docker plus a prepared scanner image.
+The same plugin includes **Security Scan** for an optional additional check.
+Only running this scan requires Docker and a prepared scanner image.
 [Advanced ARM64 Docker walkthrough](docs/DOCKER_SCAN.md) ·
 [Technical limits](docs/SECURITY_SCANNING.md)
 
 ## Keep what worked
+
+For posts, articles and messages, select **`ceo-ai:writer`**, included in the plugin. It follows your voice, uses keyboard punctuation and avoids
+sales pressure. No Docker is needed; persistent preferences are opt-in.
+[Use Writer and manage preferences](docs/WRITER.md).
 
 CEO AI checks existing solutions and relevant documented practices before
 inventing a new approach. With your permission, it can retain project lessons,

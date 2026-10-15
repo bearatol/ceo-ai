@@ -1,14 +1,14 @@
 ---
 name: security-scan
-description: Run an explicitly requested deeper local skill scan with the optional CEO AI Security module. Requires Python 3.10+, POSIX, Docker and a separately prepared immutable NVIDIA SkillSpector image. Not required by the main CEO AI plugin.
+description: Run an explicitly requested deeper local skill scan with the Security skill inside CEO AI. Requires Python 3.10+, POSIX, Docker and a separately prepared immutable NVIDIA SkillSpector image. Docker is required only to run a deep scan.
 ---
 
 # CEO AI Security — optional local deep scan
 
 Use only when the user requests a deeper scan of a selected skill package.
-This optional plugin is installed separately from CEO AI. It can operate without
-the main plugin: its generated package includes its own bounded reader and static
-analyzer. Basic CEO AI indexing works without this module or Docker.
+This skill is included in the CEO AI plugin. Its scripts include their own bounded
+reader and static analyzer. Installing CEO AI does not run this skill or install
+Docker. Basic indexing and writing work without Docker.
 
 Resolve all resources from this SKILL.md's directory in the installed package.
 Use only the sibling scripts shipped here. Never search another plugin cache,

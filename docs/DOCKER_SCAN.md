@@ -3,7 +3,7 @@
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
 Start with the [builtin scan](QUICKSTART.md). This optional route adds NVIDIA
-SkillSpector 2.12.0 through the separate CEO AI Security plugin. It uses local
+SkillSpector 2.12.0 through Security Scan inside the CEO AI plugin. It uses local
 CPU, RAM and disk, without paid APIs or LLM calls; your assistant's chat tokens
 are separate. There is no cloud fallback.
 
@@ -44,7 +44,7 @@ Require Linux `aarch64`/`arm64` and a local `unix:///…` socket. Record that so
 for the adapter. BuildKit must support `ADD --checksum` and `RUN --network=none`.
 If Buildx is missing, follow the [official installation instructions](https://github.com/docker/buildx#installing)
 only after separate approval; do not fall back to the legacy builder.
-Install `ceo-ai-security` using the [optional plugin steps](PLUGINS.md#optional-ceo-ai-security).
+Install `ceo-ai`, which includes Security Scan, using the [plugin steps](PLUGINS.md#optional-ceo-ai-security).
 Installation itself does not authorize a scan or an image build.
 
 ## 2. Build the pinned scanner image
@@ -94,7 +94,7 @@ path; do not change permissions on an existing directory to force acceptance.
 
 ```sh
 mkdir -m 700 /approved/private-scan-workspace
-python3 -I -B plugins/ceo-ai-security/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 -I -B plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
   --package research/security-scanners/fixtures/skills/b01-summary \
   --workspace /approved/private-scan-workspace \
   --image "$CEO_SCAN_IMAGE" --version 2.12.0 --docker-host "$CEO_SCAN_SOCKET"
@@ -113,8 +113,8 @@ socket. For an installed plugin, use `scripts/ceo_security_nvidia.py` relative t
 the loaded `security-scan/SKILL.md`, not a guessed cache path. Approve the report's
 private destination before saving the JSON.
 
-For the skill interface, start a new chat and select `ceo-ai-security:security-scan`
-in Codex or invoke `/ceo-ai-security:security-scan` in Claude Code.
+For the skill interface, start a new chat and select `ceo-ai:security-scan`
+in Codex or invoke `/ceo-ai:security-scan` in Claude Code.
 
 The adapter scans a read-only snapshot without network or LLM calls. It does not
 execute the skill. It refuses/excludes unsupported resources; a partial result
