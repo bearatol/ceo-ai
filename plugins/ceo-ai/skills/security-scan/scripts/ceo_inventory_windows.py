@@ -127,7 +127,7 @@ def no_streams(path):
 
 
 class Node:
-    def __init__(self, path, access=0x80, share=SHARE_READ, disposition=OPEN_EXISTING,
+    def __init__(self, path, access=READ, share=SHARE_READ, disposition=OPEN_EXISTING,
                  directory=None):
         self.path, self.handle = path, None
         handle = create(path, access | 0x80, share, None, disposition, FLAGS, None)
@@ -208,8 +208,10 @@ class PinnedRoot:
 
 def open_child(parent, name, directory=None, *, content=False):
     checked_name(name)
-    return Node(ntpath.join(parent.path, name), access=READ if content else 0x80,
-                directory=directory)
+    # Attribute-only opens are exempt from Windows sharing checks. Request
+    # read access to enforce pinning, but read bytes only through read_node.
+    # Excluded resources still receive metadata inspection only.
+    return Node(ntpath.join(parent.path, name), access=READ, directory=directory)
 
 
 def read_node(node, limit):
@@ -410,10 +412,14 @@ def publish(inv, root, document, previous):
         # Cooperating writers hold the lock. This is not a compare-and-swap
         # against an unrelated same-user writer. Rename replaces the entry,
         # never follows its target, and the source remains bound to this handle.
-        encoded = inv.CACHE.encode('utf-16-le')
-        buffer = ctypes.create_string_buffer(Rename.name.offset + len(encoded))
+        # Use the frozen absolute device path. Win32 rename handling need not
+        # interpret a relative name against a non-null RootDirectory. Every
+        # target ancestor remains pinned throughout this operation.
+        encoded = ntpath.join(root.path, inv.CACHE).encode('utf-16-le')
+        buffer = ctypes.create_string_buffer(max(ctypes.sizeof(Rename),
+                                                   Rename.name.offset + len(encoded) + 2))
         header = ctypes.cast(buffer, ctypes.POINTER(Rename)).contents
-        header.flags, header.root, header.length = int(previous is not None), root.handle, len(encoded)
+        header.flags, header.root, header.length = int(previous is not None), None, len(encoded)
         ctypes.memmove(ctypes.addressof(buffer) + Rename.name.offset, encoded, len(encoded))
         check(set_info(node.handle, 3, buffer, len(buffer)))
         published = True

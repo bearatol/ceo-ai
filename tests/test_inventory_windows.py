@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest import mock
 
@@ -163,6 +164,39 @@ class WindowsInventoryTests(unittest.TestCase):
         with win.PinnedRoot(str(self.home)) as root, win.acquire_lock(root):
             self.assertNotEqual(self.cli('--refresh').returncode, 0)
         self.assertEqual(self.cache.read_bytes(), before)
+
+    def test_direct_publish_creates_then_replaces_owned_cache(self):
+        inv, win = self.backend()
+        with win.PinnedRoot(str(self.home)) as root, win.acquire_lock(root):
+            first = win.scan(inv, root)
+            win.publish(inv, root, first, None)
+            self.assertEqual(win.read_cache(inv, root), first)
+            self.entry.write_text('---\nname: demo\n---\nChanged instructions.\n')
+            second = win.scan(inv, root)
+            self.assertNotEqual(first, second)
+            win.publish(inv, root, second, first)
+            self.assertEqual(win.read_cache(inv, root), second)
+        self.assertEqual(list(self.home.glob('.ceo-inventory-*.tmp')), [])
+
+    def test_access_denied_during_scan_preserves_cache(self):
+        inv, win = self.backend()
+        self.report('--refresh')
+        before = self.cache.read_bytes()
+        original = win.open_child
+        denied = []
+
+        def guarded(parent, name, *args, **kwargs):
+            if name == 'skills':
+                denied.append(name)
+                raise PermissionError('injected inaccessible package directory')
+            return original(parent, name, *args, **kwargs)
+
+        with mock.patch.object(win, 'open_child', side_effect=guarded):
+            with self.assertRaises(PermissionError):
+                win.run(inv, SimpleNamespace(home=str(self.home), refresh=True, allow_alias_root=[]))
+        self.assertEqual(denied, ['skills'])
+        self.assertEqual(self.cache.read_bytes(), before)
+        self.assertEqual(list(self.home.glob('.ceo-inventory-*.tmp')), [])
 
     def test_lock_hardlink_and_foreign_contents_refused(self):
         lock = self.home / '.ceo-inventory.lock'
