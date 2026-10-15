@@ -38,7 +38,7 @@ macOS、Linux 或原生 Windows（本地固定 NTFS 磁盘）上的 Python 3.10+
 Windows 扫描拒绝网络驱动器、重解析点和包别名。参见 [Windows 范围与命令](docs/SECURITY_SCANNING.md#windows)。
 
 同一插件包含 **`ceo-ai:security-scan`**，仅在主动运行额外扫描时
-需要 Docker 和准备好的扫描器镜像。
+需要 Docker。复制指南中的请求，代理会检查兼容性、准备镜像并运行冒烟测试。
 [ARM64 Docker 分步指南](docs/DOCKER_SCAN.zh-CN.md) ·
 [技术限制](docs/SECURITY_SCANNING.md)
 

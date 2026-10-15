@@ -41,7 +41,8 @@ Windows scanning refuses network drives, reparse points and package aliases. See
 [Windows scope and commands](docs/SECURITY_SCANNING.md#windows).
 
 The same plugin includes **Security Scan** for an optional additional check.
-Only running this scan requires Docker and a prepared scanner image.
+Docker is needed only for this scan. Copy the setup request from the guide:
+the agent checks compatibility, prepares the image and runs a smoke test.
 [Advanced ARM64 Docker walkthrough](docs/DOCKER_SCAN.md) ·
 [Technical limits](docs/SECURITY_SCANNING.md)
 
