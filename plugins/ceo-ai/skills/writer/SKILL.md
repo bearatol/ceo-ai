@@ -52,6 +52,9 @@ usage still costs tokens. Persistent memory uses the existing Python 3.10+ helpe
 - Preserve code, URLs, identifiers, formulas and exact attributed quotations.
   Do not damage them to satisfy typography. In ordinary prose, prefer a comma,
   colon or a new sentence to repeatedly using hyphens as dashes.
+- In narrative prose, prefer a period to a semicolon when splitting the sentence
+  preserves meaning and flow. Do not replace semicolons mechanically in code,
+  structured data or exact quotations.
 - Explain concrete actions and tradeoffs. Remove inflated importance, vague
   authority claims, bureaucratic filler, sales pressure and automatic praise.
 - Do not append "try it", "subscribe", "rate it" or "give it a star" by default.
