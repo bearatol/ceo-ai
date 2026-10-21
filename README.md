@@ -98,6 +98,19 @@ use **`$ceo-ai`** in Codex or **`/ceo-ai`** in Claude Code and Cursor.
 [Plugin setup, updates and migration](docs/PLUGINS.md#english) ·
 [Microsoft APM](docs/APM.md#english)
 
+### Install individual skills
+
+With Node.js 22.20 or later, you can select individual skills through the
+[Skills CLI](https://github.com/vercel-labs/skills/blob/main/README.md):
+
+```sh
+npx skills add bearatol/ceo-ai
+```
+
+Choose the skills, target agent, and installation scope in the prompts. Preserve
+local changes before replacing an existing installation. This installs skills,
+not the native plugin. [Catalog status and distribution guide](docs/DISTRIBUTION.md).
+
 ## Things to ask
 
 > I want to launch a product. Help me decide what to check before building it.
@@ -177,6 +190,7 @@ opinion can also be wrong. CEO gains no extra permissions and does not replace
 security reviews required by your project.
 
 [Development and verification](docs/DEVELOPMENT.md) ·
+[Distribution and catalog status](docs/DISTRIBUTION.md) ·
 [CEO workflow details](docs/CEO_GUIDE.md) · [MIT](LICENSE)
 
 ## Author

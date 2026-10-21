@@ -86,6 +86,19 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 [插件安装、更新与迁移](docs/PLUGINS.md#简体中文) ·
 [Microsoft APM](docs/APM.md#简体中文)
 
+### 单独安装技能
+
+使用 Node.js 22.20 或更高版本时，可以通过
+[Skills CLI](https://github.com/vercel-labs/skills/blob/main/README.md) 选择单个技能：
+
+```sh
+npx skills add bearatol/ceo-ai
+```
+
+按照提示选择技能、目标智能体和安装范围。替换已有安装前，请保留本地修改。
+此方式安装的是技能，不是原生插件。
+[目录收录状态与推广指南（英文）](docs/DISTRIBUTION.md)。
+
 ## 可以这样问
 
 > 我想推出一个新产品。帮我判断开发之前应该先验证什么。
@@ -154,7 +167,8 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 CEO AI 使用你现有的模型和工具。AI 的回答需要核实，第二意见也可能出错。
 CEO 不会获得额外权限，也不能替代项目要求的安全审查。
 
-[开发与验证](docs/DEVELOPMENT.md) · [CEO 工作流程](docs/CEO_GUIDE.md) · [MIT 许可证](LICENSE)
+[开发与验证](docs/DEVELOPMENT.md) · [推广与目录状态](docs/DISTRIBUTION.md) ·
+[CEO 工作流程](docs/CEO_GUIDE.md) · [MIT 许可证](LICENSE)
 
 ## 作者
 
