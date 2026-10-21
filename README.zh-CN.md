@@ -7,6 +7,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[![skills.sh 上的 CEO AI](https://skills.sh/b/bearatol/ceo-ai)](https://skills.sh/bearatol/ceo-ai)
+
 **[网站](https://bearatol.github.io/ceo-ai/zh/) · [各职业使用示例](https://bearatol.github.io/ceo-ai/zh/#cases) · [安全](https://bearatol.github.io/ceo-ai/zh/#security) · [安装](https://bearatol.github.io/ceo-ai/zh/#install) · [帮助](https://bearatol.github.io/ceo-ai/zh/#help)**
 
 网站提供使用场景和可直接发给智能体的安装消息。
@@ -94,6 +96,10 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 ```sh
 npx skills add bearatol/ceo-ai
 ```
+
+[skills.sh 上的全部五个技能](https://skills.sh/bearatol/ceo-ai) ·
+[SkillsMP 搜索](https://skillsmp.com/search?q=bearatol%2Fceo-ai&sortBy=stars)。
+已请求 SkillsMP 索引收录，尚未确认已收录。
 
 按照提示选择技能、目标智能体和安装范围。替换已有安装前，请保留本地修改。
 此方式安装的是技能，不是原生插件。

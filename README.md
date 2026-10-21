@@ -4,6 +4,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[![CEO AI on skills.sh](https://skills.sh/b/bearatol/ceo-ai)](https://skills.sh/bearatol/ceo-ai)
+
 **[Website](https://bearatol.github.io/ceo-ai/) · [Examples for your work](https://bearatol.github.io/ceo-ai/#cases) · [Security](https://bearatol.github.io/ceo-ai/#security) · [Install](https://bearatol.github.io/ceo-ai/#install) · [Help](https://bearatol.github.io/ceo-ai/#help)**
 
 Open the website for examples and an installation message you can copy to your agent.
@@ -106,6 +108,10 @@ With Node.js 22.20 or later, you can select individual skills through the
 ```sh
 npx skills add bearatol/ceo-ai
 ```
+
+[All five skills on skills.sh](https://skills.sh/bearatol/ceo-ai) ·
+[SkillsMP search](https://skillsmp.com/search?q=bearatol%2Fceo-ai&sortBy=stars).
+SkillsMP indexing has been requested; listing is not yet confirmed.
 
 Choose the skills, target agent, and installation scope in the prompts. Preserve
 local changes before replacing an existing installation. This installs skills,

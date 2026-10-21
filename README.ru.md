@@ -4,6 +4,8 @@
 
 [English](README.md) · [Русский](README.ru.md) · [简体中文](README.zh-CN.md)
 
+[![CEO AI в каталоге skills.sh](https://skills.sh/b/bearatol/ceo-ai)](https://skills.sh/bearatol/ceo-ai)
+
 **[Сайт](https://bearatol.github.io/ceo-ai/ru/) · [Примеры для разных профессий](https://bearatol.github.io/ceo-ai/ru/#cases) · [Безопасность](https://bearatol.github.io/ceo-ai/ru/#security) · [Установка](https://bearatol.github.io/ceo-ai/ru/#install) · [Помощь](https://bearatol.github.io/ceo-ai/ru/#help)**
 
 На сайте есть примеры задач и сообщение для установки через вашего агента.
@@ -110,6 +112,10 @@ Windows, macOS и Linux. Менеджеры плагинов хранят час
 ```sh
 npx skills add bearatol/ceo-ai
 ```
+
+[Все пять навыков на skills.sh](https://skills.sh/bearatol/ceo-ai) ·
+[Поиск в SkillsMP](https://skillsmp.com/search?q=bearatol%2Fceo-ai&sortBy=stars).
+Заявка на индексацию в SkillsMP отправлена; появление в каталоге пока не подтверждено.
 
 В диалоге установки выберите навыки, целевого агента и область установки.
 Сохраните локальные правки перед заменой существующей установки. Этот способ
