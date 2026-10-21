@@ -138,7 +138,7 @@ npx skills add bearatol/ceo-ai
 | --- | --- | --- |
 | 旧版仅含核心技能的 Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 五技能布局的发现与模型调用；Windows/Linux 原生管理器 |
 | 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
-| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | 0.6.0 的重新验证 |
+| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | CEO AI 0.8.0 的安装示例 |
 
 旧版仅含核心技能的插件使用 Codex CLI 0.147.0 和 Claude Code 2.1.232 检查。
 这些结果不能证明当前源码中五个技能的发现与模型行为。

@@ -8,10 +8,15 @@ Open your project in Codex, Claude Code or Cursor and send:
 
 ```text
 Install CEO AI for my current AI app using these instructions.
+Choose an installation method the app supports.
 Explain the scope first, check existing installations and preserve local edits.
-Install only the core CEO AI plugin or skill, without optional modules.
+Do not install Docker or prepare the optional scanner.
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
+
+The current plugin source contains five skills: CEO, Writer, Security Scan,
+Debugger and User Review. Check the contents of the release you choose.
+The project installer and APM provide only the core CEO skill.
 
 Installation does not start an audit. The builtin scanner needs Python 3.10+
 on macOS, Linux or native Windows, without Docker or additional Python packages.

@@ -12,11 +12,16 @@
 
 ## 找不到技能
 
-在安装 CEO AI 的同一个项目中开启新会话。Codex 使用 `$ceo-ai`，
-Claude Code 和 Cursor 使用 `/ceo-ai`。如果仍找不到，请向智能体发送：
+在项目中开启新会话，根据安装方式调用：
 
-> 请按照 https://github.com/bearatol/ceo-ai 中的 INSTALL.md 检查当前项目的 CEO AI 安装。
-> 确认我使用的应用、技能目录和文件，再单独确认应用是否能加载 ceo-ai。
+- 插件：在 Codex 中选择 `ceo-ai:ceo-ai`，在 Claude Code 中使用 `/ceo-ai:ceo-ai`。
+- 项目安装：Codex 使用 `$ceo-ai`，Claude Code 和 Cursor 使用 `/ceo-ai`。
+
+如果仍找不到，请向智能体发送：
+
+> 请按照 https://github.com/bearatol/ceo-ai 中的 INSTALL.md 检查我的 CEO AI 安装。
+> 先确认当前应用和安装方式。插件安装应检查插件注册状态及可用技能，
+> 项目安装应检查技能目录和文件。再单独确认应用是否能加载 CEO AI。
 > 保留现有文件和权限。
 
 安装器检查的是文件，应用是否加载技能需要另行确认，不同版本的应用也可能表现不同。

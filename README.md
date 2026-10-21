@@ -151,7 +151,7 @@ changes, CEO can then help implement the plan and check the result.
 | --- | --- | --- |
 | Earlier core-only Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Five-skill layout discovery and model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
-| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.6.0 |
+| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Installation example for CEO AI 0.8.0 |
 
 The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232 with the earlier
 core-only layout. They do not establish discovery or model behavior for the five

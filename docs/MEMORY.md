@@ -13,6 +13,10 @@ private location, what it will save and when it will read it. User preferences
 across projects require separate permission. Retrieved records may be sent to the
 model by your AI app. Nothing is uploaded by the memory helper itself.
 
+Records are stored outside repositories and plugin caches, without encryption.
+Moving or cloning a project, or creating a separate worktree, uses a new memory
+scope. Sharing or migrating records requires an explicit request.
+
 Project records can describe a verified fix, an approved color palette, type
 sizes, component states, mobile layouts or a working example. A pattern includes
 where it fits, where it does not, a source, evidence and a review date. CEO checks
@@ -43,6 +47,11 @@ CEO AI может сохранять проверенные уроки, шабл
 проектов требуют отдельного согласия. Прочитанные записи могут попасть в контекст
 модели через ваше ИИ-приложение. Сама утилита памяти ничего не отправляет в сеть.
 
+Записи хранятся вне репозитория и кэша плагина, без шифрования. После переноса
+проекта, клонирования или создания отдельного worktree используется новая область
+памяти. Обмен записями между областями и их перенос выполняются только по явному
+запросу.
+
 В памяти проекта можно хранить проверенное исправление, утверждённую палитру,
 размеры шрифтов, состояния компонентов, мобильные варианты и пример применения.
 У шаблона есть условия применения, ограничения, источник, подтверждение и дата
@@ -71,6 +80,9 @@ CEO AI 可以跨会话保留已验证的经验、模板和偏好。这些内容�
 可以说：**“为这个项目启用 CEO AI 记忆。”** 助手会说明准确的存储位置、保存的内容
 以及读取时机。跨项目的用户偏好需要单独授权。读取的记录可能通过 AI 应用进入模型
 上下文；记忆工具本身不联网。
+
+记录存放在仓库和插件缓存之外，未加密。移动或克隆项目、创建独立 worktree 都会使用
+新的记忆范围。只有明确提出请求，才会共享或迁移记录。
 
 项目记忆可以保存已验证的修复、获批的配色、字号、组件状态、移动端布局和使用示例。
 每个模板包含适用条件、限制、来源、验证依据和复查日期。提出新方案前，CEO 会检查

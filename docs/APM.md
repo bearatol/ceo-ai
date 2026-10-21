@@ -18,6 +18,9 @@ For reference, the Codex command is:
 apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
 
+The documented test used APM 0.31.0 with CEO AI 0.2.0 on macOS. It does not
+confirm the 0.8.0 example above. See the [test limits](#what-was-tested).
+
 Use `--target claude` or `--target cursor` for those tools. This installs one
 self-contained skill, `ceo-ai`, with its supporting files. APM itself manages
 `apm.yml`, its lockfile/cache, and user-level state such as `~/.apm`.
@@ -44,6 +47,9 @@ does not protect edits. Do not mix the Python and APM installers for one copy.
 apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
 
+APM 0.31.0 проверяли с CEO AI 0.2.0 на macOS. Эта историческая проверка не
+подтверждает работу примера с версией 0.8.0 выше. См. [границы проверки](#what-was-tested).
+
 Для Claude Code замените последний аргумент на `claude`, для Cursor на `cursor`.
 APM установит один навык `ceo-ai` со всеми нужными файлами. Сам APM ведёт
 `apm.yml`, файл версий, кэш и пользовательские настройки, в том числе `~/.apm`.
@@ -68,6 +74,9 @@ APM установит один навык `ceo-ai` со всеми нужным
 ```bash
 apm install bearatol/ceo-ai#v0.8.0 --target codex
 ```
+
+记录中的测试是在 macOS 上使用 APM 0.31.0 和 CEO AI 0.2.0 完成的，不能确认上方
+0.8.0 示例是否可用。参见[测试范围](#what-was-tested)。
 
 Claude Code 使用 `--target claude`，Cursor 使用 `--target cursor`。
 APM 会安装一个包含所需资源的 `ceo-ai` 技能。APM 本身还管理 `apm.yml`、锁文件、缓存，
@@ -104,9 +113,9 @@ primitives, global rules, or MCP servers. Role prompts remain internal reference
 
 ## What was tested
 
-APM 0.31.0 was tested with CEO AI 0.2.0 on macOS; this optional check has not
-been rerun for 0.7.0. APM was exercised through its Python CLI in disposable Codex, Claude Code,
-and Cursor project layouts. The fixture relocates only APM's configuration and
+APM 0.31.0 was tested with CEO AI 0.2.0 on macOS. This historical check does not
+verify the 0.8.0 example above. APM was exercised through its Python CLI in
+disposable Codex, Claude Code, and Cursor project layouts. The fixture relocates only APM's configuration and
 lifecycle-lock destinations to temporary storage. The macOS sandbox blocks
 network access and writes outside each fixture; `HOME` remains unchanged.
 Organization-policy discovery is disabled only in these isolated fixtures,

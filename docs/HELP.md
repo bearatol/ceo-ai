@@ -13,14 +13,18 @@ do the checks; no terminal commands are needed from you.
 
 ## The skill does not appear
 
-Open a new conversation in the same project where you installed CEO AI. Use
-`$ceo-ai` in Codex, or `/ceo-ai` in Claude Code and Cursor. If it is still missing,
-send your agent:
+Open a new conversation in your project. Then start CEO AI:
 
-> Check the CEO AI installation in this project using INSTALL.md from
-> https://github.com/bearatol/ceo-ai. Identify my current tool, check its skill
-> location and files, and tell me whether the app can actually load ceo-ai.
-> Preserve existing files and permissions.
+- Plugin: select `ceo-ai:ceo-ai` in Codex, or use `/ceo-ai:ceo-ai` in Claude Code.
+- Project installation: use `$ceo-ai` in Codex, or `/ceo-ai` in Claude Code and Cursor.
+
+If the skill is still missing, send your agent:
+
+> Check my CEO AI installation using INSTALL.md from
+> https://github.com/bearatol/ceo-ai. Identify my current app and installation
+> method first. For a plugin, check its registration and available skills.
+> For a project installation, check its skill location and files. Separately
+> confirm whether the app can load CEO AI. Preserve existing files and permissions.
 
 The installer checks files. Loading the skill is a separate check, and app
 versions may behave differently. If native subagents are unavailable, CEO can
