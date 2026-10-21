@@ -2,6 +2,7 @@
 import importlib.util
 import os
 from pathlib import Path
+import re
 import tempfile
 import unittest
 from urllib.parse import unquote, urlsplit
@@ -10,6 +11,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_module_cards_include_each_advertised_skill_in_every_locale(self):
+        for page in ('index.html', 'ru/index.html', 'zh/index.html'):
+            with self.subTest(page=page):
+                source = (ROOT / 'site' / page).read_text()
+                section = re.search(r'<div class="module-options">(.*?)</div>', source, re.S)
+                self.assertIsNotNone(section)
+                self.assertEqual(re.findall(r'<h4>(.*?)</h4>', section.group(1)),
+                                 ['CEO', 'Writer', 'Security Scan', 'Debugger', 'User Review'])
+
     def test_each_locale_has_five_keyboard_native_skill_examples(self):
         spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
         module = importlib.util.module_from_spec(spec)

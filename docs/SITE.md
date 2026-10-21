@@ -85,6 +85,23 @@ Reduced-motion behavior and 390/1440-pixel overflow checks passed in all locales
 Russian desktop and mobile screenshots were visually inspected. These checks
 exercise the website controls, not installation in the host applications.
 
+### Complete skill list and disclosure motion on 2026-10-21
+
+The module list now contains CEO, Writer, Security Scan, Debugger and User Review
+in all three locales. CEO occupies the first full-width row. A regression test
+checks the complete list. Chromium checks at 320, 390, 768 and 1440 pixels found
+no horizontal page overflow, including long references in the privacy notice.
+
+Native disclosures animate their content height and opacity where supported,
+using [`::details-content`](https://developer.chrome.com/blog/styling-details).
+Browsers without the required size/discrete-transition support use a short entry
+animation; closing remains native. All motion is scoped to `no-preference`.
+Measured opening and closing transitions passed for skill examples, professions
+and FAQ in every locale. Reduced motion, keyboard controls, exclusive groups,
+rapid repeated toggles and Russian no-JavaScript use passed. The fallback was
+checked by disabling the feature-specific rule in Chromium; this was not a
+separate Safari or Firefox run. The Russian desktop card layout was inspected.
+
 ## Design and assets
 
 The visual direction is corporate cyberpunk: graphite panels, orange controls,
