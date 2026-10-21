@@ -11,7 +11,7 @@ link only after the public page can be opened and checked.
 
 | Channel | Discovery path | CEO AI status |
 | --- | --- | --- |
-| [SkillsMP](https://skillsmp.com/) | Automatic indexing of public GitHub skills; see [About](https://skillsmp.com/about). | Repository search returned no matches. The signed-in account menu has no repository-submission control; a support request awaits the publisher's approval. |
+| [SkillsMP](https://skillsmp.com/) | Automatic indexing of public GitHub skills; see [About](https://skillsmp.com/about). | Repository search returned no matches. After publisher approval, an indexing request was emailed to support@skillsmp.com on 2026-10-21 at 16:29 Europe/Moscow. Sending was verified in the mail provider's Sent folder. Awaiting the service's response; inclusion is not confirmed. |
 | [skills.sh](https://www.skills.sh/) | Actual installs through the Skills CLI with telemetry enabled; see the [FAQ](https://www.skills.sh/docs/faq). | [Public repository page](https://www.skills.sh/bearatol/ceo-ai) lists all five skills. Verified after one maintainer installation test; displayed install count was zero when checked. |
 
 Do not repeat installations to inflate counts. No submission form was found in
