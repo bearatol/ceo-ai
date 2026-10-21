@@ -4,7 +4,7 @@
   "version": "0.8.0",
   "files": {
     "LICENSE": "f3332f2609f5727debc8f943ded03e5f35243d6ed58fd4dba7d291c052af2d7e",
-    "SKILL.md": "3ca49d27a88c011009a5ade60cadd2b3a21ec052efaad876cd0d4f607f7141e7",
+    "SKILL.md": "9d3e3a4507a3bac808b3ee023a0a091fd4966d0ef3af300ff8101da1d5f187cc",
     "VERSION": "a66780da23103beaf12432b418508966b31a2a3a787f9468a5b6cdaa8667c1ef",
     "agents/ceo.md": "304551e01a580635f29992cc8ed6d2aa9c97f71b262919ad3aec5dbc80766834",
     "agents/decision-mentor.md": "e0fce00ba4dedbe66e7194f96746676f74ff00f40768cc6ccb59ee1f5c1f5033",
@@ -23,7 +23,7 @@
     "orchestration/templates/task.json": "fd720d2d91520a03d63ddd52df72acf3e56e23f8ab41e32e4a1319efca980121",
     "profiles/core.profile": "94145998e8615961acb1df0b3b2c3ae19444452559de108c7ed878ea05a03e91",
     "references/skills/capability-discovery.md": "96f25c4a34c03651f95a74b19c46cb0114c05f1efd3671b57533f3d4db32bff5",
-    "references/skills/ceo.md": "6c81e7752218fdc12b9480399bb652892336f6597ff16e986ea72c86af90f829",
+    "references/skills/ceo.md": "b15221b75d5640c08cf1d1b96406a5cea28c44e2e67f0301d4480e61a5b44584",
     "references/skills/context-engineering.md": "6894c102fb54436d23a5ffa3b0e1d2b37aa287cf74b3923cbbda2c2d1b70c334",
     "references/skills/project-memory.md": "c524c3a2f77a030c7341883cf39601e03971b1fb3ed9e4cc16a42d98c7c865a1",
     "references/skills/quality-review.md": "3e2336dc97dc38e2cffc9f62741e745dbc323b0a07d6429dad2bffe457fbf265",

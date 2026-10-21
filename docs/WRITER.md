@@ -1,5 +1,7 @@
 # CEO AI Writer
 
+Fictional writing scene: [English](DIALOGUE.md#writer) | [Русский](DIALOGUE.ru.md#writer) | [简体中文](DIALOGUE.zh-CN.md#writer).
+
 ## English
 
 `writer` drafts, edits and translates in your voice. It uses plain language

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify one CEO AI plugin with three self-contained skills."""
+"""Build or verify one CEO AI plugin with five self-contained skills."""
 import argparse
 import json
 import os
@@ -20,6 +20,11 @@ PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-pl
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
 WRITER_SHARED = frozenset({'LICENSE', 'VERSION', 'references/skills/project-memory.md',
                            'memory/store.py', 'memory/record.schema.json', 'memory/pattern.example.json'})
+WORKFLOW_SOURCES = {
+    'debugger': frozenset({'SKILL.md'}),
+    'user-review': frozenset({'SKILL.md', 'references/professional-profiles.md'}),
+}
+WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
 
 
 
@@ -39,6 +44,7 @@ def expected(root=ROOT):
     files = {'skills/ceo-ai/' + name: data for name, data in sorted(source.items())}
     files.update(security_files(root))
     files.update(writer_files(root))
+    files.update(workflow_files(root))
     files['LICENSE'] = source['LICENSE']
     files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
@@ -69,12 +75,26 @@ def writer_files(root=ROOT):
     return {'skills/writer/' + name: data for name, data in sorted(module.items())}
 
 
+def workflow_files(root=ROOT):
+    source, _ = package(root / '.apm/skills/ceo-ai')
+    files = {}
+    for skill, allowed in WORKFLOW_SOURCES.items():
+        module = tree(root / 'modules' / ('ceo-ai-' + skill))
+        require(set(module) == allowed, skill + ' module differs from publication allowlist')
+        module.update({name: source[name] for name in WORKFLOW_SHARED})
+        files.update({'skills/' + skill + '/' + name: data
+                      for name, data in sorted(module.items())})
+    return files
+
+
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
     security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                                   'scripts/ceo_inventory_windows.py'}
     return (PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
+            | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
+               for name in allowed | WORKFLOW_SHARED}
             | {'skills/security-scan/' + name for name in security})
 
 

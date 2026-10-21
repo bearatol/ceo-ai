@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -15,11 +16,83 @@ from install import package, tree
 
 
 class PluginTests(unittest.TestCase):
-    def test_one_plugin_exposes_three_skills(self):
+    def test_one_plugin_exposes_five_skills(self):
         files = plugins.expected(ROOT)
         self.assertEqual({n for n in files if n.endswith('/SKILL.md')}, {
-            'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security-scan/SKILL.md'})
+            'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security-scan/SKILL.md',
+            'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md'})
         self.assertIn(b'name: writer\n', files['skills/writer/SKILL.md'])
+
+    def test_new_workflows_are_self_contained_after_cache_relocation(self):
+        files = plugins.expected(ROOT)
+        resources = {
+            'debugger': {'SKILL.md', 'LICENSE', 'VERSION'},
+            'user-review': {'SKILL.md', 'LICENSE', 'VERSION',
+                            'references/professional-profiles.md'},
+        }
+        with tempfile.TemporaryDirectory(prefix='workflow cache ') as folder:
+            cache = Path(folder).resolve() / '插件'
+            for skill, expected in resources.items():
+                prefix = 'skills/' + skill + '/'
+                payload = {name[len(prefix):]: data for name, data in files.items()
+                           if name.startswith(prefix)}
+                self.assertEqual(set(payload), expected)
+                target = cache / skill
+                for name, data in payload.items():
+                    path = target / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(data)
+                self.assertIn('name: ' + skill + '\n', (target / 'SKILL.md').read_text())
+                for shared in ('LICENSE', 'VERSION'):
+                    self.assertEqual(payload[shared], (ROOT / shared).read_bytes())
+                for path in target.rglob('*.md'):
+                    for link in re.findall(r'\]\(([^)]+)\)', path.read_text()):
+                        if link.startswith(('https://', 'http://', '#')):
+                            continue
+                        resource = (path.parent / link.split('#')[0]).resolve()
+                        self.assertTrue(resource.is_relative_to(target), str(resource))
+                        self.assertTrue(resource.is_file(), str(resource))
+
+    def test_new_workflows_reject_extra_or_missing_source_files(self):
+        for skill in ('debugger', 'user-review'):
+            for mutation in ('extra', 'missing'):
+                with self.subTest(skill=skill, mutation=mutation), tempfile.TemporaryDirectory() as folder:
+                    root = Path(folder).resolve()
+                    for name in ('.apm', 'modules'):
+                        shutil.copytree(ROOT / name, root / name)
+                    shutil.copy2(ROOT / 'VERSION', root / 'VERSION')
+                    module = root / 'modules' / ('ceo-ai-' + skill)
+                    if mutation == 'extra':
+                        (module / 'private-session.json').write_text('{"synthetic": true}')
+                    else:
+                        (module / 'SKILL.md').unlink()
+                    with self.assertRaisesRegex(ValueError, 'allowlist'):
+                        plugins.expected(root)
+
+    def test_existing_three_skill_plugin_can_add_workflows_without_losing_edits(self):
+        from install import hashes
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder).resolve() / 'package'
+            files = plugins.expected(ROOT)
+            old = {name: data for name, data in files.items()
+                   if name != 'payload.json' and not name.startswith(
+                       ('skills/debugger/', 'skills/user-review/'))}
+            old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
+                version='0.8.0', files=hashes(old)))
+            for name, data in old.items():
+                path = target / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+            with self.assertRaisesRegex(ValueError, 'layout'):
+                plugins.write(target, files)
+            self.assertEqual(tree(target), old)
+            plugins.write(target, files, allow_layout_change=True)
+            self.assertEqual(tree(target), files)
+            edited = target / 'skills/user-review/SKILL.md'
+            edited.write_text('Synthetic user customization')
+            with self.assertRaisesRegex(ValueError, 'edited'):
+                plugins.write(target, files, allow_layout_change=True)
+            self.assertEqual(edited.read_text(), 'Synthetic user customization')
 
     def test_writer_has_only_reviewed_resources_and_relocated_memory_works(self):
         files = plugins.writer_files(ROOT)

@@ -136,6 +136,16 @@
   ],
   "original_additions": [
     {
+      "path": "modules/ceo-ai-debugger",
+      "license": "MIT",
+      "note": "Original evidence-led debugging and behavior-preserving refactoring workflow, following the existing CEO approach and delivery checks."
+    },
+    {
+      "path": "modules/ceo-ai-user-review",
+      "license": "MIT",
+      "note": "Original synthetic user-perspective review and professional lenses. W3C cognitive usability guidance is linked as background; no third-party prompts or real participant data are bundled."
+    },
+    {
       "path": ".apm/skills/ceo-ai/references/skills/project-memory.md",
       "license": "MIT",
       "note": "Original workflow for consent, verified lessons, patterns and user controls."

@@ -256,7 +256,8 @@ h1 em{
   background:var(--accent)}
 .dialogue{
   display:grid;
-  grid-template-columns:1fr 1.35fr;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  align-items:start;
   gap:90px;
   padding-block:56px 86px;
   border-top:1px solid var(--line)}
@@ -320,6 +321,66 @@ h1 em{
   font-size:14px;
   color:var(--muted);
   margin-bottom:0}
+.dialogue .example-note{
+  font-size:15px;
+  line-height:1.6}
+.skill-examples{
+  display:grid;
+  gap:12px;
+  min-width:0}
+.skill-example{
+  min-width:0;
+  border:1px solid var(--line);
+  background:var(--panel)}
+.skill-example>summary{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 24px;
+  gap:16px;
+  min-height:88px;
+  padding:20px 24px}
+.skill-example>summary>.example-heading{
+  min-width:0;
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.4;
+  transform:none}
+.example-heading small{
+  display:block;
+  color:var(--accent);
+  font-size:14px;
+  margin-bottom:5px}
+.example-plus{
+  justify-self:end}
+.skill-example .conversation{
+  min-width:0;
+  border:0;
+  padding:0 24px 24px;
+  overflow-wrap:anywhere}
+.skill-example .memo-top{
+  display:block;
+  border-top:1px solid var(--line);
+  border-bottom:0;
+  padding:16px 0 0;
+  letter-spacing:0;
+  text-transform:none}
+.skill-example .message{
+  grid-template-columns:78px minmax(0,1fr);
+  gap:14px}
+.skill-example .message p{
+  font-size:16px;
+  line-height:1.55}
+.skill-example .memo-result{
+  align-items:flex-start;
+  font-size:15px}
+.skill-example .memo-caption{
+  margin:18px 0 0;
+  font-size:14px}
+.skill-example .memo-caption a{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px}
+.skill-example>summary:focus-visible{
+  outline-offset:3px}
 .method{
   padding:66px 0 74px;
   background:#141b22;
@@ -665,6 +726,15 @@ h1{
   font-size:14px}
 .conversation{
   padding:20px}
+.skill-example>summary{
+  padding:18px 16px}
+.skill-example .conversation{
+  padding:0 16px 16px}
+.skill-example .message{
+  grid-template-columns:minmax(0,1fr);
+  gap:3px}
+.skill-example .speaker{
+  padding-top:0}
 .memo-top{
   font-size:14px}
 .message{

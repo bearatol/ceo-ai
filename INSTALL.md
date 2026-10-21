@@ -12,8 +12,9 @@ Choose an installation method, then complete the release selection below before
 running installation or update commands. Removal uses the installed manager and
 does not require looking up a new release.
 
-Install one native plugin, `ceo-ai`, containing the CEO, Writer and Security Scan
-skills. No separate Writer/Security installation is required. Installation does
+The current source tree builds one native plugin, `ceo-ai`, containing CEO,
+Writer, Security Scan, Debugger and User Review. No separate skill installation
+is required for this layout. Installation does
 not authorize a scan, install Docker or enable memory. Verify that the reviewed
 snapshot has this layout; older releases may differ. Never silently substitute
 a development checkout when stable release selection fails.
@@ -41,7 +42,8 @@ a development checkout when stable release selection fails.
    Stop on a mismatch, even when version labels agree. Do not accept arbitrary
    hooks, commands, agent registrations, MCP servers or dependency installers.
 5. After native installation, verify the cached payload and host discovery.
-   Expected: `ceo-ai:ceo-ai`, `ceo-ai:writer` and `ceo-ai:security-scan`,
+   Expected for this layout: `ceo-ai:ceo-ai`, `ceo-ai:writer`,
+   `ceo-ai:security-scan`, `ceo-ai:debugger` and `ceo-ai:user-review`,
    with no native agents/hooks/MCP. Claude invokes
    `/ceo-ai:ceo-ai`; in Codex select that entry from the skill picker. The package
    root is its cached `skills/ceo-ai` directory, not the source checkout.
@@ -59,13 +61,20 @@ optional persistent preferences. Installation never enables memory.
 Docker and a separately prepared, reviewed immutable SkillSpector image. Establish
 approved input paths, a private workspace, image identity and resource scope first.
 No Docker or image is installed automatically. Missing prerequisites leave only
-this extra scan unavailable; CEO and Writer remain usable. The scanner has no
+this extra scan unavailable; the other skills remain usable. The scanner has no
 LLM/API calls or cloud fallback. Host conversation tokens still apply.
 
+`ceo-ai:debugger` and `ceo-ai:user-review` use the host model and authorized tools.
+They bundle no runtime or new permissions. Debugger needs access to the relevant
+code and checks; User Review needs access to the material under review. Their
+presence in this source tree does not establish availability in an older release
+or successful host discovery.
+
 Each skill resolves resources from its own directory inside the installed package.
-Verify all three directories against the reviewed payload. Project/APM installs
-continue to provide the core skill only. See [Writer](docs/WRITER.md) and
-[scan setup](docs/DOCKER_SCAN.md).
+Verify all five directories for this layout against the reviewed payload.
+Project/APM installs continue to provide the core skill only. See
+[Writer](docs/WRITER.md), [scan setup](docs/DOCKER_SCAN.md),
+[Debugger](docs/DEBUGGER.md) and [User Review](docs/USER_REVIEW.md).
 
 ## Migration between installation methods
 

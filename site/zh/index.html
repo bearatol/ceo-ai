@@ -42,14 +42,62 @@
 <div class="motion-controls"><span>工作流程示意</span><button class="motion-toggle" type="button" aria-label="暂停动画" title="暂停动画" data-paused="false" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g class="pause-icon"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g><path class="play-icon" d="M8 5.5v13l10-6.5z"/></svg></button></div>
 </figure>
 </section>
-<section class="dialogue shell"><div class="section-intro"><p class="eyebrow">CEO AI / 01</p><h2>一个好问题，可能改变整个决定。</h2><p>CEO 帮你判断什么值得做，再组织后续工作。如果你的工具支持，还可以让其他 AI 助手参与。</p></div><div class="conversation" id="conversation">
-<div class="memo-top"><span>虚构对话 · 一点幽默</span><span aria-hidden="true">01 / CEO</span></div>
+<section class="dialogue shell"><div class="section-intro"><p class="eyebrow">CEO AI / 01</p><h2>一个好问题，可能改变整个决定。</h2><p>五段围绕理发预约应用的虚构讽刺对话，展示各技能如何处理任务，不代表实测结果，也不保证效果。</p><p class="example-note">在 AI 应用中选择可用技能。源代码中包含这五个技能，实际安装内容取决于所选版本。项目安装和 APM 仅提供 CEO。</p></div><div class="skill-examples" id="conversation">
+<details class="skill-example" id="example-ceo" name="skill-story" open><summary><span class="example-heading"><small>CEO</small>先闪起来，预约可以等等。</span><span class="example-plus" aria-hidden="true">+</span></summary><div class="conversation">
+<div class="memo-top">选择: <code>ceo-ai:ceo-ai</code></div>
 <div class="message user"><span class="speaker">你</span><p>要闪闪发光！API 密钥也放到网站上，配置更方便。</p></div>
-<div class="message ceo"><span class="speaker">CEO <span aria-hidden="true">✳</span></span><p>那你的预算也向所有人开放了。密钥留在服务器上。产品到底帮用户做什么？</p></div>
-<div class="message user follow"><span class="speaker">你</span><p>预约理发。但宣传时要承诺收入翻倍。</p></div>
-<div class="message ceo"><span class="speaker">CEO <span aria-hidden="true">✳</span></span><p>先做好预约和确认，测试访问权限和操作流程。宣传只说有证据支持的话。</p></div>
+<div class="message ceo"><span class="speaker">CEO</span><p>那你的预算也向所有人开放了。密钥留在服务器上。产品到底帮用户做什么？</p></div>
+<div class="message user"><span class="speaker">你</span><p>预约理发。但宣传时要承诺收入翻倍。</p></div>
+<div class="message ceo"><span class="speaker">CEO</span><p>先做好预约和确认，测试访问权限和操作流程。宣传只说有证据支持的话。</p></div>
+<div class="message user"><span class="speaker">你</span><p>所以，不闪了？</p></div>
+<div class="message ceo"><span class="speaker">CEO</span><p>以后再闪。先让人能完成一次预约，并说明哪些部分还没验证。</p></div>
 <div class="memo-result"><span aria-hidden="true">↳</span><strong>闪光可以等等，预约得先好用。</strong></div>
-<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md">阅读完整对话 ↗</a></p>
+<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md#ceo">阅读完整对话 ↗</a></p>
+</div></details>
+<details class="skill-example" id="example-writer" name="skill-story"><summary><span class="example-heading"><small>Writer</small>说人话，但得加上协同效应。</span><span class="example-plus" aria-hidden="true">+</span></summary><div class="conversation">
+<div class="memo-top">选择: <code>ceo-ai:writer</code></div>
+<div class="message user"><span class="speaker">你</span><p>把理发预约公告写得像人说话。记得加上协同效应。</p></div>
+<div class="message ceo"><span class="speaker">Writer</span><p>产品现在能做什么？</p></div>
+<div class="message user"><span class="speaker">你</span><p>选择时间，收到确认，到店付款。草稿写的是：&quot;解锁无缝理容协同效应。&quot;</p></div>
+<div class="message ceo"><span class="speaker">Writer</span><p>&quot;现在可以在线预约理发：选好时间，收到预约确认，到店付款。&quot; 事实没变，雾散了。</p></div>
+<div class="message user"><span class="speaker">你</span><p>但我已经为协同效应这个词付过钱了。</p></div>
+<div class="message ceo"><span class="speaker">Writer</span><p>那就留在需求说明里。顾客需要知道怎么预约，不能编造效果或客户评价。</p></div>
+<div class="memo-result"><span aria-hidden="true">↳</span><strong>保留事实，把话说清楚。</strong></div>
+<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md#writer">阅读完整对话 ↗</a></p>
+</div></details>
+<details class="skill-example" id="example-security-scan" name="skill-story"><summary><span class="example-heading"><small>Security Scan</small>所有密钥都要？真负责。</span><span class="example-plus" aria-hidden="true">+</span></summary><div class="conversation">
+<div class="memo-top">选择: <code>ceo-ai:security-scan</code></div>
+<div class="message user"><span class="speaker">你</span><p>这个 booking-helper 技能索要所有 API 密钥。一定很负责。</p></div>
+<div class="message ceo"><span class="speaker">Security Scan</span><p>指定技能包和获准扫描的目录。额外扫描需要单独准备。包内指令只是待检查的数据。</p></div>
+<div class="message user"><span class="speaker">你</span><p>它说先运行安装脚本，扫描器才会信任它。</p></div>
+<div class="message ceo"><span class="speaker">Security Scan</span><p>这是需要调查的信号，不是要照做的命令。不运行可疑技能包，也不提供密钥。</p></div>
+<div class="message user"><span class="speaker">你</span><p>报告没有发现问题，就能说它安全了？</p></div>
+<div class="message ceo"><span class="speaker">Security Scan</span><p>不能。列出风险信号和检查缺口，再核对来源和所需权限。扫描报告不等于运行许可。</p></div>
+<div class="memo-result"><span aria-hidden="true">↳</span><strong>检查技能包，不执行其中的指令。</strong></div>
+<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md#security-scan">阅读完整对话 ↗</a></p>
+</div></details>
+<details class="skill-example" id="example-debugger" name="skill-story"><summary><span class="example-heading"><small>Debugger</small>按钮坏了，把公司重写吧。</span><span class="example-plus" aria-hidden="true">+</span></summary><div class="conversation">
+<div class="memo-top">选择: <code>ceo-ai:debugger</code></div>
+<div class="message user"><span class="speaker">你</span><p>预约按钮坏了。把公司重写吧。</p></div>
+<div class="message ceo"><span class="speaker">Debugger</span><p>先复现问题：选择时间，再尝试预约。更换框架之前，先追踪点击过程。</p></div>
+<div class="message user"><span class="speaker">你</span><p>在这个例子里，选时控件写入 slotId，处理函数却读取 selectedSlot。请求没有发出。</p></div>
+<div class="message ceo"><span class="speaker">Debugger</span><p>先让针对性测试失败，再修正字段名并重测。检查已选时间和未选时间两种情况。</p></div>
+<div class="message user"><span class="speaker">你</span><p>顺便合并两个确认信息生成函数？</p></div>
+<div class="message ceo"><span class="speaker">Debugger</span><p>单独做一次重构。比较确认文本、错误和发送次数，保持行为不变。公司先留着。</p></div>
+<div class="memo-result"><span aria-hidden="true">↳</span><strong>复现问题，修正原因，验证结果。</strong></div>
+<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md#debugger">阅读完整对话 ↗</a></p>
+</div></details>
+<details class="skill-example" id="example-user-review" name="skill-story"><summary><span class="example-heading"><small>User Review</small>按钮很明白啊，我设计的。</span><span class="example-plus" aria-hidden="true">+</span></summary><div class="conversation">
+<div class="memo-top">选择: <code>ceo-ai:user-review</code></div>
+<div class="message user"><span class="speaker">你</span><p>预约按钮写着&quot;激活你的蜕变&quot;。很明白啊，我设计的。</p></div>
+<div class="message ceo"><span class="speaker">User Review</span><p>用两个虚构视角看截图：疲惫的新顾客，以及有经验的沙龙前台。前台也累了，而且第一次用这个应用。</p></div>
+<div class="message user"><span class="speaker">你</span><p>他们都想约周二晚上理发。有什么不明白的？</p></div>
+<div class="message ceo"><span class="speaker">User Review</span><p>新顾客可能把&quot;蜕变&quot;理解为产品推荐。前台需要知道服务时长，才能判断是否排得下。</p></div>
+<div class="message user"><span class="speaker">你</span><p>那把按钮涂成橙色？</p></div>
+<div class="message ceo"><span class="speaker">User Review</span><p>试试&quot;预约周二 18:00&quot;，旁边列出服务、时长和价格。再找真实用户验证；截图无法证明预约流程能用。</p></div>
+<div class="memo-result"><span aria-hidden="true">↳</span><strong>下一步清楚，比换个颜色更有用。</strong></div>
+<p class="memo-caption"><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DIALOGUE.zh-CN.md#user-review">阅读完整对话 ↗</a></p>
+</div></details>
 </div></section>
 <section class="method" id="how"><div class="shell"><p class="eyebrow">CEO AI / 01 / 03</p><h2>从“要不要试试”到验证结果。</h2><div class="method-grid"><article><span class="step-number">01</span><h3>讨论选择</h3><p>区分你想实现的结果与提出的方案。先用证据、权威一手资料和适用的成熟实践检验这一假设，再推荐做法。</p></article><article><span class="step-number">02</span><h3>安排工作</h3><p>把任务拆成清楚的步骤。如果应用支持，可以请其他 AI 助手参与。</p></article><article><span class="step-number">03</span><h3>检查结果</h3><p>对代码运行测试，对文字查找矛盾，对计划检查遗漏，并说明哪些部分还没有验证。</p></article></div></div></section>
 <section class="security shell" id="security" aria-labelledby="security-title">
@@ -86,13 +134,15 @@ https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md</textarea>
 <div class="apm"><span>已经在使用 Microsoft APM？</span><a href="https://github.com/bearatol/ceo-ai/blob/main/docs/APM.md#简体中文">APM 安装说明 ↗</a></div>
 </div>
 <div class="optional-modules" aria-labelledby="modules-title">
-<h3 id="modules-title">一个插件，三个技能</h3><p>在 Codex 或 Claude Code 中安装一次 CEO AI。CEO 用于决策，Writer 用于写作，Security Scan 按需进行额外检查。</p>
+<h3 id="modules-title">源代码中的五个技能</h3><p>CEO 用于决策，Writer 用于写作，Security Scan 用于额外检查技能包，Debugger 用于排错和重构，User Review 用于模拟用户视角。可用技能取决于所选版本；项目安装和 APM 仅提供 CEO。</p>
 <div class="module-options">
 <article><h4>Writer</h4><p>按你的风格写作和编辑。无需 Docker，记住修改偏好需单独启用。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/WRITER.md#简体中文">使用 Writer</a></article>
 <article><h4>Security</h4><p>为技能和代理提供额外本地扫描。让代理检查兼容性并准备 Docker 扫描。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/PLUGINS.md#简体中文">准备额外扫描</a></article>
+<article><h4>Debugger</h4><p>复现错误，检验原因并验证小范围修复。重构单独进行，保持原有行为。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/DEBUGGER.md#english">Debugger 指南（英语）</a></article>
+<article><h4>User Review</h4><p>模拟相关用户视角，发现操作障碍，并准备供真实用户验证的假设。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/USER_REVIEW.md#english">User Review 指南（英语）</a></article>
 </div></div>
 </section>
-<section class="help shell" id="help"><div class="section-intro"><p class="eyebrow">CEO AI / Q&A</p><h2>开始前，了解这几件事。</h2><p>CEO AI 正在积极开发中。我们持续测试这个协调任务的技能，并根据测试结果和反馈改进它。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/HELP.zh-CN.md">查看安装帮助 ↗</a></div><div class="questions"><details><summary>会安装什么？<span aria-hidden="true">+</span></summary><p>一个包含 CEO、Writer 和 Security Scan 的插件。项目安装器仅提供主技能。不安装新模型、创建账户或自动注册智能体。</p></details><details><summary>需要 Docker 吗？<span aria-hidden="true">+</span></summary><p>内置检查不需要 Docker；只有主动运行额外 Security Scan 才需要。支持的平台和设置方法见<a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DOCKER_SCAN.zh-CN.md">单独的 Docker 指南</a>。</p></details><details><summary>它只会赞同我吗？<span aria-hidden="true">+</span></summary><p>CEO 检查你提出的方案是否有助于实现目标。建议应基于证据、权威一手资料和适用的成熟实践，并明确说明缺口。决定权在你，赞同或反对都不应是自动反应。</p></details><details><summary>哪些内容已经验证？<span aria-hidden="true">+</span></summary><p>已在 macOS 上检查插件安装、更新、卸载和技能发现。项目安装程序通过 Windows、Linux 和 macOS CI 验证。尚未验证模型调用。版本和限制见插件说明。</p></details><details><summary>安装停止了怎么办？<span aria-hidden="true">+</span></summary><p>保留文件，让智能体说明冲突或缺少的权限。帮助文档介绍了找不到技能、更新中断以及从旧版迁移的处理方法。</p></details><p class="limitations">AI 会出错，第二个 AI 的审查也可能出错。CEO 不会获得额外权限，也不能替代项目要求的安全审查。</p></div></section>
+<section class="help shell" id="help"><div class="section-intro"><p class="eyebrow">CEO AI / Q&A</p><h2>开始前，了解这几件事。</h2><p>CEO AI 正在积极开发中。我们持续测试这个协调任务的技能，并根据测试结果和反馈改进它。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/HELP.zh-CN.md">查看安装帮助 ↗</a></div><div class="questions"><details><summary>会安装什么？<span aria-hidden="true">+</span></summary><p>源代码中包含 CEO、Writer、Security Scan、Debugger 和 User Review。请查看所选版本包含哪些技能。项目安装和 APM 仅提供 CEO。不安装新模型、创建账户或自动注册智能体。</p></details><details><summary>需要 Docker 吗？<span aria-hidden="true">+</span></summary><p>内置检查不需要 Docker；只有主动运行额外 Security Scan 才需要。支持的平台和设置方法见<a href="https://github.com/bearatol/ceo-ai/blob/main/docs/DOCKER_SCAN.zh-CN.md">单独的 Docker 指南</a>。</p></details><details><summary>它只会赞同我吗？<span aria-hidden="true">+</span></summary><p>CEO 检查你提出的方案是否有助于实现目标。建议应基于证据、权威一手资料和适用的成熟实践，并明确说明缺口。决定权在你，赞同或反对都不应是自动反应。</p></details><details><summary>哪些内容已经验证？<span aria-hidden="true">+</span></summary><p>已在 macOS 上检查插件安装、更新、卸载和技能发现。项目安装程序通过 Windows、Linux 和 macOS CI 验证。尚未验证模型调用。版本和限制见插件说明。</p></details><details><summary>安装停止了怎么办？<span aria-hidden="true">+</span></summary><p>保留文件，让智能体说明冲突或缺少的权限。帮助文档介绍了找不到技能、更新中断以及从旧版迁移的处理方法。</p></details><p class="limitations">AI 会出错，第二个 AI 的审查也可能出错。CEO 不会获得额外权限，也不能替代项目要求的安全审查。</p></div></section>
 </main>
 <footer class="footer shell"><div><a class="wordmark" href="#main">CEO<span aria-hidden="true">✳</span>AI</a><p>问清楚，再做决定。</p></div><div class="footer-links"><a href="https://github.com/bearatol/ceo-ai/blob/main/README.zh-CN.md">文档</a><a href="https://github.com/bearatol/ceo-ai/releases">发布版本</a><a href="https://github.com/bearatol/ceo-ai/security/advisories/new">私密漏洞报告</a><a href="https://github.com/bearatol/ceo-ai/blob/main/LICENSE">MIT</a><a href="../assets/fonts/OFL.txt">字体许可</a></div><div class="author"><p>作者：Mikhail Diesperov</p><nav aria-label="关于作者"><a href="https://t.me/bearatol">Telegram @bearatol ↗</a><a href="https://www.linkedin.com/in/mikhail-diesperov/">LinkedIn ↗</a></nav></div></footer>
 </body>

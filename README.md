@@ -27,7 +27,7 @@ established practices and authoritative primary sources before consequential
 recommendations. It separates facts from guesses, flags missing evidence and
 respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome).
 
-[A fictional customer, ambitious ideas and a more useful plan](docs/DIALOGUE.md).
+[Five fictional skill demonstrations: CEO, Writer, Security Scan, Debugger and User Review](docs/DIALOGUE.md).
 
 ## Security checks during indexing
 
@@ -57,6 +57,21 @@ inventing a new approach. With your permission, it can retain project lessons,
 design patterns and separately approved user preferences. Memory starts off.
 Every save is announced; you can view, correct, delete or disable it in plain
 language. [Memory and templates](docs/MEMORY.md#english).
+
+## Debug code and review the user experience
+
+The native plugin also includes **`ceo-ai:debugger`** to reproduce bugs, test
+possible causes and verify a small fix, or refactor within a defined scope while
+preserving tested behavior. [Debugger guide](docs/DEBUGGER.md#english).
+
+Use **`ceo-ai:user-review`** to examine a flow as a tired novice and as a chosen
+professional. It keeps expertise separate from attention, fatigue and motivation,
+points to concrete friction or possible exit points, and proposes fixes with
+tradeoffs. These are synthetic hypotheses, not user research or conversion
+predictions. [User Review guide](docs/USER_REVIEW.md#english).
+
+These two skills are additions in this source tree; check the selected release's
+contents. Project/APM installs still contain only the core CEO skill.
 
 ## Get started
 
@@ -115,12 +130,13 @@ changes, CEO can then help implement the plan and check the result.
 
 | Installation method | Verified | Still unverified |
 | --- | --- | --- |
-| Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Model invocation; Windows/Linux native managers |
+| Earlier core-only Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Five-skill layout discovery and model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
 | APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Rerun with 0.6.0 |
 
-The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232. They confirm
-that the host finds the skill, not that the model follows every instruction.
+The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232 with the earlier
+core-only layout. They do not establish discovery or model behavior for the five
+skills in this source tree.
 See [test evidence and limitations](docs/PLUGINS.md#what-was-checked) and
 [automated checks](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).
 

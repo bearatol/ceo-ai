@@ -30,8 +30,11 @@ Optional learning and reusable patterns follow [project memory](references/skill
 It starts off, requires explicit scope consent, and offers visible save notices,
 view, correction, deletion and disable controls. Installation never enables it.
 
-The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks and
-`ceo-ai:security-scan` for explicitly requested deeper scans. Load the relevant
-skill only when needed through the host's discovery mechanism. Installation does
-not run a scan, install Docker or enable memory. Project/APM installs contain only
-this core entry; do not assume native sibling skills exist in those installations.
+The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
+`ceo-ai:debugger` for debugging and behavior-preserving refactoring,
+`ceo-ai:user-review` for examining materials through novice and relevant
+professional perspectives, and `ceo-ai:security-scan` for explicitly requested
+deeper scans. Discover and load only the relevant skill within the user's
+authorization. Installation does not run reviews or scans, install Docker or
+enable memory. Project/APM installs contain only this core entry; do not assume
+native sibling skills exist in those installations.

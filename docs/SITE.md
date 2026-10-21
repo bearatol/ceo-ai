@@ -52,13 +52,54 @@ The checked site tree has SHA-256 `f3367523510b026dc9a5f12f68cd69f1bb1100193ec2d
 To reproduce this fingerprint, sort the files under `site/` by POSIX path, form
 one UTF-8 line per file as `<SHA-256>  <path>\n`, then hash the concatenated lines.
 
+### Skill example verification on 2026-10-21
+
+The five fictional skill examples were checked in Chromium for English, Russian
+and Simplified Chinese at 320, 390, 768 and 1440 CSS pixels. Each example opened
+with Enter and closed with Space. Focus outlines were visible, summary targets
+were at least 44 pixels high, titles stayed upright and no horizontal overflow
+was detected. At 390 pixels, all five examples also worked with JavaScript
+disabled in each locale. A Russian mobile screenshot was inspected; Tab and
+Shift+Tab returned focus to summaries without placing them behind the header.
+No page errors, console errors or external request attempts were observed in
+these checks. This verifies the examples' presentation, not skill execution or
+assistive-technology conformance. Clipboard and installation flows were not rerun.
+
+All 13 focused site/documentation tests passed. They include checking all five
+localized full-story links against actual Markdown files and heading fragments.
+The static site validator passed. The Markdown check passed for 97 documents
+with the local research `.runtime` directory excluded; its existing unrelated
+link errors remain outside this change.
+
+The checked site-tree SHA-256 is
+`1f1742bc20d111d75135de2a555cec3f83b0d3c318e832c4b6ffaf04e506b168`,
+using the fingerprint procedure above. These are local checks, not a publication
+record.
+
+Before publication on 2026-10-21, the full suite ran 242 tests: 215 passed and
+27 were skipped. Package integrity, site validation and the 97-document link
+check passed. In Chromium, all nine locale/application combinations copied the
+displayed installation message; the three extra-scan prompts copied correctly
+too. All six denied-clipboard cases selected the full message for manual copying.
+Reduced-motion behavior and 390/1440-pixel overflow checks passed in all locales.
+Russian desktop and mobile screenshots were visually inspected. These checks
+exercise the website controls, not installation in the host applications.
+
 ## Design and assets
 
 The visual direction is corporate cyberpunk: graphite panels, orange controls,
 restrained blue details, a central AI coordinator and readable body text.
-The workflow illustration is decorative, not live agent status. The dialogue is
-an example, not a recorded benchmark. App invocation and model behavior remain
-unverified; preserve that distinction when updating the copy.
+The workflow illustration is decorative, not live agent status. The five skill
+dialogues are fictional, satirical examples, not recorded benchmarks or guaranteed
+results. Keep the English, Russian and Simplified Chinese cards aligned with
+their full `docs/DIALOGUE*.md` scenes and the anchors `ceo`, `writer`,
+`security-scan`, `debugger` and `user-review`. Preserve the `#conversation` entry
+link, the five unique `example-*` IDs, native `details` controls and CEO open by
+default. Keep release availability and the core-only project/APM scope explicit.
+App invocation and model behavior remain unverified; preserve that distinction
+when updating the copy. The cards require keyboard, narrow-screen and
+no-JavaScript checks after changes; the earlier browser record above does not
+verify them.
 
 Visual references: the [Arasaka concept by Elias Holtsmann](https://dribbble.com/shots/17141782-Arasaka-Corporation-Landing-Page)
 and [Industrial Media interface](https://hostbento.com/templates/industrial-media-portfolio-website-template).

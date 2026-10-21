@@ -8,10 +8,13 @@ contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
 committed `plugins/ceo-ai` package for both native plugin managers. It contains
-`skills/ceo-ai/`, `skills/writer/` and `skills/security-scan/` with one manifest
-and one receipt. Writer and Security source files live in `modules/ceo-ai-writer/`
-and `modules/ceo-ai-security/`. Each generated skill has its own required shared
-resources, copied from the canonical core files. Docker is a scan-time prerequisite,
+`skills/ceo-ai/`, `skills/writer/`, `skills/security-scan/`, `skills/debugger/` and
+`skills/user-review/` with one manifest and one receipt. Source files for the
+additional skills live in `modules/ceo-ai-writer/`, `modules/ceo-ai-security/`,
+`modules/ceo-ai-debugger/` and `modules/ceo-ai-user-review/`. Each generated skill
+has its required shared resources, copied from the canonical core files, including
+`LICENSE` and `VERSION`. Debugger and User Review add instructions, not runtime
+dependencies or extra host permissions. Docker is a scan-time prerequisite,
 not an install-time dependency. Edit canonical sources only; the doctor rejects generated drift.
 The plugin builder uses an explicit publication allowlist, verifies source hashes,
 rejects symlinks and refuses to overwrite edited or unmanaged generated payloads.
@@ -52,11 +55,17 @@ Machine-facing instructions stay in English. Keep the English, Russian and
 Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 `package.py` builds only the core APM bundle. `plugins.py` builds and checks one
-native plugin with three skill directories. To add the reviewed directories to
+native plugin with five skill directories. To add the reviewed directories to
 an intact generated package, use `python3 -B scripts/plugins.py --write
 --allow-layout-change`. The flag permits additions and the known historical core
 adapter removal, never arbitrary deletion or adoption of edited files. The
 project/APM installer still installs only the core entry.
+
+Debugger and User Review are source-tree additions. Packaging checks verify
+declared files and resource paths; scenario evaluation checks whether responses
+meet their contracts. Neither is evidence that a host discovers or invokes the
+new skills. Record installation, discovery, model behavior and scenario results
+separately; do not extend historical core-only host checks to this layout.
 
 The optional module does not bundle third-party scanner code or an image. Its
 actual local scan requires Python 3.10+, POSIX, Docker and a separately prepared
@@ -110,6 +119,8 @@ Use the latest commit's run for release acceptance.
 
 - [Native plugins, migration and actual host verification](PLUGINS.md)
 - [CEO behavior and evidence](CEO_GUIDE.md)
+- [Debugger: bug fixes and behavior-preserving refactoring](DEBUGGER.md)
+- [User Review: synthetic novice and professional perspectives](USER_REVIEW.md)
 - [Security scanning and optional engine boundaries](SECURITY_SCANNING.md)
 - [Agent installation procedure](../INSTALL.md)
 - [APM integration](APM.md)

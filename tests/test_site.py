@@ -4,11 +4,54 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_each_locale_has_five_keyboard_native_skill_examples(self):
+        spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        skills = {'ceo', 'writer', 'security-scan', 'debugger', 'user-review'}
+        for page, dialogue in [('index.html', 'DIALOGUE.md'),
+                               ('ru/index.html', 'DIALOGUE.ru.md'),
+                               ('zh/index.html', 'DIALOGUE.zh-CN.md')]:
+            with self.subTest(page=page):
+                document = module.Document()
+                document.feed((ROOT / 'site' / page).read_text())
+                examples = {attrs.get('id') for tag, attrs in document.tags
+                            if tag == 'details' and attrs.get('id', '').startswith('example-')}
+                self.assertEqual(examples, {'example-' + skill for skill in skills})
+                links = {attrs.get('href') for tag, attrs in document.tags if tag == 'a'}
+                self.assertTrue({'https://github.com/bearatol/ceo-ai/blob/main/docs/'
+                                 + dialogue + '#' + skill for skill in skills} <= links)
+
+    def test_site_documentation_links_resolve_to_real_files_and_headings(self):
+        site_spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
+        site_checker = importlib.util.module_from_spec(site_spec)
+        site_spec.loader.exec_module(site_checker)
+        doc_spec = importlib.util.spec_from_file_location('check_docs', ROOT / 'scripts/check_docs.py')
+        doc_checker = importlib.util.module_from_spec(doc_spec)
+        doc_spec.loader.exec_module(doc_checker)
+        prefix = 'https://github.com/bearatol/ceo-ai/blob/main/'
+        for page in ('index.html', 'ru/index.html', 'zh/index.html'):
+            document = site_checker.Document()
+            document.feed((ROOT / 'site' / page).read_text())
+            for tag, attrs in document.tags:
+                link = attrs.get('href', '')
+                if tag != 'a' or not link.startswith(prefix):
+                    continue
+                destination = urlsplit(link[len(prefix):])
+                if not destination.path.endswith('.md'):
+                    continue
+                with self.subTest(page=page, link=link):
+                    target = ROOT / unquote(destination.path)
+                    content = doc_checker.read_local(ROOT, target)
+                    if destination.fragment:
+                        self.assertIn(unquote(destination.fragment), doc_checker.headings(content))
+
     def test_public_site_contract(self):
         spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
         module = importlib.util.module_from_spec(spec)

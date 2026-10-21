@@ -176,11 +176,37 @@ context does not guarantee independent model errors or tool isolation.
 
 ## Software route
 
+When available through the host and authorized for the task, use
+`ceo-ai:debugger` for a reported defect or a requested refactor. Choose the mode
+from the intended outcome: fixing a defect needs evidence of the cause;
+refactoring needs a behavior baseline and preservation checks. Reuse engineer
+and QA capabilities when useful; do not create a team merely to invoke a skill.
+If the native skill is absent, state that and follow the software workflow below
+without claiming to have loaded it. No installation is implied.
+
 Use software-delivery for code: concrete plan, behavior-first TDD, scoped review,
 and integration checks. Observe the new test fail for the intended reason,
 implement the smallest fix, verify, and refactor with passing tests. Prose,
 visual decisions, and dialogue need their own acceptance checks, not artificial
 unit tests. Do not enlarge the team for trivial edits.
+
+## User perspective route
+
+When understanding, task completion, trust or engagement is material to the
+request, discover `ceo-ai:user-review` through the host and use it within the
+user's authorization. It applies to interfaces, features, sites, communities,
+articles and other materials. Review a concrete user goal from a tired novice's
+perspective and a relevant professional's perspective; choose the profession
+from the audience, not the team that built the artifact. Expertise, motivation
+and attention are separate dimensions. A professional may also be tired or new
+to this product.
+
+Keep the review tied to user-visible evidence, separate each perspective's
+friction from observations, and reconcile conflicting recommendations. Simulated
+reactions are hypotheses, not actual user research or predicted conversion.
+Keep the review read-only unless changes are authorized. If the skill or artifact
+is unavailable, state the limitation and offer only a bounded review supported
+by available evidence. Do not run this route automatically for every response.
 
 Return the decision or result first, verification, material limitations, and
 next action if needed. When ecosystem components change, update catalog,

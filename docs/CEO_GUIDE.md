@@ -1,5 +1,7 @@
 # Working with CEO
 
+Fictional CEO scene: [English](DIALOGUE.md#ceo) | [Русский](DIALOGUE.ru.md#ceo) | [简体中文](DIALOGUE.zh-CN.md#ceo).
+
 [CEO AI website](https://bearatol.github.io/ceo-ai/) · [Work examples](https://bearatol.github.io/ceo-ai/#cases) · [Install](https://bearatol.github.io/ceo-ai/#install)
 
 CEO helps examine a decision and coordinate work. Start with the outcome and
@@ -99,7 +101,13 @@ The builtin check uses Python's standard library, without Docker, LLM calls or
 external APIs. The native plugin includes `ceo-ai:security-scan` for explicitly
 requested local NVIDIA checks. It needs Docker and a reviewed scanner image only
 when run; indexing never invokes it automatically. The same plugin includes
-`ceo-ai:writer` for writing and editing. No separate plugin installation is needed.
+`ceo-ai:writer` for writing and editing. The current source tree also includes
+`ceo-ai:debugger` for debugging and behavior-preserving refactoring, and
+`ceo-ai:user-review` for synthetic reviews as a tired novice and a chosen
+professional. No separate plugin installation is needed for this layout. Load
+siblings through the host's skill discovery only when relevant; do not assume
+their availability in an older release or a project/APM installation, which
+contains only the core entry. See [Debugger](DEBUGGER.md) and [User Review](USER_REVIEW.md).
 
 [Security scanning](SECURITY_SCANNING.md) explains T0–T4 observations, partial
 coverage, module prerequisites, costs and the disabled future API. No result

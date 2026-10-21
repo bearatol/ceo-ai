@@ -26,7 +26,7 @@ CEO 将提出的方案视为实现目标的一项假设。它检查关键前提�
 它区分事实与推测，说明证据缺口，尊重用户知情后的偏好。
 [如何检验方案](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome)。
 
-[想要闪光效果、还想公开密钥的客户：一段虚构对话](docs/DIALOGUE.zh-CN.md).
+[五个虚构技能示例: CEO, Writer, Security Scan, Debugger 和 User Review](docs/DIALOGUE.zh-CN.md).
 
 ## 索引时进行安全检查
 
@@ -48,6 +48,19 @@ Windows 扫描拒绝网络驱动器、重解析点和包别名。参见 [Windows
 获得同意后，它可以保存项目经验、设计模板，以及单独获批的跨项目偏好。
 记忆默认关闭，每次保存都会告知你。可以用自然语言查看、修改、删除或关闭记忆。
 [记忆与模板](docs/MEMORY.md#简体中文)。
+
+## 调试代码与检查用户流程
+
+原生插件还包含 **`ceo-ai:debugger`**：复现问题、验证可能的原因并检查小范围修复，
+或在明确的范围内重构并保持已测试的行为。[Debugger 指南（英俄文）](docs/DEBUGGER.md)。
+
+**`ceo-ai:user-review`** 从疲惫的新手和指定专业人士的角度检查流程。
+它把专业知识与注意力、疲劳和动机分别考虑，指出具体障碍及可能离开的环节，
+提出修改建议并说明取舍。这些是模拟产生的假设，不是用户研究或转化率预测。
+[User Review 指南（英俄文）](docs/USER_REVIEW.md)。
+
+这两个技能是当前源码中的新增内容，请核对所选发布版本。项目安装和 APM
+仍然只提供核心 CEO 技能。
 
 ## 开始使用
 
@@ -104,12 +117,12 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 
 | 安装方式 | 已验证 | 尚未验证 |
 | --- | --- | --- |
-| Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 模型调用；Windows/Linux 原生管理器 |
+| 旧版仅含核心技能的 Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 五技能布局的发现与模型调用；Windows/Linux 原生管理器 |
 | 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
 | APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | 0.6.0 的重新验证 |
 
-插件检查使用 Codex CLI 0.147.0 和 Claude Code 2.1.232。
-应用发现了技能，但这不能证明模型会遵守所有指令。
+旧版仅含核心技能的插件使用 Codex CLI 0.147.0 和 Claude Code 2.1.232 检查。
+这些结果不能证明当前源码中五个技能的发现与模型行为。
 [验证结果与限制](docs/PLUGINS.md#验证范围) ·
 [自动检查](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)。
 
