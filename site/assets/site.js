@@ -22,7 +22,8 @@
     if (plugin) {
       const command = document.createElement('code');
       command.textContent = plugin;
-      parts.push(panel.dataset.plugin + ' ', command, '; ');
+      const label = selected.value === 'Codex' ? panel.dataset.pluginSelect : panel.dataset.plugin;
+      parts.push(label + ' ', command, '; ');
     }
     const command = document.createElement('code');
     command.textContent = project;
@@ -53,7 +54,16 @@
   const stage = visual?.querySelector('.flow-stage');
   if (!visual || !button || !stage) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 801px)');
+  const scene = visual.querySelector('.core-scene');
   let paused = false, visible = false, phase = 0;
+  let frame = 0;
+  const resetTilt = () => {
+    window.cancelAnimationFrame(frame);
+    frame = 0;
+    scene?.style.removeProperty('--tilt-x');
+    scene?.style.removeProperty('--tilt-y');
+  };
   const sync = () => {
     const active = !paused && !reduced.matches && visible && !document.hidden;
     visual.classList.toggle('motion-active', active);
@@ -62,6 +72,7 @@
     button.setAttribute('aria-label', label);
     button.title = label;
     button.dataset.paused = String(paused);
+    if (!active || !pointer.matches) resetTilt();
   };
   visual.addEventListener('animationiteration', event => {
     if (event.animationName !== 'task-flow' || !event.target.classList.contains('route-0') ||
@@ -71,14 +82,47 @@
     stage.textContent = visual.getAttribute('data-stage-' + phase);
   });
   button.addEventListener('click', () => { paused = !paused; sync(); });
+  visual.addEventListener('pointermove', event => {
+    if (!scene || event.pointerType !== 'mouse' || !pointer.matches ||
+        !visual.classList.contains('motion-active')) return;
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(() => {
+      const bounds = visual.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
+      const y = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1));
+      scene.style.setProperty('--tilt-x', (-y * 4).toFixed(2) + 'deg');
+      scene.style.setProperty('--tilt-y', (x * 4).toFixed(2) + 'deg');
+      frame = 0;
+    });
+  });
+  visual.addEventListener('pointerleave', resetTilt);
+  visual.addEventListener('pointercancel', resetTilt);
+  pointer.addEventListener('change', sync);
   reduced.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
-    visible = entries[0].isIntersecting;
+    visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .12;
     sync();
-  }).observe(visual);
+  }, { threshold: .12 }).observe(visual);
   else visible = true;
   sync();
+})();
+
+// Reveal only small illustrations and cards. Content is visible before JS runs.
+(() => {
+  if (!('IntersectionObserver' in window)) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      if (!reduced.matches && !entry.target.contains(document.activeElement)) {
+        entry.target.classList.add('reveal-in');
+      }
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: .12, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.method-grid article, .scan-preview, .pattern-preview, .module-options article')
+    .forEach(element => observer.observe(element));
 })();
 
 // Anchor offsets follow the actual sticky header, including translated labels.

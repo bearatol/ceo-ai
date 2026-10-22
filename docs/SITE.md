@@ -7,9 +7,9 @@ Edit the three pages together and keep their installation guidance consistent
 with [INSTALL.md](../INSTALL.md).
 
 The installation button copies a message. It does not run an installer.
-The message names the selected tool, limits installation to the current project,
-asks the agent to check the operating system and prerequisites, and points to
-the instructions tagged `v0.3.0`.
+The message names the selected tool, asks the agent to check existing installs
+and plugin support, explain the scope, preserve local edits, and report the
+installation method and launch steps. It points to the current `INSTALL.md`.
 Without JavaScript, visitors can select the message manually. If clipboard
 access fails, the page selects the message and explains how to copy it.
 
@@ -103,6 +103,42 @@ checked by disabling the feature-specific rule in Chromium; this was not a
 separate Safari or Firefox run. The Russian desktop card layout was inspected.
 
 ## Design and assets
+
+### Motion and clarity update on 2026-10-22
+
+The hero now states which AI applications host CEO AI. The installation guidance
+distinguishes selecting the Codex plugin from entering a command. The diagram
+uses a shaded SVG core, three phase colors and 2.8-second signal cycles with a
+short pause at each destination. Small cards enter once on scroll; the main copy
+is always visible. Desktop pointer movement tilts the diagram by at most four
+degrees. Mobile omits that tilt and the ambient loops. The existing pause,
+offscreen stop and reduced-motion controls also govern the new effects.
+
+References inspected were [Tarantool](https://www.tarantool.io/),
+[Neo4j](https://neo4j.com/), [Linear](https://linear.app/),
+[Vercel](https://vercel.com/) and [Stripe](https://stripe.com/).
+The chosen direction uses a central object with depth, meaningful signal paths
+and restrained interface feedback. No reference assets or runtime libraries were
+added. Ambient motion uses transform and opacity, following the
+[web.dev animation guidance](https://web.dev/articles/animations-guide).
+
+Chromium checks passed in all three locales at 320, 390, 768 and 1440 pixels
+without horizontal overflow. All nine application/locale combinations copied the
+displayed installation message. Keyboard radio selection and disclosure controls,
+three denied-clipboard cases, three no-JavaScript cases and three reduced-motion
+cases passed. The diagram advanced, paused all loops, resumed, stopped offscreen
+and responded to live motion-preference changes. Desktop tilt, its removal on
+mobile, scroll reveals and the missing-IntersectionObserver fallback passed.
+No page errors, console errors or external runtime requests were observed in
+the locale/control checks. Russian desktop and mobile screenshots were inspected.
+These are website checks in Chromium, not host-application installation tests,
+real-user research or Safari/Firefox verification.
+
+The full suite ran 243 tests: 216 passed and 27 were skipped. The site validator
+and package doctor passed. The final source diff received the direct security
+checklist review; an independently restricted reviewer was unavailable.
+
+### Visual identity
 
 The visual direction is corporate cyberpunk: graphite panels, orange controls,
 restrained blue details, a central AI coordinator and readable body text.

@@ -4,15 +4,28 @@
 <path id="route-analysis" pathLength="1" d="M237 346 L196 376 H120 V419 H94 V455"/>
 <path id="route-execution" pathLength="1" d="M280 346 V455"/>
 <path id="route-review" pathLength="1" d="M323 346 L364 376 H440 V419 H466 V455"/>
+<radialGradient id="core-fill" cx=".3" cy=".15" r="1">
+<stop stop-color="#354959"/><stop offset=".48" stop-color="#1a2732"/><stop offset="1" stop-color="#0b1219"/>
+</radialGradient>
+<linearGradient id="core-edge" x1="170" y1="158" x2="390" y2="346" gradientUnits="userSpaceOnUse">
+<stop stop-color="#e1eaf0"/><stop offset=".3" stop-color="#839baa"/><stop offset=".65" stop-color="#344c5b"/><stop offset="1" stop-color="#a67b50"/>
+</linearGradient>
+<linearGradient id="core-bevel" x1="280" y1="158" x2="280" y2="346" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6b8393" stop-opacity=".7"/><stop offset=".42" stop-color="#243442" stop-opacity=".3"/><stop offset="1" stop-color="#050b10"/>
+</linearGradient>
 </defs>
-<g stroke="#3d6276" stroke-width=".7">
+<g stroke="#426073" stroke-width=".65" opacity=".72">
 <use href="#orbit"/><ellipse cx="280" cy="252" rx="160" ry="170"/><ellipse cx="280" cy="252" rx="96" ry="170"/><ellipse cx="280" cy="252" rx="32" ry="170"/>
 <ellipse cx="280" cy="252" rx="198" ry="40"/><ellipse cx="280" cy="252" rx="198" ry="86"/><ellipse cx="280" cy="252" rx="198" ry="135"/>
 <path d="M82 252h396M280 82v340M140 132l280 240M140 372l280-240"/>
 </g>
-<g stroke="#ff963f"><use href="#orbit" stroke-width="2" stroke-dasharray="16 9" stroke-dashoffset="-4.5"/><path d="M63 226v-35h35m364 0h35v35M63 278v35h35m364 0h35v-35" stroke-width="1.5"/></g>
-<path d="M237 158h86l67 53v82l-67 53h-86l-67-53v-82z" fill="#101820" stroke="#9dc9e0" stroke-width="1.5"/>
-<path d="M244 169h72l62 48v70l-62 48h-72l-62-48v-70z" stroke="#384f60"/>
-<g stroke="#9dc9e0" stroke-width="1.4" stroke-linejoin="round"><use href="#route-analysis"/><use href="#route-execution"/><use href="#route-review"/></g>
+<g stroke="#ff963f"><use href="#orbit" stroke-width="1" stroke-dasharray="1 8" opacity=".5"/><path d="M63 226v-35h35m364 0h35v35M63 278v35h35m364 0h35v-35" stroke-width="1.2" opacity=".75"/></g>
+<path d="M237 158h86l67 53v82l-67 53h-86l-67-53v-82z" transform="translate(0 7)" fill="#05090d" opacity=".85"/>
+<path d="M237 158h86l67 53v82l-67 53h-86l-67-53v-82z" fill="url(#core-bevel)" stroke="url(#core-edge)" stroke-width="1.6"/>
+<path d="M244 169h72l62 48v70l-62 48h-72l-62-48v-70z" fill="url(#core-fill)" stroke="#607887" stroke-width=".8"/>
+<path d="M170 211l67-53h86l67 53M182 217l62-48h72" stroke="#c4d9e5" stroke-width=".9" opacity=".7"/>
+<path d="M170 293l67 53h86l67-53" stroke="#ff963f" stroke-width="1" opacity=".55"/>
+<path d="M251 181h58M258 322h44" stroke="#8399a6" stroke-width=".7" opacity=".45"/>
+<g stroke="#7895a7" stroke-width="1" stroke-linejoin="round"><use href="#route-analysis"/><use href="#route-execution"/><use href="#route-review"/></g>
 <g fill="#ff963f"><circle cx="94" cy="455" r="3"/><circle cx="280" cy="455" r="3"/><circle cx="466" cy="455" r="3"/><circle cx="280" cy="82" r="3"/><circle cx="82" cy="252" r="3"/><circle cx="478" cy="252" r="3"/></g>
 </svg>
