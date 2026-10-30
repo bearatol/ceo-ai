@@ -33,6 +33,21 @@ their preference, it proceeds rather than endlessly questioning what they want.
 
 These are workflow instructions, not a guarantee that a model will follow them.
 
+## Conversation style
+
+All five native skills use Writer-informed defaults for normal conversation as
+well as finished text: answer the user's question directly, explain concrete
+actions, keep the form of address consistent, and avoid filler, automatic praise
+and repeated conclusions. Internal instructions are in English; responses follow
+the user's language and requested tone, detail and format.
+
+Each skill contains its own compact style guidance. Using it does not require
+invoking Writer or enabling memory. Brevity never removes required evidence,
+uncertainty, risk explanations, informed approval or the skill's output contract.
+Code, identifiers, URLs and exact quotations retain their meaning and spelling.
+See the [synthetic conversation scenarios](../tests/scenarios/conversation-style.md)
+for the acceptance cases and their limits.
+
 ## Proportionate coordination
 
 For dependent work, CEO keeps a compact plan and progress record. For a decision
