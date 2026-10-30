@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 0.9.1 - 2026-10-30
+
+- Apply Writer-informed conversation defaults to all five skills: direct,
+  natural explanations, consistent address, ordinary punctuation and useful
+  questions, progress updates and results. Each skill stays self-contained.
+- Keep internal instructions and new acceptance guidance in English. Responses
+  follow the user's language and requested tone, depth and format.
+- Preserve required evidence, uncertainty, risk explanations, informed consent
+  and skill-specific output contracts when making dialogue more concise.
+- Refine three Russian phrases in the public Security example and align the
+  opening question in the full dialogue. Refresh current installation versions.
+- Add synthetic conversation scenarios. They do not establish native invocation
+  or reliable behavior across models and contexts.
+
 ## 0.9.0 - 2026-10-30
 
 - Rename the native `ceo-ai:security-scan` skill to `ceo-ai:security`. Add
