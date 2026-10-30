@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Strengthen Writer's professional editing workflow for product copy, business,
+  technical and personal writing. Add bilingual examples and review exercises;
+  use Wikipedia's style observations as editorial prompts, not an AI detector.
+  Keep factual limits, user voice and opt-in memory unchanged.
+
 ## 0.8.0
 
 - Support builtin security indexing on native Windows with fixed local NTFS.

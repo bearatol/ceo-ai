@@ -55,12 +55,12 @@
     "skills/user-review/VERSION": "a66780da23103beaf12432b418508966b31a2a3a787f9468a5b6cdaa8667c1ef",
     "skills/user-review/references/professional-profiles.md": "09d45aa4981685a8b55ae63ba7c562f62296585b4833fa52b9d0428305e7bc7f",
     "skills/writer/LICENSE": "f3332f2609f5727debc8f943ded03e5f35243d6ed58fd4dba7d291c052af2d7e",
-    "skills/writer/SKILL.md": "4f86e0012f2edc6b5709d069fc0510530e61681a4fbd8723d74928bb1f8d855c",
+    "skills/writer/SKILL.md": "e0e16a35fdef413338710b939768634f32ec57dbc8fac25f4d2a8caa7506fbf0",
     "skills/writer/VERSION": "a66780da23103beaf12432b418508966b31a2a3a787f9468a5b6cdaa8667c1ef",
     "skills/writer/memory/pattern.example.json": "760caaeaa664148bb12cacc49e62383a9de6a6ea4d5dc6a25ccd05ead72b2e99",
     "skills/writer/memory/record.schema.json": "d63f736d29d298435c6a8711aa924239faab1e26971a482fa14a6045d47d7763",
     "skills/writer/memory/store.py": "7d174306699d88394b2ade92d9c111206febc4139e8b856ea755a0011e3f25df",
     "skills/writer/references/skills/project-memory.md": "c524c3a2f77a030c7341883cf39601e03971b1fb3ed9e4cc16a42d98c7c865a1",
-    "skills/writer/references/skills/writer-style.md": "dd33a5fd9884edceb841f94ff4ae93ed352262ac499d14ae2e890157edbf058f"
+    "skills/writer/references/skills/writer-style.md": "98ffad932b7e447f2d85de31621db3539024ec60356b332fbfc9fb109eee01fc"
   }
 }

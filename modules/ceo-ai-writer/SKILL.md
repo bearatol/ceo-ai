@@ -1,19 +1,22 @@
 ---
 name: writer
-description: Draft, edit, or translate posts, articles, announcements, and messages in the user's voice, with plain language and optional learning from explicit corrections.
+description: Draft, edit, or translate articles, messages, and product copy with clear meaning, professional judgment, the user's voice, and optional learning from explicit corrections.
 ---
 
 # Writer
 
-Write as the user would explain the subject to another person. Keep enough detail
-to make the story useful. Natural writing is not a promise to evade AI detection
-or a reason to hide authorship assistance where disclosure is required.
+Write for the reader's task, with the care of a professional editor. Use the
+user's voice when it is known; otherwise choose a clear, capable tone suited to
+the format. Keep the detail that makes the text useful. Natural writing is not a
+promise to evade AI detection or a reason to hide authorship assistance where
+disclosure is required.
 
 ## Locate resources
 
-This entry is `skills/writer/SKILL.md` inside the `ceo-ai` plugin. Its containing directory is the package root. Resolve the resource paths
-below against that root, never against the project or another plugin's cache.
-Missing resources mean an incomplete installation.
+In the installed `ceo-ai` plugin this entry is `skills/writer/SKILL.md`. Resolve
+the resource paths below relative to the directory containing this file, never
+against the current project or another plugin's cache. Missing resources mean
+an incomplete installation.
 
 Read `references/skills/writer-style.md` for editorial checks and synthetic
 examples. Read `references/skills/project-memory.md` only for persistent learning
@@ -21,26 +24,56 @@ or profile management. Writer is included with CEO AI. It requires no
 external service, paid API, Docker or autonomous background job. Normal host model
 usage still costs tokens. Persistent memory uses the existing Python 3.10+ helper.
 
-## Draft from evidence
+## Draft and edit from evidence
 
-1. Establish the audience, language, format and intended point from the request.
+1. Establish the audience, reader's task, language, format and intended point.
    Reuse supplied drafts, corrections and explicitly selected writing samples.
+   For interface copy, identify the screen state and what the person can do next.
    Ask only for something that materially changes the result. Do not search mail,
    chats, local folders or accounts for samples without authorization.
-2. Separate facts from style. A supplied sample is evidence of phrasing, not proof
-   of the current product's features or the user's biography. Preserve numbers,
-   technical meaning, uncertainty and attribution. Never invent personal memories,
-   feelings, experiments, quotes, customers or results to make prose sound human.
+2. Separate facts from style. A sample shows phrasing, not the current product's
+   features or the user's biography. Preserve numbers, technical meaning,
+   uncertainty and attribution. Never invent personal memories, feelings,
+   experiments, quotes, customers or results to make prose sound human. Verify
+   sources through authorized tools when necessary; do not invent a reference or
+   pretend a supplied source supports a claim it does not address.
 3. Prefer explicit user instructions over learned preferences, then relevant
-   approved examples, then the defaults below. Apply a correction in context:
+   approved examples, then these defaults. Apply a correction in context:
    "made" can suit a personal project story without banning "released" in release
    notes. Do not impose one author's voice on every user of the public plugin.
-4. Draft a connected explanation: why the subject matters here, what happened,
-   what follows from it. Use headings, lists and technical detail when helpful,
-   not to satisfy a fixed template. Do not turn every task into a marketing funnel.
-5. Review once for factual drift and once for voice, rhythm and punctuation.
-   Output the requested text, without internal critique or competing drafts unless
-   requested. Keep any memory-save notice separate from publication copy.
+4. Build the explanation around the information the reader needs. Name the
+   action, result or decision before elaborating. Connect reasons to consequences.
+   Replace slogans and vague praise with supported specifics. Use lists, headings
+   and technical detail where they help; do not force a fixed outline or funnel.
+5. Edit in two passes. First check claims, logic, missing conditions and whether
+   the text answers the reader's question. Then check phrasing, rhythm and
+   punctuation. Read each paragraph as part of the whole: cut a sentence that
+   merely repeats its heading or restates the previous sentence. A smoother
+   sentence must not change the meaning. Preserve a sound draft's own voice.
+6. Apply the format checks below and `references/skills/writer-style.md`. Stop
+   when the text is accurate, clear and fit for use; do not keep substituting
+   synonyms or adding personality. Output the requested finished text without
+   internal critique or competing drafts unless asked. Keep any memory-save
+   notice separate from publication copy.
+
+## Match the format
+
+- **Interface copy:** name the object or action in labels and buttons. State the
+  actual result, error or next step in messages. Use the product's vocabulary
+  consistently. Do not substitute a metaphor for a necessary instruction, expose
+  implementation details, or promise delivery, safety or availability that the
+  product has not established. Preserve accessible names, placeholders, variables,
+  units and the distinction between a completed action and one still in progress.
+- **Business writing:** state the request, decision, responsibility and relevant
+  deadline plainly. Use a respectful tone without ceremonial praise or invented
+  urgency. Keep the conditions the recipient needs to act.
+- **Technical or analytical writing:** preserve the mechanism, scope, evidence
+  and uncertainty. Use a domain term when it is the precise term, explaining it
+  for an unfamiliar reader. Distinguish observation from interpretation and
+  proposed work from completed work.
+- **Personal writing:** use the author's supported experience and point of view.
+  Keep a concrete detail when it carries the story. Do not manufacture an
+  anecdote, emotion or casual persona to make the author seem relatable.
 
 ## Defaults until the user says otherwise
 
