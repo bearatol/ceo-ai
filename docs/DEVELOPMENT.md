@@ -8,14 +8,15 @@ contains their relative paths along with four role prompts, the protocol and the
 packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
 committed `plugins/ceo-ai` package for both native plugin managers. It contains
-`skills/ceo-ai/`, `skills/writer/`, `skills/security-scan/`, `skills/debugger/` and
+`skills/ceo-ai/`, `skills/writer/`, `skills/security/`, `skills/debugger/` and
 `skills/user-review/` with one manifest and one receipt. Source files for the
 additional skills live in `modules/ceo-ai-writer/`, `modules/ceo-ai-security/`,
 `modules/ceo-ai-debugger/` and `modules/ceo-ai-user-review/`. Each generated skill
 has its required shared resources, copied from the canonical core files, including
 `LICENSE` and `VERSION`. Debugger and User Review add instructions, not runtime
-dependencies or extra host permissions. Docker is a scan-time prerequisite,
-not an install-time dependency. Edit canonical sources only; the doctor rejects generated drift.
+dependencies or extra host permissions. Security adds target-specific audit and
+consent instructions; Docker is required only for its optional SkillSpector
+skill-package scan. Edit canonical sources only; the doctor rejects generated drift.
 The plugin builder uses an explicit publication allowlist, verifies source hashes,
 rejects symlinks and refuses to overwrite edited or unmanaged generated payloads.
 It is a developer build for a trusted checkout, not a concurrent runtime installer.
@@ -57,8 +58,11 @@ Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONT
 `package.py` builds only the core APM bundle. `plugins.py` builds and checks one
 native plugin with five skill directories. To add the reviewed directories to
 an intact generated package, use `python3 -B scripts/plugins.py --write
---allow-layout-change`. The flag permits additions and the known historical core
+--allow-layout-change`. The flag permits additions, the complete known
+`skills/security-scan/` to `skills/security/` migration, and historical core
 adapter removal, never arbitrary deletion or adoption of edited files. The
+rename rejects incomplete/extra legacy files or a colliding new skill directory.
+Both receipt verification and staged promotion/rollback remain mandatory. The
 project/APM installer still installs only the core entry.
 
 Debugger and User Review are source-tree additions. Packaging checks verify
@@ -67,11 +71,14 @@ meet their contracts. Neither is evidence that a host discovers or invokes the
 new skills. Record installation, discovery, model behavior and scenario results
 separately; do not extend historical core-only host checks to this layout.
 
-The optional module does not bundle third-party scanner code or an image. Its
-actual local scan requires Python 3.10+, POSIX, Docker and a separately prepared
-reviewed immutable NVIDIA image. The module performs no installation, pulls or
-LLM/API calls. Core indexing requires no Docker. Cloud execution, accounts and
-subscriptions are not implemented.
+Security bundles no general-purpose pentest runtime. Its assistant-led audits use
+the host model and authorized tools; scenario fixtures are in
+`tests/scenarios/security.md`. They are not records of native invocation or live
+tests. Its optional SkillSpector adapter does not bundle third-party scanner
+code or an image; that route requires Python 3.10+, POSIX, Docker and a separately
+prepared reviewed immutable NVIDIA image. The adapter performs no installation,
+pulls or LLM/API calls. Core indexing requires no Docker. A CEO AI cloud scanner,
+accounts and subscriptions are not implemented.
 
 The [Checks workflow](../.github/workflows/checks.yml) runs the ordinary tests,
 doctor and documentation checks on Ubuntu with Python 3.10/3.12 and macOS with

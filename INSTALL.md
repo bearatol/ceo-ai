@@ -13,7 +13,7 @@ running installation or update commands. Removal uses the installed manager and
 does not require looking up a new release.
 
 The current source tree builds one native plugin, `ceo-ai`, containing CEO,
-Writer, Security Scan, Debugger and User Review. No separate skill installation
+Writer, Security, Debugger and User Review. No separate skill installation
 is required for this layout. Installation does
 not authorize a scan, install Docker or enable memory. Verify that the reviewed
 snapshot has this layout; older releases may differ. Never silently substitute
@@ -43,7 +43,7 @@ a development checkout when stable release selection fails.
    hooks, commands, agent registrations, MCP servers or dependency installers.
 5. After native installation, verify the cached payload and host discovery.
    Expected for this layout: `ceo-ai:ceo-ai`, `ceo-ai:writer`,
-   `ceo-ai:security-scan`, `ceo-ai:debugger` and `ceo-ai:user-review`,
+   `ceo-ai:security`, `ceo-ai:debugger` and `ceo-ai:user-review`,
    with no native agents/hooks/MCP. Claude invokes
    `/ceo-ai:ceo-ai`; in Codex select that entry from the skill picker. The package
    root is its cached `skills/ceo-ai` directory, not the source checkout.
@@ -57,12 +57,22 @@ a development checkout when stable release selection fails.
 `ceo-ai:writer` uses the host model for writing. Python 3.10+ is needed only for
 optional persistent preferences. Installation never enables memory.
 
-`ceo-ai:security-scan` runs only on explicit request. It needs Python 3.10+, POSIX,
-Docker and a separately prepared, reviewed immutable SkillSpector image. Establish
+`ceo-ai:security` uses the host model and authorized tools for audits of code,
+websites, APIs, mobile apps, configuration, infrastructure, AI systems and skill
+packages, plus explicitly consented, bounded penetration tests. It bundles no
+runtime scanner suite. Ordinary audits have no Docker or universal Python
+prerequisite; available tools determine coverage. Active tests require an
+explained target, purpose, exact actions, risks, safer option, limits and
+stop/recovery plan before informed approval. Unchanged approvals can be reused;
+new targets or risks need new consent. Host permissions and policy still apply.
+
+Only the optional SkillSpector route for skill packages needs Python 3.10+, POSIX,
+Docker and a separately prepared, reviewed immutable scanner image. Establish
 approved input paths, a private workspace, image identity and resource scope first.
-No Docker or image is installed automatically. Missing prerequisites leave only
-this extra scan unavailable; the other skills remain usable. The scanner has no
-LLM/API calls or cloud fallback. Host conversation tokens still apply.
+No Docker or image is installed automatically. Missing prerequisites leave this
+route unavailable. This static adapter makes no LLM/API calls and has no cloud
+fallback; Security's host-model conversation still uses your app's model tokens.
+See [Security workflow](docs/SECURITY_SCANNING.md).
 
 `ceo-ai:debugger` and `ceo-ai:user-review` use the host model and authorized tools.
 They bundle no runtime or new permissions. Debugger needs access to the relevant
@@ -73,7 +83,8 @@ or successful host discovery.
 Each skill resolves resources from its own directory inside the installed package.
 Verify all five directories for this layout against the reviewed payload.
 Project/APM installs continue to provide the core skill only. See
-[Writer](docs/WRITER.md), [scan setup](docs/DOCKER_SCAN.md),
+[Writer](docs/WRITER.md), [Security](docs/SECURITY_SCANNING.md),
+[optional skill-package scan setup](docs/DOCKER_SCAN.md),
 [Debugger](docs/DEBUGGER.md) and [User Review](docs/USER_REVIEW.md).
 
 ## Migration between installation methods

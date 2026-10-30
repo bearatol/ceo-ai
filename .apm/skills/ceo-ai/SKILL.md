@@ -19,6 +19,9 @@ prompts under agents/ can guide an approved native subagent whose effective
 permissions fit the assignment. They are not registered native agents merely
 because their files exist. Do not manufacture availability or separate reviews.
 Respect mandatory security gates; mentor and QA roles do not replace them.
+An independent review can use a separate qualified native subagent. If Claude
+is unavailable, use that route within the user's authorization and actual host
+restrictions; do not require a Claude login or claim unverified tool isolation.
 
 Explain work in the user's language. Describe the actual check: tests for code,
 contradictions and unsupported claims for text, and alternatives and failure
@@ -33,8 +36,9 @@ view, correction, deletion and disable controls. Installation never enables it.
 The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for examining materials through novice and relevant
-professional perspectives, and `ceo-ai:security-scan` for explicitly requested
-deeper scans. Discover and load only the relevant skill within the user's
+professional perspectives, and `ceo-ai:security` for scoped security audits and
+informed, authorized penetration tests, including optional local skill-package
+scans. Discover and load only the relevant skill within the user's
 authorization. Installation does not run reviews or scans, install Docker or
 enable memory. Project/APM installs contain only this core entry; do not assume
 native sibling skills exist in those installations.

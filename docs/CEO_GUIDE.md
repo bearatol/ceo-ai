@@ -42,6 +42,11 @@ the smallest useful check. It does not approve spending, grant access, or replac
 a mandatory security review. The normal limit is one assessment and one focused
 follow-up. Settled preferences should not be debated again without new evidence.
 
+Independent review means a separate qualified context, not a mandatory provider.
+If Claude is unavailable, CEO can use an authorized native subagent. It must
+honor the applicable canonical security-review method and host restrictions;
+instruction-only limits must not be presented as technical isolation.
+
 The optional CEO agent role declares read-only access; the installer does not
 register it as a native agent. It delegates implementation to an
 authorized worker when one is available. A host running the CEO skill directly
@@ -98,9 +103,12 @@ executing content. TOML remains partial and its declared permissions are not an
 attestation of the host's effective restrictions.
 
 The builtin check uses Python's standard library, without Docker, LLM calls or
-external APIs. The native plugin includes `ceo-ai:security-scan` for explicitly
-requested local NVIDIA checks. It needs Docker and a reviewed scanner image only
-when run; indexing never invokes it automatically. The same plugin includes
+external APIs. The native plugin includes `ceo-ai:security` for audits of code,
+websites, APIs, mobile apps, configuration, infrastructure, AI systems and skill
+packages, plus explicitly authorized, bounded penetration tests. Ordinary audits use the
+host model and available tools without a Docker prerequisite. Only its optional
+SkillSpector route for skill packages needs Docker and a reviewed scanner image;
+indexing never invokes it automatically. The same plugin includes
 `ceo-ai:writer` for writing and editing. The current source tree also includes
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring, and
 `ceo-ai:user-review` for synthetic reviews as a tired novice and a chosen
@@ -109,8 +117,9 @@ siblings through the host's skill discovery only when relevant; do not assume
 their availability in an older release or a project/APM installation, which
 contains only the core entry. See [Debugger](DEBUGGER.md) and [User Review](USER_REVIEW.md).
 
-[Security scanning](SECURITY_SCANNING.md) explains T0–T4 observations, partial
-coverage, module prerequisites, costs and the disabled future API. No result
+[Security workflow](SECURITY_SCANNING.md) explains informed consent, target-specific
+methods, evidence reports, T0–T4 inventory observations, partial coverage,
+optional scanner prerequisites, costs and the disabled future scanner API. No result
 grants execution authority. Actual restrictions must be enforced by the host.
 
 ## Code and evidence

@@ -18,13 +18,13 @@ class SiteTests(unittest.TestCase):
                 section = re.search(r'<div class="module-options">(.*?)</div>', source, re.S)
                 self.assertIsNotNone(section)
                 self.assertEqual(re.findall(r'<h4>(.*?)</h4>', section.group(1)),
-                                 ['CEO', 'Writer', 'Security Scan', 'Debugger', 'User Review'])
+                                 ['CEO', 'Writer', 'Security', 'Debugger', 'User Review'])
 
     def test_each_locale_has_five_keyboard_native_skill_examples(self):
         spec = importlib.util.spec_from_file_location('check_site', ROOT / 'scripts/check_site.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        skills = {'ceo', 'writer', 'security-scan', 'debugger', 'user-review'}
+        skills = {'ceo', 'writer', 'security', 'debugger', 'user-review'}
         for page, dialogue in [('index.html', 'DIALOGUE.md'),
                                ('ru/index.html', 'DIALOGUE.ru.md'),
                                ('zh/index.html', 'DIALOGUE.zh-CN.md')]:

@@ -91,10 +91,14 @@ metadata through the host's read-only tools. Do not run discovered package code.
 Inspect available security observations before loading a new candidate's
 instructions. Investigate suspicious findings or incomplete coverage; capability
 tiers, cached results and vendor safety badges do not establish trust. Builtin
-indexing is local and calls no models or Docker. Deeper scans use `ceo-ai:security-scan`, included as a separate skill in the native
-plugin. Docker is needed only for that explicit scan, never for installation.
-They need explicit scope and a resource budget; a future API requires data and spending approval. Neither
-a scan nor a subagent can enlarge host permissions.
+indexing is local and calls no models or Docker. The native plugin includes
+`ceo-ai:security` for scoped security audits and informed, authorized penetration
+tests. Its optional SkillSpector route checks skill packages and needs the
+reviewed local Docker setup; ordinary assistant-led audits do not require it.
+Active tests need agreed scope, purpose, risks, action limits, stop/recovery rules
+and human approval. Scanner preparation and external services need applicable
+data, network and spending permissions. Neither a scan nor a subagent can enlarge
+host permissions.
 Refresh only an owned derived index when permitted, after additions, removals,
 changes, or a failed freshness check. Never rewrite someone else's catalog.
 
@@ -157,6 +161,15 @@ independent checks. Do not simulate specialist opinions or certify your own
 work as independently reviewed.
 
 ## Independent mentor
+
+Independent means a separate qualified review context, not a required provider.
+If Claude is unavailable, use an authorized native subagent rather than making
+Claude login a prerequisite. Match the role to the review and the host's actual
+capabilities; disclose any instruction-only restrictions. For mandatory security
+gates, use the canonical security-reviewer or ai-vulnerability-monitor method and
+respect applicable user and host restrictions. A mentor never substitutes for
+those gates. Unavailable Claude alone does not mean all independent review is
+unavailable; genuine absence of a permitted reviewer remains a blocker below.
 
 Before a difficult-to-reverse, materially costly, public, or boundary-changing
 commitment, select an independent qualified reviewer, using decision-mentor

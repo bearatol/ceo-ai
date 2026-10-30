@@ -87,7 +87,7 @@ exercise the website controls, not installation in the host applications.
 
 ### Complete skill list and disclosure motion on 2026-10-21
 
-The module list now contains CEO, Writer, Security Scan, Debugger and User Review
+The module list now contains CEO, Writer, Security, Debugger and User Review
 in all three locales. CEO occupies the first full-width row. A regression test
 checks the complete list. Chromium checks at 320, 390, 768 and 1440 pixels found
 no horizontal page overflow, including long references in the privacy notice.
@@ -146,7 +146,7 @@ The workflow illustration is decorative, not live agent status. The five skill
 dialogues are fictional, satirical examples, not recorded benchmarks or guaranteed
 results. Keep the English, Russian and Simplified Chinese cards aligned with
 their full `docs/DIALOGUE*.md` scenes and the anchors `ceo`, `writer`,
-`security-scan`, `debugger` and `user-review`. Preserve the `#conversation` entry
+`security`, `debugger` and `user-review`. Preserve the `#conversation` entry
 link, the five unique `example-*` IDs, native `details` controls and CEO open by
 default. Keep release availability and the core-only project/APM scope explicit.
 App invocation and model behavior remain unverified; preserve that distinction

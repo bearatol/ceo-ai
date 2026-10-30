@@ -29,7 +29,7 @@ established practices and authoritative primary sources before consequential
 recommendations. It separates facts from guesses, flags missing evidence and
 respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome).
 
-[Five fictional skill demonstrations: CEO, Writer, Security Scan, Debugger and User Review](docs/DIALOGUE.md).
+[Five fictional skill demonstrations: CEO, Writer, Security, Debugger and User Review](docs/DIALOGUE.md).
 
 ## Security checks during indexing
 
@@ -42,11 +42,25 @@ and unverified trust. No findings does not mean safe.
 Windows scanning refuses network drives, reparse points and package aliases. See
 [Windows scope and commands](docs/SECURITY_SCANNING.md#windows).
 
-The same plugin includes **Security Scan** for an optional additional check.
-Docker is needed only for this scan. Copy the setup request from the guide:
-the agent checks compatibility, prepares the image and runs a smoke test.
-[Advanced ARM64 Docker walkthrough](docs/DOCKER_SCAN.md) ·
-[Technical limits](docs/SECURITY_SCANNING.md)
+## Audit your application or system
+
+Select **`ceo-ai:security`** in the same plugin for evidence-based audits of code,
+websites, APIs, mobile apps, configuration, infrastructure, AI systems and skill
+packages, plus explicitly authorized, bounded penetration tests. It uses your
+host model and available tools; ordinary audits have no Docker prerequisite.
+Before active tests it explains the target, purpose, exact actions, risks,
+safer options, limits and stop/recovery plan, then obtains your informed consent.
+The report states which checks could not run and what remains unverified.
+No report guarantees complete security.
+[Security workflow and limits](docs/SECURITY_SCANNING.md).
+
+### Optional skill-package scan
+
+For skill packages only, the optional SkillSpector adapter needs separately
+prepared Docker tooling and a reviewed image. Copy the setup request from the
+[ARM64 Docker walkthrough](docs/DOCKER_SCAN.md); the agent checks compatibility,
+explains preparation and runs a smoke test. Those scanner requirements do not
+apply to ordinary Security audits.
 
 ## Keep what worked
 
@@ -151,7 +165,7 @@ changes, CEO can then help implement the plan and check the result.
 | --- | --- | --- |
 | Earlier core-only Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Five-skill layout discovery and model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
-| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Installation example for CEO AI 0.8.0 |
+| APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Installation example for CEO AI 0.9.0 |
 
 The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232 with the earlier
 core-only layout. They do not establish discovery or model behavior for the five

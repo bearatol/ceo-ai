@@ -14,8 +14,14 @@ from install import ALLOWED, checked_hashes, hashes, package, require, safe_path
 
 ROOT = Path(__file__).resolve().parents[1]
 RECEIPTS = {'ceo-ai': 'ceo-ai-plugin'}
-OPTIONAL_SOURCE = frozenset({'SKILL.md', 'scripts/ceo_security_nvidia.py'})
+OPTIONAL_SOURCE = frozenset({'SKILL.md', 'scripts/ceo_security_nvidia.py',
+                             'references/engagement.md', 'references/testing-profiles.md',
+                             'references/reporting.md', 'references/skill-scan.md'})
 LEGACY_ADAPTER = 'skills/ceo-ai/scripts/ceo_security_nvidia.py'
+LEGACY_SECURITY = frozenset('skills/security-scan/' + name for name in (
+    'LICENSE', 'SKILL.md', 'VERSION', 'scripts/ceo_inventory.py',
+    'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
+    'scripts/ceo_security_nvidia.py'))
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
 WRITER_SHARED = frozenset({'LICENSE', 'VERSION', 'references/skills/project-memory.md',
@@ -64,7 +70,7 @@ def security_files(root=ROOT):
     for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                  'scripts/ceo_inventory_windows.py'):
         module[name] = source[name]
-    return {'skills/security-scan/' + name: data for name, data in sorted(module.items())}
+    return {'skills/security/' + name: data for name, data in sorted(module.items())}
 
 
 def writer_files(root=ROOT):
@@ -95,7 +101,20 @@ def publication_paths(plugin):
             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
             | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
                for name in allowed | WORKFLOW_SHARED}
-            | {'skills/security-scan/' + name for name in security})
+            | {'skills/security/' + name for name in security})
+
+
+def reviewed_removals(previous, removed, plugin):
+    if plugin != 'ceo-ai':
+        return False
+    if removed == {LEGACY_ADAPTER}:
+        return True
+    # Only the complete historical payload may move. A partial legacy tree or
+    # an existing new tree could contain work that the rename would discard.
+    legacy = {name for name in previous if name.startswith('skills/security-scan/')}
+    return (legacy == LEGACY_SECURITY and
+            not any(name.startswith('skills/security/') for name in previous) and
+            removed in (LEGACY_SECURITY, LEGACY_SECURITY | {LEGACY_ADAPTER}))
 
 
 def preflight(destination, files, allow_layout_change=False, *, plugin='ceo-ai'):
@@ -118,7 +137,7 @@ def preflight(destination, files, allow_layout_change=False, *, plugin='ceo-ai')
                 'Generated plugin was edited; preserve changes before rebuilding')
         removed = set(previous) - set(files)
         require(set(previous) == set(files) or (allow_layout_change and
-                (not removed or plugin == 'ceo-ai' and removed == {LEGACY_ADAPTER})),
+                (not removed or reviewed_removals(previous, removed, plugin))),
                 'Plugin file layout changed; review migration before rebuilding')
     return destination, previous
 
@@ -164,7 +183,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--allow-layout-change', action='store_true',
-                        help='Accept reviewed additions or the known core Docker-adapter removal')
+                        help='Accept reviewed additions, the security skill rename, or the known core Docker-adapter removal')
     args = parser.parse_args()
     try:
         if args.write:

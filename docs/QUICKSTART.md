@@ -14,7 +14,7 @@ Do not install Docker or prepare the optional scanner.
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-The current plugin source contains five skills: CEO, Writer, Security Scan,
+The current plugin source contains five skills: CEO, Writer, Security,
 Debugger and User Review. Check the contents of the release you choose.
 The project installer and APM provide only the core CEO skill.
 
@@ -59,7 +59,7 @@ contain findings. A report does not approve execution or change permissions.
 For example, “remote code pattern; coverage partial; trust unverified” means
 review the code source and the unchecked parts—not “malware confirmed”.
 
-Need an additional engine? The included Security Scan skill has an
+Need an additional skill-package engine? The included Security skill has an
 [optional Docker walkthrough](DOCKER_SCAN.md). Its prepared recipe is limited
 to a native ARM64 Docker host with Linux ARM64 containers. It is not part of the
 first scan; no cloud service is available.

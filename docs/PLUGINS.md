@@ -13,7 +13,7 @@ selected release's contents before installing it in Codex or Claude Code:
 | --- | --- | --- |
 | `ceo-ai:ceo-ai` | Discuss decisions, coordinate work, check skills during indexing | Python 3.10+ on macOS, Linux or Windows (fixed local NTFS) for indexing |
 | `ceo-ai:writer` | Draft and edit in your voice | No Docker; Python 3.10+ only for optional persistent memory |
-| `ceo-ai:security-scan` | An explicitly requested additional local scan | Python 3.10+, POSIX, Docker and a prepared scanner image |
+| `ceo-ai:security` | Audit applications, infrastructure, AI systems and skills; bounded pentests with explicit consent | Host model and authorized tools; Docker only for optional SkillSpector skill-package scanning |
 | `ceo-ai:debugger` | Reproduce and fix bugs; refactor while preserving tested behavior | Host access to the relevant code and checks; no bundled runtime |
 | `ceo-ai:user-review` | Review a flow as a tired novice and a chosen professional | Authorized access to the material; no bundled runtime |
 
@@ -56,14 +56,26 @@ APM. Those routes currently provide the core skill only, not these additional
 native skills. CEO AI is distributed through this repository's catalog, not the
 official OpenAI or Anthropic directories.
 
-### Optional CEO AI Security
+### Security
 
-Security Scan is included in the same plugin; running it is optional. Without
-Docker, use the builtin indexing check. To prepare the extra scanner, follow the
-[Docker walkthrough](DOCKER_SCAN.md). The current image recipe supports native
-ARM64 Docker hosts with Buildx/BuildKit. Neither Docker nor the scanner image is
-installed by the plugin. There is no cloud service or LLM/API call in the scanner.
-See [coverage and costs](SECURITY_SCANNING.md).
+Select `ceo-ai:security` for a scoped audit or an explicitly authorized, bounded
+penetration test. It reviews code, websites, APIs, mobile apps, configuration,
+infrastructure, AI systems and skill packages with the host model and available
+tools. It first
+clarifies ownership, targets and evidence. Before active tests it explains the
+purpose, exact actions, possible harm, safer option, limits and stop/recovery
+plan, then asks for informed consent. Reuse unchanged approval; seek new consent
+for new targets or risks. Host permissions and policy always apply. The report
+lists checks that could not run and what remains unverified. It never guarantees
+complete security.
+[Workflow, methods and reports](SECURITY_SCANNING.md).
+
+Ordinary audits do not require Docker. Only optional SkillSpector scanning of
+skill packages uses the [Docker walkthrough](DOCKER_SCAN.md): the current image
+recipe supports native ARM64 Docker hosts with Buildx/BuildKit. Python 3.10+,
+POSIX, Docker and the reviewed image are prerequisites for that adapter alone.
+The plugin installs none of them. The static adapter uses no LLM/API; the ordinary
+Security conversation uses your host model. No new scanner suite is bundled.
 
 ### Writer
 
@@ -130,7 +142,7 @@ host. Windows/Linux CI checks packaging and the project installer. See
 | --- | --- | --- |
 | `ceo-ai:ceo-ai` | Обсуждение задач, координация, проверка при индексации | Для локальной проверки Python 3.10+ и macOS, Linux или Windows (локальный NTFS) |
 | `ceo-ai:writer` | Тексты и редактура в твоём стиле | Без Docker; Python нужен только для сохранения предпочтений |
-| `ceo-ai:security-scan` | Дополнительная проверка по запросу | Python 3.10+, POSIX, Docker и подготовленный образ |
+| `ceo-ai:security` | Аудит приложений, инфраструктуры, ИИ-систем и скиллов; согласованный пентест | Модель приложения и разрешённые инструменты; Docker только для опциональной проверки пакетов через SkillSpector |
 | `ceo-ai:debugger` | Воспроизведение и исправление ошибок; рефакторинг с сохранением проверенного поведения | Доступ приложения к нужному коду и проверкам; без встроенной среды исполнения |
 | `ceo-ai:user-review` | Проверка сценария глазами уставшего новичка и выбранного профессионала | Разрешённый доступ к материалу; без встроенной среды исполнения |
 
@@ -170,13 +182,27 @@ Review добавлены в текущие исходники; в старом 
 APM. Сейчас они ставят только основной навык, без дополнительных нативных скиллов.
 Плагин доступен из каталога репозитория, а не официальных каталогов OpenAI и Anthropic.
 
-### Опциональный CEO AI Security
+### Security: безопасность
 
-Навык уже внутри плагина. Запуск дополнительного сканера остаётся добровольным.
-Без Docker работает базовая проверка при индексации. Для дополнительной есть
-[подготовка Docker по шагам](DOCKER_SCAN.ru.md): текущий рецепт рассчитан на
-нативный ARM64 Docker-хост и Buildx/BuildKit. Образ готовится отдельно.
-[Ограничения проверки и расходы](SECURITY_SCANNING.md).
+Выбери `ceo-ai:security` для аудита или пентеста в явно согласованных границах.
+Навык проверяет код, сайты, API, мобильные приложения, конфигурации,
+инфраструктуру, ИИ-системы и пакеты скиллов. Для этого использует модель
+и доступные инструменты твоего приложения. Сначала уточняет права на объект,
+границы и материалы.
+Перед активными тестами объясняет цель, точные действия, возможный вред,
+более безопасный вариант, лимиты, остановку и восстановление, затем получает
+осознанное согласие. Прежнее согласие действует в неизменных границах; новые
+объекты или риски требуют нового. Права приложения и его правила сохраняются.
+Отчёт указывает, какие проверки не удалось выполнить и что осталось
+неподтверждённым. Он не гарантирует безопасность.
+[Процесс, методы и отчёт](SECURITY_SCANNING.md).
+
+Обычному аудиту Docker не нужен. Он нужен только опциональному SkillSpector для
+пакетов скиллов: [подготовка по шагам](DOCKER_SCAN.ru.md). Текущий рецепт —
+нативный ARM64 Docker-хост и Buildx/BuildKit. Python 3.10+, POSIX и проверенный
+образ тоже нужны только этому адаптеру; плагин их не устанавливает.
+Статический адаптер не вызывает LLM/API, а диалог Security использует модель
+приложения. Нового набора сканеров в поставке нет.
 
 ### Writer
 
@@ -240,7 +266,7 @@ codex plugin add ceo-ai@ceo-ai-plugins
 | --- | --- | --- |
 | `ceo-ai:ceo-ai` | 讨论决策、协调任务、索引时检查 | 本地检查需要 Python 3.10+，支持 macOS、Linux 及 Windows（本地固定 NTFS） |
 | `ceo-ai:writer` | 按你的风格写作和编辑 | 无需 Docker；持久偏好需要 Python |
-| `ceo-ai:security-scan` | 按请求进行额外扫描 | Python、POSIX、Docker 和已准备的镜像 |
+| `ceo-ai:security` | 审查应用、基础设施、AI 系统和技能；经明确同意的有限渗透测试 | 宿主模型及获准工具；仅可选 SkillSpector 技能包扫描需要 Docker |
 | `ceo-ai:debugger` | 复现并修复问题；保持已测试行为的重构 | 宿主可访问相关代码与检查；不捆绑运行环境 |
 | `ceo-ai:user-review` | 从疲惫新手和指定专业人士的角度检查流程 | 获准访问审查材料；不捆绑运行环境 |
 
@@ -268,11 +294,20 @@ codex plugin add ceo-ai@ceo-ai-plugins
 安装后开启新对话。原生管理器会使用用户级目录和缓存。Cursor、项目安装器及
 APM 目前仍只提供主技能，不包含其他原生技能。
 
-### 可选 CEO AI Security
+### Security 安全审查
 
-扫描技能已经包含在插件中，只有主动运行额外扫描才需要 Docker 和镜像。
-没有 Docker 也可使用基础索引检查。参见 [ARM64 Docker 准备步骤](DOCKER_SCAN.zh-CN.md)
-与[覆盖范围及成本](SECURITY_SCANNING.md)。
+选择 `ceo-ai:security` 进行限定范围的审查，或经明确授权的有限渗透测试。
+它使用 AI 应用的模型和可用工具检查代码、网站、API、移动应用、配置、基础设施、AI 系统及技能包。
+首先确认目标所有权、范围和材料。主动测试前说明目的、具体操作、可能危害、
+更安全的选项、限额、停止及恢复方案，再取得知情同意。范围和风险不变时沿用授权；
+新目标或新风险需要重新同意。宿主权限和政策始终有效。报告说明哪些检查无法执行，
+以及哪些部分仍未验证；不能保证完全安全。[流程、方法与报告](SECURITY_SCANNING.md)。
+
+常规审查不需要 Docker。仅可选 SkillSpector 技能包扫描使用
+[ARM64 Docker 准备步骤](DOCKER_SCAN.zh-CN.md)：当前方案要求原生 ARM64 Docker
+主机和 Buildx/BuildKit。Python 3.10+、POSIX 和已审查镜像也仅是该适配器的前置条件，
+插件不会安装它们。静态适配器不调用 LLM/API；常规 Security 对话使用宿主模型。
+插件不捆绑新的扫描工具套件。
 
 ### Writer
 
