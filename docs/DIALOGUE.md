@@ -4,7 +4,7 @@
 
 **Educational fiction applies to every scene below.** These standalone sketches show working methods, not recorded runs, measured results, endorsements or guarantees. Any scans, observations and tests inside the story are fictional.
 
-**Contents:** [CEO](#ceo) | [Writer](#writer) | [Security Scan](#security-scan) | [Debugger](#debugger) | [User Review](#user-review)
+**Contents:** [CEO](#ceo) | [Writer](#writer) | [Security](#security) | [Debugger](#debugger) | [User Review](#user-review)
 
 ## CEO
 
@@ -83,29 +83,31 @@
 
 **Writer:** Memory stays off. I'll use the correction in this chat. Put "synergy" in the barber's crossword. The announcement is ready for your review, and has not been published.
 
-## Security Scan
+## Security
 
-### "It wants every key. Must be very responsible."
+### "Audit the booking app. Can you try the live site?"
 
-**Customer:** This booking-helper skill wants all our keys. Thorough onboarding! Run Security Scan on that package before we use it.
+*Fictional walkthrough; no system was accessed and no test was performed.*
 
-**Security Scan:** I'll inspect the selected skill package, not certify the whole booking app. Is the local scanner prepared? A scan request doesn't authorize installing Docker or building an image.
+**Customer:** Audit our booking app. Can you try the live site? I would prefer to find the holes before our customers do.
 
-**Customer:** No. I thought installing CEO AI hired a tiny security department inside my laptop.
+**Security:** Which target do you own or have permission to test, and what is in scope? I can begin with approved code and configuration. Active tests need a concrete plan and your informed consent; the host's permissions and policy still apply.
 
-**Security Scan:** Setup is separate. It needs a supported host, Docker and a verified image. I'll explain preparation and download, disk, memory and CPU costs before approval.
+**Customer:** We own https://booking-staging.example.invalid. Only /api/bookings/synthetic-17 is in scope. Review its booking handler and access-control configuration. We have two synthetic test accounts and fake bookings. Production, payments and third-party systems are outside scope. No active requests yet.
 
-**Customer:** Within this story, I approve that described local preparation and the scan of this package. No tour of my home folder.
+**Security:** In this fictional code review, the handler appears to check login without checking who owns the booking. One account might read another account's booking. Code review supports that hypothesis; it does not prove the deployed API behaves that way.
 
-**Security Scan:** In this fictional scan, the setup checks pass. The report flags an instruction asking to collect unrelated credentials. I report location, severity and coverage without copying secrets or running package scripts.
+**Customer:** How would you verify it without turning a booking into an incident?
 
-**Customer:** So it's definitely stealing them?
+**Security:** Proposed test: two read-only GET requests to the approved staging booking endpoint, first as the owner of a synthetic booking, then as the other test account for that same booking. Purpose: check the ownership boundary. Limit: two requests, one at a time, within 60 seconds, a 5-second timeout per request, redirects disabled; no retries or intended booking-data writes. Even reads can create logs and expose data. A safer option is to keep the finding as an unverified code-review hypothesis. Stop on real data, instability, an unexpected redirect or any scope change. Record only status and the synthetic booking marker, keep credentials out of the report, then discard the local test clients without extra requests. Reads can still affect logs or session metadata; if a prearranged cleanup cannot be completed, I will stop and report it. Do you approve this plan?
 
-**Security Scan:** Static evidence supports a finding for review, not proof of execution or intent. Leave this package disabled and review why it requests credentials outside its task.
+**Customer:** Within this fictional story, I approve exactly that staging test, with those two synthetic accounts, the two-request/60-second limit and stop/local-client-cleanup rules. No production access.
 
-**Customer:** And a package with no findings gets a tiny police badge?
+**Security:** Fictional outcome: the second account receives the synthetic booking marker too. Stop at that minimal proof. The report would identify the endpoint, conditions, observed response and impact, without saving tokens or unrelated data. Add server-side ownership enforcement, then verify that the owner succeeds and the other account is denied under an approved retest plan.
 
-**Security Scan:** No badge. No findings doesn't mean safe. Excluded or unreadable content limits coverage, and a completed scan grants no permission to execute a skill.
+**Customer:** So we can stamp the entire app secure after the fix?
+
+**Security:** No. This example covers one access-control path. Mobile clients, infrastructure, AI integrations and other endpoints were not tested. Any checks that could not run remain unverified. The report separates verified evidence from hypotheses. A new target or risk needs new consent; approval can be reused only while scope and risk stay unchanged.
 
 ## Debugger
 

@@ -19,9 +19,10 @@ class PluginTests(unittest.TestCase):
     def test_one_plugin_exposes_five_skills(self):
         files = plugins.expected(ROOT)
         self.assertEqual({n for n in files if n.endswith('/SKILL.md')}, {
-            'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security-scan/SKILL.md',
+            'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security/SKILL.md',
             'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md'})
         self.assertIn(b'name: writer\n', files['skills/writer/SKILL.md'])
+        self.assertIn(b'name: security\n', files['skills/security/SKILL.md'])
 
     def test_new_workflows_are_self_contained_after_cache_relocation(self):
         files = plugins.expected(ROOT)

@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -15,7 +16,10 @@ import plugins
 from install import tree
 
 CORE = ROOT / 'plugins/ceo-ai'
-OPTIONAL = ROOT / 'plugins/ceo-ai/skills/security-scan'
+OPTIONAL = ROOT / 'plugins/ceo-ai/skills/security'
+LEGACY_FILES = frozenset({'LICENSE', 'SKILL.md', 'VERSION', 'scripts/ceo_inventory.py',
+                          'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
+                          'scripts/ceo_security_nvidia.py'})
 
 class SecurityModuleTests(unittest.TestCase):
     def write_fixture(self, root, files):
@@ -33,6 +37,26 @@ class SecurityModuleTests(unittest.TestCase):
         from install import hashes
         files['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin',schema_version=1,
             version='0.5.0',files=hashes({n:d for n,d in files.items() if n != 'payload.json'})))
+        return files
+
+    def legacy_security_payload(self, adapter=False):
+        current = plugins.expected(ROOT)
+        files = {name: data for name, data in current.items()
+                 if name != 'payload.json' and not name.startswith('skills/security/')}
+        for name in LEGACY_FILES:
+            data = current['skills/security/' + name]
+            if name == 'SKILL.md':
+                data = b'---\nname: security-scan\n---\nPrevious reviewed security skill.\n'
+            files['skills/security-scan/' + name] = data
+        if adapter:
+            files[plugins.LEGACY_ADAPTER] = b'# previous reviewed adapter\n'
+        return self.receipted(files)
+
+    def receipted(self, files, identity='ceo-ai-plugin'):
+        from install import hashes
+        files = {name: data for name, data in files.items() if name != 'payload.json'}
+        files['payload.json'] = plugins.encode(dict(name=identity, schema_version=1,
+            version='0.8.0', files=hashes(files)))
         return files
 
     def test_core_does_not_ship_docker_adapter(self):
@@ -64,15 +88,32 @@ class SecurityModuleTests(unittest.TestCase):
 
     def test_optional_has_only_one_self_contained_skill_and_shared_bytes_match(self):
         files = plugins.security_files(ROOT)
-        self.assertEqual({'skills/security-scan/'+n:d for n,d in tree(OPTIONAL).items()},files)
-        self.assertEqual([n for n in files if n.endswith('/SKILL.md')],['skills/security-scan/SKILL.md'])
+        self.assertEqual({'skills/security/'+n:d for n,d in tree(OPTIONAL).items()},files)
+        self.assertEqual([n for n in files if n.endswith('/SKILL.md')],['skills/security/SKILL.md'])
         for name in ('ceo_inventory.py','ceo_security.py'):
-            self.assertEqual(files['skills/security-scan/scripts/'+name],
+            self.assertEqual(files['skills/security/scripts/'+name],
                              (ROOT/'.apm/skills/ceo-ai/scripts'/name).read_bytes())
         for name in ('.codex-plugin/plugin.json','.claude-plugin/plugin.json'):
             manifest = json.loads(plugins.expected(ROOT)[name])
             self.assertEqual(manifest['name'],'ceo-ai')
             self.assertFalse({'agents','hooks','mcpServers','apps','dependencies','commands'} & manifest.keys())
+
+    def test_security_references_and_links_survive_cache_relocation(self):
+        prefix = 'skills/security/'
+        files = {name[len(prefix):]: data for name, data in plugins.security_files(ROOT).items()}
+        self.assertEqual({name for name in files if name.startswith('references/')}, {
+            'references/engagement.md', 'references/testing-profiles.md',
+            'references/reporting.md', 'references/skill-scan.md'})
+        with tempfile.TemporaryDirectory(prefix='security references ') as temporary:
+            target = Path(temporary).resolve() / '插件'
+            self.write_fixture(target, files)
+            for path in target.rglob('*.md'):
+                for link in re.findall(r'\]\(([^)]+)\)', path.read_text()):
+                    if link.startswith(('https://', 'http://', '#')):
+                        continue
+                    resource = (path.parent / link.split('#')[0]).resolve()
+                    self.assertTrue(resource.is_relative_to(target), str(resource))
+                    self.assertTrue(resource.is_file(), str(resource))
 
     @unittest.skipUnless(os.name == 'posix', 'Descriptor-based scanning requires POSIX')
     def test_optional_cli_survives_relocation_without_core_or_docker(self):
@@ -110,6 +151,45 @@ class SecurityModuleTests(unittest.TestCase):
             self.assertEqual(tree(target),plugins.expected(ROOT))
             self.assertFalse((target/plugins.LEGACY_ADAPTER).exists())
 
+    def test_security_rename_requires_review_and_can_include_historical_adapter_removal(self):
+        for adapter in (False, True):
+            with self.subTest(adapter=adapter), tempfile.TemporaryDirectory() as temporary:
+                target = Path(temporary).resolve() / 'ceo-ai'
+                old = self.legacy_security_payload(adapter=adapter)
+                files = plugins.expected(ROOT)
+                self.write_fixture(target, old)
+                with self.assertRaisesRegex(ValueError, 'layout'):
+                    plugins.write(target, files)
+                self.assertEqual(tree(target), old)
+                plugins.write(target, files, allow_layout_change=True)
+                self.assertEqual(tree(target), files)
+                self.assertFalse((target / 'skills/security-scan').exists())
+
+    def test_security_rename_preserves_incomplete_extra_edited_colliding_or_unowned_content(self):
+        for mode in ('missing', 'extra', 'edited', 'identity', 'receipt-missing',
+                     'collision', 'unrelated'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temporary:
+                target = Path(temporary).resolve() / 'ceo-ai'
+                old = self.legacy_security_payload()
+                if mode == 'missing':
+                    del old['skills/security-scan/VERSION']
+                elif mode == 'extra':
+                    old['skills/security-scan/private-notes.md'] = b'Preserve this note'
+                elif mode == 'edited':
+                    old['skills/security-scan/scripts/ceo_security.py'] += b'\n# local edit\n'
+                elif mode == 'collision':
+                    old['skills/security/SKILL.md'] = b'Preserve this existing skill'
+                elif mode == 'unrelated':
+                    old['skills/custom/SKILL.md'] = b'Preserve this user skill'
+                if mode != 'edited':
+                    old = self.receipted(old, 'other-plugin' if mode == 'identity' else 'ceo-ai-plugin')
+                if mode == 'receipt-missing':
+                    del old['payload.json']
+                self.write_fixture(target, old)
+                with self.assertRaises(ValueError):
+                    plugins.write(target, plugins.expected(ROOT), allow_layout_change=True)
+                self.assertEqual(tree(target), old)
+
     def test_extra_removal_modified_legacy_and_wrong_receipt_are_preserved(self):
         for mode in ('extra','modified','receipt'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as temporary:
@@ -125,10 +205,13 @@ class SecurityModuleTests(unittest.TestCase):
                 self.assertEqual(tree(target),old)
 
     def test_staging_or_promotion_failure_preserves_previous_payload(self):
-        for phase in ('staging','promotion'):
-            with self.subTest(phase=phase),tempfile.TemporaryDirectory() as temporary:
+        for phase, migration in ((phase, migration) for phase in ('staging', 'promotion')
+                                 for migration in ('adapter', 'security', 'both')):
+            with self.subTest(phase=phase, migration=migration),tempfile.TemporaryDirectory() as temporary:
                 base=Path(temporary).resolve();target=base/'ceo-ai'
-                old=self.legacy_payload();self.write_fixture(target,old)
+                old = (self.legacy_payload() if migration == 'adapter'
+                       else self.legacy_security_payload(adapter=migration == 'both'))
+                self.write_fixture(target,old)
                 rename=os.rename;write_bytes=Path.write_bytes
                 def fail_promotion(src,dest):
                     if '-build-' in Path(src).name:raise OSError('synthetic promotion failure')
@@ -142,15 +225,20 @@ class SecurityModuleTests(unittest.TestCase):
                 self.assertEqual(tree(target),old)
                 self.assertEqual(list(base.iterdir()),[target])
 
-    def test_optional_source_allowlist_rejects_private_additions(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root=Path(temporary).resolve()
-            shutil.copytree(ROOT/'.apm',root/'.apm')
-            shutil.copytree(ROOT/'modules',root/'modules')
-            shutil.copyfile(ROOT/'VERSION',root/'VERSION')
-            (root/'modules/ceo-ai-security/private.txt').write_text('Never publish')
-            with self.assertRaisesRegex(ValueError,'allowlist'):
-                plugins.security_files(root)
+    def test_optional_source_allowlist_rejects_private_additions_or_missing_references(self):
+        for missing in (None, 'engagement.md', 'testing-profiles.md', 'reporting.md', 'skill-scan.md'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory() as temporary:
+                root=Path(temporary).resolve()
+                shutil.copytree(ROOT/'.apm',root/'.apm')
+                shutil.copytree(ROOT/'modules',root/'modules')
+                shutil.copyfile(ROOT/'VERSION',root/'VERSION')
+                module = root / 'modules/ceo-ai-security'
+                if missing is None:
+                    (module / 'private.txt').write_text('Never publish')
+                else:
+                    (module / 'references' / missing).unlink()
+                with self.assertRaisesRegex(ValueError,'allowlist'):
+                    plugins.security_files(root)
 
     def test_altered_generated_shared_runtime_fails_verification(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -158,7 +246,7 @@ class SecurityModuleTests(unittest.TestCase):
             for directory in ('.apm','modules','plugins'):
                 shutil.copytree(ROOT/directory,root/directory)
             shutil.copyfile(ROOT/'VERSION',root/'VERSION')
-            (root/'plugins/ceo-ai/skills/security-scan/scripts/ceo_security.py').write_text('altered')
+            (root/'plugins/ceo-ai/skills/security/scripts/ceo_security.py').write_text('altered')
             with self.assertRaisesRegex(ValueError,'stale'):
                 plugins.check(root)
 

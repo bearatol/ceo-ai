@@ -28,7 +28,7 @@ CEO 将提出的方案视为实现目标的一项假设。它检查关键前提�
 它区分事实与推测，说明证据缺口，尊重用户知情后的偏好。
 [如何检验方案](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome)。
 
-[五个虚构技能示例: CEO, Writer, Security Scan, Debugger 和 User Review](docs/DIALOGUE.zh-CN.md).
+[五个虚构技能示例: CEO, Writer, Security, Debugger 和 User Review](docs/DIALOGUE.zh-CN.md).
 
 ## 索引时进行安全检查
 
@@ -39,10 +39,20 @@ macOS、Linux 或原生 Windows（本地固定 NTFS 磁盘）上的 Python 3.10+
 **[第一次扫描：安装 → “检查我的技能” → 理解结果](docs/QUICKSTART.zh-CN.md)。**
 Windows 扫描拒绝网络驱动器、重解析点和包别名。参见 [Windows 范围与命令](docs/SECURITY_SCANNING.md#windows)。
 
-同一插件包含 **`ceo-ai:security-scan`**，仅在主动运行额外扫描时
-需要 Docker。复制指南中的请求，代理会检查兼容性、准备镜像并运行冒烟测试。
-[ARM64 Docker 分步指南](docs/DOCKER_SCAN.zh-CN.md) ·
-[技术限制](docs/SECURITY_SCANNING.md)
+## 审查应用或系统
+
+在同一插件中选择 **`ceo-ai:security`**，可审查代码、网站、API、移动应用、配置、
+基础设施、AI 系统和技能包，并在明确授权的范围内进行渗透测试。
+它使用宿主模型及可用工具，常规审查不要求 Docker。主动测试前，代理说明目标、
+目的、具体操作、风险、更安全的选项、限额、停止及恢复方案，再取得知情同意。
+报告说明哪些检查无法执行，以及哪些部分仍未验证。任何报告都不能保证完全安全。
+[安全审查流程与限制](docs/SECURITY_SCANNING.md)。
+
+### 可选技能包扫描
+
+仅针对技能包，可选 SkillSpector 适配器需要单独准备 Docker 和已审查镜像。
+复制 [ARM64 Docker 指南](docs/DOCKER_SCAN.zh-CN.md)中的请求，代理会检查兼容性、
+说明准备步骤并运行冒烟测试。这些扫描器要求不适用于常规 Security 审查。
 
 ## 保留有用的经验
 
@@ -138,7 +148,7 @@ npx skills add bearatol/ceo-ai
 | --- | --- | --- |
 | 旧版仅含核心技能的 Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 五技能布局的发现与模型调用；Windows/Linux 原生管理器 |
 | 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
-| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | CEO AI 0.8.0 的安装示例 |
+| APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | CEO AI 0.9.0 的安装示例 |
 
 旧版仅含核心技能的插件使用 Codex CLI 0.147.0 和 Claude Code 2.1.232 检查。
 这些结果不能证明当前源码中五个技能的发现与模型行为。

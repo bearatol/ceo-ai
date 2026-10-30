@@ -3,9 +3,11 @@
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
 Начни со [встроенной проверки](QUICKSTART.ru.md). Этот необязательный вариант
-добавляет NVIDIA SkillSpector 2.12.0 через навык Security Scan внутри CEO AI.
+добавляет NVIDIA SkillSpector 2.12.0 через навык Security внутри CEO AI.
 Он использует процессор, память и диск, без платных API и вызовов LLM. Токены
-чата с помощником учитываются отдельно. Облачной замены нет.
+чата с помощником учитываются отдельно. Облачной замены нет. Этот маршрут
+проверяет только пакеты скиллов. Обычный аудит через Security использует модель
+приложения и доступные инструменты без этой подготовки Docker.
 
 Отправь агенту запрос, заменив путь:
 
@@ -73,7 +75,7 @@ docker --host "$CEO_SCAN_SOCKET" buildx inspect "$CEO_SCAN_BUILDER"
 адаптера. BuildKit должен поддерживать `ADD --checksum` и `RUN --network=none`.
 Если Buildx отсутствует, следуй [официальной инструкции установки](https://github.com/docker/buildx#installing)
 в пределах согласованных действий. Не переходи на старый сборщик.
-Установи `ceo-ai` со встроенным навыком Security Scan по [инструкции плагина](PLUGINS.md#опциональный-ceo-ai-security).
+Установи `ceo-ai` со встроенным навыком Security по [инструкции плагина](PLUGINS.md#security-безопасность).
 Сама установка не разрешает сканирование или сборку образа.
 
 ## 2. Собери образ с закреплёнными версиями
@@ -121,11 +123,11 @@ docker --host "$CEO_SCAN_SOCKET" run --rm --pull=never --network none --read-onl
 для записи. Замени путь в примере; не меняй права существующей папки ради обхода проверки.
 
 Укажи в `CEO_SCAN_ADAPTER` файл `scripts/ceo_security_nvidia.py` внутри
-загруженного установленного скилла `security-scan`. Не угадывай путь кеша
+загруженного установленного скилла `security`. Не угадывай путь кеша
 и не используй скачанную замену.
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security-scan/scripts/ceo_security_nvidia.py'
+CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -143,11 +145,11 @@ python3 -I -B "$CEO_SCAN_ADAPTER" \
 Повтори команду адаптера с `--package /approved/skill-directory` — каталогом,
 содержащим `SKILL.md`. Оставь разрешённые рабочую папку, ID образа, версию и сокет.
 При установке плагина используй `scripts/ceo_security_nvidia.py` относительно
-загруженного `security-scan/SKILL.md`, не угадывай путь кэша. До сохранения JSON
+загруженного `security/SKILL.md`, не угадывай путь кэша. До сохранения JSON
 согласуй приватный путь отчёта.
 
-Для работы через навык начни новый чат: выбери `ceo-ai:security-scan`
-в Codex или вызови `/ceo-ai:security-scan` в Claude Code.
+Для работы через навык начни новый чат: выбери `ceo-ai:security`
+в Codex или вызови `/ceo-ai:security` в Claude Code.
 
 Адаптер проверяет копию только для чтения, без сети и LLM. Код скилла он не
 исполняет. Неподдерживаемые ресурсы приводят к отказу или неполному результату.

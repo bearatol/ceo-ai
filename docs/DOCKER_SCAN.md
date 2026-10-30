@@ -3,9 +3,10 @@
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
 Start with the [builtin scan](QUICKSTART.md). This optional route adds NVIDIA
-SkillSpector 2.12.0 through Security Scan inside the CEO AI plugin. It uses local
+SkillSpector 2.12.0 through Security inside the CEO AI plugin. It uses local
 CPU, RAM and disk, without paid APIs or LLM calls; your assistant's chat tokens
-are separate. There is no cloud fallback.
+are separate. There is no cloud fallback. This route checks skill packages only. Ordinary
+Security audits use the host model and available tools without this Docker setup.
 
 Send this request to your agent, replacing the path:
 
@@ -74,7 +75,7 @@ Require Linux `aarch64`/`arm64` and a local `unix:///…` socket. Record that so
 for the adapter. BuildKit must support `ADD --checksum` and `RUN --network=none`.
 If Buildx is missing, follow the [official installation instructions](https://github.com/docker/buildx#installing)
 within approved scope; do not fall back to the legacy builder.
-Install `ceo-ai`, which includes Security Scan, using the [plugin steps](PLUGINS.md#optional-ceo-ai-security).
+Install `ceo-ai`, which includes Security, using the [plugin steps](PLUGINS.md#security).
 Installation itself does not authorize a scan or an image build.
 
 ## 2. Build the pinned scanner image
@@ -122,10 +123,10 @@ ancestors must be trusted and not writable by other users. Replace the example
 path; do not change permissions on an existing directory to force acceptance.
 
 Set `CEO_SCAN_ADAPTER` to `scripts/ceo_security_nvidia.py` inside the loaded
-installed `security-scan` skill, not to a guessed cache or downloaded substitute.
+installed `security` skill, not to a guessed cache or downloaded substitute.
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security-scan/scripts/ceo_security_nvidia.py'
+CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -143,11 +144,11 @@ test on your machine.
 Repeat the adapter command with `--package /approved/skill-directory`, a directory
 containing `SKILL.md`. Keep the approved private workspace, image ID, version and
 socket. For an installed plugin, use `scripts/ceo_security_nvidia.py` relative to
-the loaded `security-scan/SKILL.md`, not a guessed cache path. Approve the report's
+the loaded `security/SKILL.md`, not a guessed cache path. Approve the report's
 private destination before saving the JSON.
 
-For the skill interface, start a new chat and select `ceo-ai:security-scan`
-in Codex or invoke `/ceo-ai:security-scan` in Claude Code.
+For the skill interface, start a new chat and select `ceo-ai:security`
+in Codex or invoke `/ceo-ai:security` in Claude Code.
 
 The adapter scans a read-only snapshot without network or LLM calls. It does not
 execute the skill. It refuses/excludes unsupported resources; a partial result

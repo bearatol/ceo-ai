@@ -14,7 +14,7 @@
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-当前插件源码包含五个技能：CEO、Writer、Security Scan、Debugger 和 User Review。
+当前插件源码包含五个技能：CEO、Writer、Security、Debugger 和 User Review。
 请核对所选发布版本的内容。项目安装程序和 APM 只提供核心 CEO 技能。
 
 安装不会启动审计。内置扫描器需要 macOS、Linux 或原生 Windows 上的 Python 3.10+，
@@ -53,7 +53,7 @@ https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 发现。报告不会授予执行权限或改变权限。例如，“远程代码执行模式；部分覆盖；
 信任未验证”表示应复核代码来源及未检查部分，并不表示已确认恶意软件。
 
-需要另一个引擎？插件内的 Security Scan 技能提供
+需要另一个技能包扫描引擎？插件内的 Security 技能提供
 [Docker 分步指南](DOCKER_SCAN.zh-CN.md)。目前准备的构建方式仅适用于原生 ARM64
 Docker 主机与 Linux ARM64 容器。第一次扫描不需要它，目前也没有云服务。
 

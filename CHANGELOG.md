@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 0.9.0 - 2026-10-30
+
+- Rename the native `ceo-ai:security-scan` skill to `ceo-ai:security`. Add
+  target-specific methods for code, web/API/mobile, configuration, infrastructure,
+  AI systems and skill packages using available authorized tools.
+- Require informed approval of bounded active tests: explain purpose, concrete
+  actions, possible harm, safer alternatives, limits and stop/recovery rules.
+  Separate evidence from hypotheses and report untested areas.
+- Add original guidance informed by NIST, PTES, OWASP, CIS and CVSS. Keep the
+  existing SkillSpector adapter unchanged as an optional skill-package-only route;
+  ordinary assistant-led audits do not require Docker.
+- Allow CEO-coordinated independent native-subagent review when Claude is
+  unavailable, within applicable user and host restrictions. Do not claim that
+  instruction-only reviewer limits are technical isolation.
+- Update the website, documentation and fictional examples in English, Russian
+  and Simplified Chinese. Add guarded package migration and behavioral scenarios.
+- Migration: update the combined `ceo-ai` plugin through its existing manager,
+  start a new chat and select `ceo-ai:security`. Existing skill-scan prompts must
+  use the new name. Project/APM installations still provide only the core skill.
+  Do not manually rename cached plugin folders.
 - Strengthen Writer's professional editing workflow for product copy, business,
   technical and personal writing. Add bilingual examples and review exercises;
   use Wikipedia's style observations as editorial prompts, not an AI detector.

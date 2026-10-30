@@ -2,9 +2,10 @@
 
 [English](DOCKER_SCAN.md) · [Русский](DOCKER_SCAN.ru.md) · [简体中文](DOCKER_SCAN.zh-CN.md)
 
-先做[内置检查](QUICKSTART.zh-CN.md)。本指南通过CEO AI 内的 Security Scan 技能追加
+先做[内置检查](QUICKSTART.zh-CN.md)。本指南通过CEO AI 内的 Security 技能追加
 NVIDIA SkillSpector 2.12.0 检查，消耗本地 CPU、内存和磁盘，不调用付费 API 或 LLM。
-助手的对话 token 单独计算，没有云端备用服务。
+助手的对话 token 单独计算，没有云端备用服务。此路线仅检查技能包。
+常规 Security 审查使用宿主模型和可用工具，无需此 Docker 准备过程。
 
 把下面的请求发给助手，并替换路径：
 
@@ -60,7 +61,7 @@ docker --host "$CEO_SCAN_SOCKET" buildx inspect "$CEO_SCAN_BUILDER"
 
 需要 Linux `aarch64`/`arm64` 和本地 `unix:///…` 套接字。记录该套接字供适配器使用。
 BuildKit 必须支持 `ADD --checksum` 和 `RUN --network=none`。按
-[插件说明](PLUGINS.md#可选-ceo-ai-security)安装包含扫描技能的 `ceo-ai`。
+[插件说明](PLUGINS.md#security-安全审查)安装包含扫描技能的 `ceo-ai`。
 安装本身不授权扫描或构建镜像。
 如果缺少 Buildx，须在授权范围内遵循[官方安装说明](https://github.com/docker/buildx#installing)，
 不要回退到旧版构建器。
@@ -105,11 +106,11 @@ docker --host "$CEO_SCAN_SOCKET" run --rm --pull=never --network none --read-onl
 在待扫描包外选择一个**新的**、已批准的私密目录。父目录必须可信且不允许其他用户写入。
 替换示例路径；不要修改已有目录的权限来强行通过检查。
 
-将 `CEO_SCAN_ADAPTER` 设置为已加载、已安装的 `security-scan` 技能内的
+将 `CEO_SCAN_ADAPTER` 设置为已加载、已安装的 `security` 技能内的
 `scripts/ceo_security_nvidia.py`。不要猜测缓存路径或使用下载的替代文件。
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security-scan/scripts/ceo_security_nvidia.py'
+CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -125,11 +126,11 @@ python3 -I -B "$CEO_SCAN_ADAPTER" \
 
 重复适配器命令，将参数改为 `--package /approved/skill-directory`，该目录须包含
 `SKILL.md`。保留获批工作目录、镜像 ID、版本及套接字。使用已安装插件时，
-从加载的 `security-scan/SKILL.md` 所在目录找到 `scripts/ceo_security_nvidia.py`，
+从加载的 `security/SKILL.md` 所在目录找到 `scripts/ceo_security_nvidia.py`，
 不要猜测缓存路径。保存 JSON 前先批准私密报告位置。
 
-如需通过技能操作，请开启新会话，在 Codex 中选择 `ceo-ai:security-scan`，
-或在 Claude Code 中调用 `/ceo-ai:security-scan`。
+如需通过技能操作，请开启新会话，在 Codex 中选择 `ceo-ai:security`，
+或在 Claude Code 中调用 `/ceo-ai:security`。
 
 适配器检查只读副本，不联网、不调用 LLM，也不运行技能代码。不支持的资源会导致拒绝
 或不完整结果。退出码 `2` 表示检查不完整，不表示没有发现问题。

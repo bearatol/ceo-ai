@@ -1,14 +1,68 @@
-# Security observations for skills and agents
+# Security audits, bounded penetration tests and skill-package scans
+
+Use `ceo-ai:security` to review the security of code, websites, APIs, mobile apps,
+configuration, infrastructure, AI/agent systems or skill packages. It uses your
+AI app's model and authorized tools. Before a penetration test, agree the exact
+actions and limits on a target you are authorized to test, with informed consent
+about the risks.
+
+The skill bundles no new scanner suite and has no universal Python or Docker
+prerequisite. Available tools, access and evidence determine what can be checked.
+A result with no findings does not guarantee safety. Your AI app's actual
+permissions and policies remain binding.
+
+## Audit and testing workflow
+
+1. Establish the goal, owner/authorization, exact targets, environment, evidence,
+   exclusions and desired output. Start with authorized read-only material; a
+   broad request does not authorize intrusive actions or unrelated discovery.
+2. Choose target-specific checks and explain the proposed active test before it
+   runs: purpose and exact action, likely benefit, possible harm, a safer option,
+   request/time/cost limits, stop conditions and recovery or cleanup. Ask for
+   informed approval of the concrete plan. Reuse approval while its scope and
+   risks remain unchanged; new targets or risks need new consent. Tool approvals
+   and host policy cannot be bypassed by conversational consent.
+3. Use the smallest proof that resolves the question, preferably in staging with
+   synthetic data. Stop on the agreed limits, unexpected real data, instability
+   or a boundary change. No persistence, unnecessary data collection or expansion
+   from one finding into a wider compromise.
+4. Report observed evidence separately from hypotheses, with reproduction scope,
+   impact, confidence, remediation and a suitable verification step. Record
+   skipped or unavailable tests and affected targets as coverage gaps; never
+   invent execution, tool availability or a successful check.
+
+The installed skill links to [engagement and consent rules](../modules/ceo-ai-security/references/engagement.md),
+[target-specific testing profiles](../modules/ceo-ai-security/references/testing-profiles.md),
+[evidence and reporting](../modules/ceo-ai-security/references/reporting.md) and
+[optional skill-package scanning](../modules/ceo-ai-security/references/skill-scan.md).
+Use the resources next to the loaded `security/SKILL.md` in a native installation.
+Project and APM installs still contain only the core CEO skill.
+
+Method references inform the selected checks; they do not certify a result:
+[NIST SP 800-115](https://csrc.nist.gov/pubs/sp/800/115/final) and
+[PTES pre-engagement](https://pentest-standard.readthedocs.io/en/latest/preengagement_interactions.html)
+for planning and rules of engagement; [OWASP WSTG](https://wstg.owasp.org/v4.2/)
+and [ASVS](https://asvs.owasp.org/) for web/API checks;
+[OWASP MASTG](https://mas.owasp.org/MASTG/) for mobile;
+[CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks) for applicable
+configuration baselines; [OWASP AI Agent Security](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+for AI/agent trust boundaries; and [CVSS v4.0](https://www.first.org/cvss/v4.0/specification-document)
+when a justified severity vector is useful.
+
+## Builtin inventory screening
 
 The CEO AI inventory includes an original stdlib scanner. It analyzes the same
 bounded bytes used for each package fingerprint. It never executes package
 content, fetches links, installs dependencies, invokes a model or reads API keys.
-This is an advisory screening layer, not a system antivirus or runtime gate.
+These properties apply to this static inventory utility, not every Security
+workflow. It is an advisory screening layer, not a system antivirus or runtime
+gate.
 
-Start with the [first-scan guide](QUICKSTART.md). For the optional engine, use the
-[Docker walkthrough](DOCKER_SCAN.md) ([Русский](DOCKER_SCAN.ru.md),
-[简体中文](DOCKER_SCAN.zh-CN.md)). Its current recipe requires native ARM64 Docker,
-Buildx/BuildKit and Linux ARM64 containers; it does not cover every Docker host.
+Start with the [first-scan guide](QUICKSTART.md). Only the optional SkillSpector
+route for skill packages uses the [Docker walkthrough](DOCKER_SCAN.md)
+([Русский](DOCKER_SCAN.ru.md), [简体中文](DOCKER_SCAN.zh-CN.md)). Its current
+recipe requires native ARM64 Docker, Buildx/BuildKit and Linux ARM64 containers;
+it does not cover every Docker host or audit target.
 
 ## Indexing
 
@@ -92,19 +146,22 @@ reproducible observations and freshness, not a trusted exemption from checking.
 The CLI loads its trusted sibling modules from source, ignoring Python bytecode
 caches and creating none in the installed bundle.
 
-## Optional CEO AI Security module
+## Optional SkillSpector route for skill packages
 
-The native `ceo-ai` plugin includes the builtin indexing check and a separate
-`ceo-ai:security-scan` skill for optional deeper checks. The latter has its own
-bounded reader, static scanner and NVIDIA adapter. Installing the plugin does
-not start a scan or install Docker. Use the [plugin guide](PLUGINS.md#optional-ceo-ai-security)
-to verify the selected snapshot; older releases used a separate security plugin.
+The native `ceo-ai` plugin includes the builtin indexing check and the broader
+`ceo-ai:security` skill described above. That skill retains a bounded reader,
+static scanner and NVIDIA adapter for optional checks of skill packages only.
+This adapter does not audit a website, API, mobile app or infrastructure target.
+Installing the plugin does not start a scan or install Docker. Use the
+[plugin guide](PLUGINS.md#security) to verify the selected snapshot; older
+releases used a separate security plugin.
 
-Before opting in, check these prerequisites: Python 3.10 or newer, a POSIX host
-with descriptor/no-follow support, a Docker client and working daemon, and a
-separately prepared, reviewed NVIDIA SkillSpector image. The module installs none
-of these. Without them, the deeper scan is unavailable; core CEO AI remains usable.
-The scanner itself does not use an LLM or paid API.
+Only for this optional route, check these prerequisites: Python 3.10 or newer,
+a POSIX host with descriptor/no-follow support, a Docker client and working
+daemon, and a separately prepared, reviewed NVIDIA SkillSpector image. The module
+installs none of these. Without them, this route is unavailable; ordinary audits
+can still use authorized host tools. The static adapter itself does not use an
+LLM or paid API; host-model conversation tokens still apply.
 
 Prepare and review a local scanner image separately. The adapter never pulls or
 installs anything. Require an immutable image ID or repository digest and an
@@ -113,17 +170,20 @@ workspace must already exist, be owned by the invoking user, and have trusted
 ancestors and no group/world write permission.
 
 ```sh
-python3 plugins/ceo-ai/skills/security-scan/scripts/ceo_security_nvidia.py \
+python3 plugins/ceo-ai/skills/security/scripts/ceo_security_nvidia.py \
   --package /approved/skill-package --workspace /approved/private-workspace \
   --image "$SCANNER_IMAGE_DIGEST" --version 2.12.0
 ```
 
 In a native installation, use `scripts/ceo_security_nvidia.py` relative to the
-loaded `security-scan/SKILL.md`, not the source checkout or the core skill. Select
-`ceo-ai:security-scan` in Codex or invoke
-`/ceo-ai:security-scan` in Claude Code. The skill checks scope and
-prerequisites before running an explicitly requested scan; it does not install
-Docker, build/download the scanner image, or fall back to an online provider.
+loaded `security/SKILL.md`, not the source checkout or the core skill. Select
+`ceo-ai:security` in Codex or invoke
+`/ceo-ai:security` in Claude Code. The skill checks scope and
+prerequisites before running an explicitly requested scan. A scan-only request
+does not authorize Docker installation or image builds/downloads. An explicit
+preparation request can authorize the separately reviewed setup workflow in the
+skill-scan guide. The adapter itself never pulls/builds an image or falls back
+to an online provider.
 
 If needed, pass `--docker-host unix:///approved/docker.sock`. Only the host Docker
 client connects to that socket; it is never mounted in the scanner container.
@@ -165,11 +225,11 @@ and a hard budget. There is no endpoint, client, credential store or provider.
 Environment keys cannot activate it. A future implementation must show an
 estimate, stop at the budget and report incomplete work without a paid fallback.
 
-The lightweight check stays in the regular bundle. The native plugin also ships the
-separate Security Scan skill with the Docker adapter; scanner engines remain separately
-prepared tools. No cloud server, subscription, API client or account system is
-implemented. The host must enforce read/write/network restrictions and approval
-inheritance independently.
+The lightweight check stays in the regular bundle. The native plugin also ships
+Security's host-model workflow and the optional skill-package Docker adapter;
+scanner engines remain separately prepared tools. No CEO AI cloud server,
+subscription, API client or account system is implemented. The host must enforce
+read/write/network restrictions and approval inheritance independently.
 
 ## Windows
 
