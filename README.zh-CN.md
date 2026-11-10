@@ -28,7 +28,7 @@ CEO 将提出的方案视为实现目标的一项假设。它检查关键前提�
 它区分事实与推测，说明证据缺口，尊重用户知情后的偏好。
 [如何检验方案](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome)。
 
-[五个虚构技能示例: CEO, Writer, Security, Debugger 和 User Review](docs/DIALOGUE.zh-CN.md).
+[六个虚构技能示例](docs/DIALOGUE.zh-CN.md).
 
 ## 索引时进行安全检查
 
@@ -71,8 +71,11 @@ Windows 扫描拒绝网络驱动器、重解析点和包别名。参见 [Windows
 提出修改建议并说明取舍。这些是模拟产生的假设，不是用户研究或转化率预测。
 [User Review 指南（英俄文）](docs/USER_REVIEW.md)。
 
-这两个技能是当前源码中的新增内容，请核对所选发布版本。项目安装和 APM
-仍然只提供核心 CEO 技能。
+**`ceo-ai:video-editor`** 可以审查素材、建议是否补拍，也可以按时间码讨论剪辑、
+核对字幕并修改预览。渲染取决于应用可用的媒体工具。
+[Video Editor 指南和提示词](docs/VIDEO_EDITOR.md#简体中文)。
+
+安装前请核对所选发布版本。项目安装和 APM 只提供核心 CEO 技能。
 
 ## 开始使用
 
@@ -107,7 +110,7 @@ Codex 和 Claude Code 可以使用插件管理器。Cursor 继续使用项目安
 npx skills add bearatol/ceo-ai
 ```
 
-[skills.sh 上的全部五个技能](https://skills.sh/bearatol/ceo-ai) ·
+[skills.sh 上的 CEO AI](https://skills.sh/bearatol/ceo-ai) ·
 [SkillsMP 搜索](https://skillsmp.com/search?q=bearatol%2Fceo-ai&sortBy=stars)。
 已请求 SkillsMP 索引收录，尚未确认已收录。
 
@@ -146,12 +149,12 @@ npx skills add bearatol/ceo-ai
 
 | 安装方式 | 已验证 | 尚未验证 |
 | --- | --- | --- |
-| 旧版仅含核心技能的 Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 五技能布局的发现与模型调用；Windows/Linux 原生管理器 |
+| 旧版仅含核心技能的 Codex / Claude Code 插件 | macOS 上的安装、更新、卸载和技能发现 | 六技能布局的发现与模型调用；Windows/Linux 原生管理器 |
 | 项目安装程序，三种应用 | Windows、Linux 和 macOS CI 中的文件生命周期 | 应用内技能调用 |
 | APM 0.31.0 | macOS 上 CEO AI 0.2.0 的文件生命周期 | CEO AI 0.9.1 的安装示例 |
 
 旧版仅含核心技能的插件使用 Codex CLI 0.147.0 和 Claude Code 2.1.232 检查。
-这些结果不能证明当前源码中五个技能的发现与模型行为。
+这些结果不能证明当前源码中六个技能的发现与模型行为。
 [验证结果与限制](docs/PLUGINS.md#验证范围) ·
 [自动检查](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml)。
 

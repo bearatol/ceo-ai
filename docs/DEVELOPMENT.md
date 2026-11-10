@@ -9,9 +9,10 @@ packet tool. Those internal IDs are not additional native skill registrations.
 APM discovers this layout through `apm.yml`. `scripts/plugins.py` produces the
 committed `plugins/ceo-ai` package for both native plugin managers. It contains
 `skills/ceo-ai/`, `skills/writer/`, `skills/security/`, `skills/debugger/` and
-`skills/user-review/` with one manifest and one receipt. Source files for the
+`skills/user-review/` and `skills/video-editor/` with one manifest and one receipt. Source files for the
 additional skills live in `modules/ceo-ai-writer/`, `modules/ceo-ai-security/`,
-`modules/ceo-ai-debugger/` and `modules/ceo-ai-user-review/`. Each generated skill
+`modules/ceo-ai-debugger/`, `modules/ceo-ai-user-review/` and
+`modules/ceo-ai-video-editor/`. Each generated skill
 has its required shared resources, copied from the canonical core files, including
 `LICENSE` and `VERSION`. Debugger and User Review add instructions, not runtime
 dependencies or extra host permissions. Security adds target-specific audit and
@@ -56,7 +57,7 @@ Machine-facing instructions stay in English. Keep the English, Russian and
 Simplified Chinese README and help guides aligned; see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 `package.py` builds only the core APM bundle. `plugins.py` builds and checks one
-native plugin with five skill directories. To add the reviewed directories to
+native plugin with six skill directories. To add the reviewed directories to
 an intact generated package, use `python3 -B scripts/plugins.py --write
 --allow-layout-change`. The flag permits additions, the complete known
 `skills/security-scan/` to `skills/security/` migration, and historical core

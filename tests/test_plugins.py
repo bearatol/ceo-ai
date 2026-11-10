@@ -16,11 +16,12 @@ from install import package, tree
 
 
 class PluginTests(unittest.TestCase):
-    def test_one_plugin_exposes_five_skills(self):
+    def test_one_plugin_exposes_six_skills(self):
         files = plugins.expected(ROOT)
         self.assertEqual({n for n in files if n.endswith('/SKILL.md')}, {
             'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security/SKILL.md',
-            'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md'})
+            'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md',
+            'skills/video-editor/SKILL.md'})
         self.assertIn(b'name: writer\n', files['skills/writer/SKILL.md'])
         self.assertIn(b'name: security\n', files['skills/security/SKILL.md'])
 
@@ -30,6 +31,7 @@ class PluginTests(unittest.TestCase):
             'debugger': {'SKILL.md', 'LICENSE', 'VERSION'},
             'user-review': {'SKILL.md', 'LICENSE', 'VERSION',
                             'references/professional-profiles.md'},
+            'video-editor': {'SKILL.md', 'LICENSE', 'VERSION'},
         }
         with tempfile.TemporaryDirectory(prefix='workflow cache ') as folder:
             cache = Path(folder).resolve() / '插件'
@@ -55,7 +57,7 @@ class PluginTests(unittest.TestCase):
                         self.assertTrue(resource.is_file(), str(resource))
 
     def test_new_workflows_reject_extra_or_missing_source_files(self):
-        for skill in ('debugger', 'user-review'):
+        for skill in ('debugger', 'user-review', 'video-editor'):
             for mutation in ('extra', 'missing'):
                 with self.subTest(skill=skill, mutation=mutation), tempfile.TemporaryDirectory() as folder:
                     root = Path(folder).resolve()
@@ -77,7 +79,7 @@ class PluginTests(unittest.TestCase):
             files = plugins.expected(ROOT)
             old = {name: data for name, data in files.items()
                    if name != 'payload.json' and not name.startswith(
-                       ('skills/debugger/', 'skills/user-review/'))}
+                       ('skills/debugger/', 'skills/user-review/', 'skills/video-editor/'))}
             old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
                 version='0.8.0', files=hashes(old)))
             for name, data in old.items():

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify one CEO AI plugin with five self-contained skills."""
+"""Build or verify one CEO AI plugin with six self-contained skills."""
 import argparse
 import json
 import os
@@ -29,6 +29,7 @@ WRITER_SHARED = frozenset({'LICENSE', 'VERSION', 'references/skills/project-memo
 WORKFLOW_SOURCES = {
     'debugger': frozenset({'SKILL.md'}),
     'user-review': frozenset({'SKILL.md', 'references/professional-profiles.md'}),
+    'video-editor': frozenset({'SKILL.md'}),
 }
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
 

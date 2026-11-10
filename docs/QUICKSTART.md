@@ -14,9 +14,10 @@ Do not install Docker or prepare the optional scanner.
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-The current plugin source contains five skills: CEO, Writer, Security,
-Debugger and User Review. Check the contents of the release you choose.
+The current plugin source contains six skills: CEO, Writer, Security,
+Debugger, User Review and Video Editor. Check the contents of the release you choose.
 The project installer and APM provide only the core CEO skill.
+Looking for an editing workflow? See [Video Editor](VIDEO_EDITOR.md#english).
 
 Installation does not start an audit. The builtin scanner needs Python 3.10+
 on macOS, Linux or native Windows, without Docker or additional Python packages.

@@ -35,14 +35,14 @@ These are workflow instructions, not a guarantee that a model will follow them.
 
 ## Conversation style
 
-All five native skills use Writer-informed defaults for normal conversation as
+The native plugin includes Writer-informed defaults for normal conversation as
 well as finished text: answer the user's question directly, explain concrete
 actions, keep the form of address consistent, and avoid filler, automatic praise
 and repeated conclusions. Internal instructions are in English; responses follow
 the user's language and requested tone, detail and format.
 
-Each skill contains its own compact style guidance. Using it does not require
-invoking Writer or enabling memory. Brevity never removes required evidence,
+Skills with their own style guidance use it directly. It requires neither a
+Writer invocation nor persistent memory. Brevity never removes required evidence,
 uncertainty, risk explanations, informed approval or the skill's output contract.
 Code, identifiers, URLs and exact quotations retain their meaning and spelling.
 See the [synthetic conversation scenarios](../tests/scenarios/conversation-style.md)
@@ -125,12 +125,13 @@ host model and available tools without a Docker prerequisite. Only its optional
 SkillSpector route for skill packages needs Docker and a reviewed scanner image;
 indexing never invokes it automatically. The same plugin includes
 `ceo-ai:writer` for writing and editing. The current source tree also includes
-`ceo-ai:debugger` for debugging and behavior-preserving refactoring, and
+`ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for synthetic reviews as a tired novice and a chosen
-professional. No separate plugin installation is needed for this layout. Load
+professional, and `ceo-ai:video-editor` for reviewing footage, planning cuts and
+revising previews. No separate plugin installation is needed for this layout. Load
 siblings through the host's skill discovery only when relevant; do not assume
 their availability in an older release or a project/APM installation, which
-contains only the core entry. See [Debugger](DEBUGGER.md) and [User Review](USER_REVIEW.md).
+contains only the core entry. See [Debugger](DEBUGGER.md), [User Review](USER_REVIEW.md) and [Video Editor](VIDEO_EDITOR.md).
 
 [Security workflow](SECURITY_SCANNING.md) explains informed consent, target-specific
 methods, evidence reports, T0–T4 inventory observations, partial coverage,
