@@ -35,7 +35,8 @@ view, correction, deletion and disable controls. Installation never enables it.
 The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for examining materials through novice and relevant
-professional perspectives, and `ceo-ai:security` for scoped security audits and
+professional perspectives, `ceo-ai:video-editor` for reviewing and editing footage,
+and `ceo-ai:security` for scoped security audits and
 informed, authorized penetration tests, including optional local skill-package
 scans. Discover and load only the relevant skill within the user's
 authorization. Installation does not run reviews or scans, install Docker or

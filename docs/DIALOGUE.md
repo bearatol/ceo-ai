@@ -1,10 +1,10 @@
-# Five skills, one barber, several questionable ideas
+# Six skills, one barber, several questionable ideas
 
 [English](DIALOGUE.md) · [Русский](DIALOGUE.ru.md) · [简体中文](DIALOGUE.zh-CN.md)
 
 **Educational fiction applies to every scene below.** These standalone sketches show working methods, not recorded runs, measured results, endorsements or guarantees. Any scans, observations and tests inside the story are fictional.
 
-**Contents:** [CEO](#ceo) | [Writer](#writer) | [Security](#security) | [Debugger](#debugger) | [User Review](#user-review)
+**Contents:** [CEO](#ceo) | [Writer](#writer) | [Security](#security) | [Debugger](#debugger) | [User Review](#user-review) | [Video Editor](#video-editor)
 
 ## CEO
 
@@ -158,3 +158,17 @@
 **Customer:** What if they book and leave immediately? Our engagement will look terrible.
 
 **User Review:** That could be success: both need a confirmed appointment, then a free exit. Validate these proposals through real booking attempts in an approved test setting. We have no measured user results.
+
+## Video Editor
+
+*Fictional example. No footage was rendered for this dialogue.*
+
+**Barber:** Make a 20-second vertical promo. Take out all the pauses. My booking app already has a loading screen.
+
+**Video Editor:** At source 00:05–00:06 you pause after “I only trim a little,” just before the close-up of the haircut. That pause sets up the joke. I’d keep it, shorten the gap at 00:12–00:14, and move the captions above the app controls. Let’s compare two short previews before export.
+
+**Barber:** Keep the pause. Also put back “for first-time customers.” That’s the bit my colleague approved.
+
+**Video Editor:** I’ll restore source 00:15–00:17 in a new revision and keep the caption placement. Then I’ll check the line against the new preview timecodes and confirm the total length.
+
+[Video Editor guide and prompts](VIDEO_EDITOR.md#english).

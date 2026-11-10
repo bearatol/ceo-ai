@@ -14,9 +14,10 @@
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-В текущем исходном коде плагина пять навыков: CEO, Writer, Security,
-Debugger и User Review. Проверь состав выбранного релиза.
+В текущем исходном коде плагина шесть навыков: CEO, Writer, Security,
+Debugger, User Review и Video Editor. Проверь состав выбранного релиза.
 Установщик проекта и APM предоставляют только основной навык CEO.
+Для работы с видео открой [руководство Video Editor](VIDEO_EDITOR.md#русский).
 
 Установка не запускает аудит. Встроенному сканеру нужны Python 3.10+ и macOS,
 Linux или Windows. Docker и дополнительные пакеты Python не нужны. В Windows

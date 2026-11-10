@@ -14,8 +14,9 @@
 https://github.com/bearatol/ceo-ai/blob/main/INSTALL.md
 ```
 
-当前插件源码包含五个技能：CEO、Writer、Security、Debugger 和 User Review。
+当前插件源码包含六个技能：CEO、Writer、Security、Debugger、User Review 和 Video Editor。
 请核对所选发布版本的内容。项目安装程序和 APM 只提供核心 CEO 技能。
+如需剪辑视频，请参阅 [Video Editor 指南](VIDEO_EDITOR.md#简体中文)。
 
 安装不会启动审计。内置扫描器需要 macOS、Linux 或原生 Windows 上的 Python 3.10+，
 不需要 Docker 或额外的 Python 包。Windows 仅支持本地固定 NTFS 磁盘，拒绝重解析点及包别名。

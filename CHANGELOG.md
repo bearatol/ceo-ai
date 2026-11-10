@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.10.0 - 2026-11-10
+
+- Add the native `ceo-ai:video-editor` skill for reviewing footage, deciding
+  whether to reshoot, and preparing or editing a video with available tools.
+- Review sound, lighting, framing and delivery against the footage. Use
+  timecoded cut plans, editable revisions and short previews for feedback.
+- Route editing, graphics and captions through available FFmpeg, HyperFrames,
+  Remotion and transcription tools. Check what can run before starting an edit.
+- Add Video Editor guides and fictional examples in English, Russian and
+  Simplified Chinese. Update the native plugin through its existing manager
+  and start a new chat to select the skill. Project/APM installs provide CEO.
+
 ## 0.9.1 - 2026-10-30
 
 - Apply Writer-informed conversation defaults to all five skills: direct,
