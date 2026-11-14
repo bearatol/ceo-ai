@@ -113,13 +113,17 @@
 <section class="video-editor shell" id="video-editor" aria-labelledby="video-editor-title">
 <div class="video-intro"><p class="eyebrow">CEO AI / Video Editor</p><h2 id="video-editor-title">用 AI 剪辑视频</h2><p>提供素材，说明你想做什么视频。Video Editor 帮你评估素材、编排剪辑，并通过对话修改。它是 CEO AI 的一项技能，可用于短视频、访谈、演讲录像等内容。</p><a class="text-link" href="#video-editor">本节链接</a></div>
 <div class="video-workflow">
-<article><span class="step-number">01 / 审查</span><h3>哪些保留，哪些补拍</h3><p>审查声音、光线、构图和表达。按时间码指出哪些片段有效、哪些问题能靠剪辑解决、哪些台词或镜头值得重新录制。</p><p class="video-output">结果：带时间码的意见和改进方案。</p></article>
-<article><span class="step-number">02 / 剪辑</span><h3>从原始素材到预览</h3><p>编排场景、精简冗余，保留有意义的停顿。加入字幕、图形和声音。结合你提供的参考讨论风格，最终导出前先审看预览。</p><p class="video-output">结果：剪辑方案；具备合适工具时，还可生成预览和成片。</p></article>
+<article><span class="step-number">01 / 审查</span><h3>哪些保留，哪些补拍</h3><p>检查声音、光线、构图、表达及叙述拖沓的地方。按时间码给出最多三项优先建议：观察到的问题、对观众可能产生的影响，以及具体的剪辑或补拍方案。</p><p class="video-output">结果：带时间码的意见和改进方案。</p></article>
+<article><span class="step-number">02 / 剪辑</span><h3>从原始素材到预览</h3><p>编排场景、删除重复内容，加入有助于理解的例子。根据受众和内容选择节奏，保留有意义的停顿。最终导出前，在预览中检查字幕、图形和声音。</p><p class="video-output">结果：剪辑方案；具备合适工具时，还可生成预览和成片。</p></article>
 <article><span class="step-number">03 / 修改</span><h3>恢复台词，调整字幕</h3><p>用日常语言说明要改的具体片段。按文字稿剪辑时，可以在新版本中恢复某一句被删台词，并在修改后核对字幕同步。</p><p class="video-output">结果：包含已确认修改的新版本。</p></article>
+</div>
+<div class="video-start" id="video-editor-engagement">
+<div class="video-brief"><h3>让视频更值得看</h3><p>编辑会查找拖沓的开头、重复内容、缺少例子、单调的表达，以及视频提出却未解答的问题，并建议缩短、重排、演示或重新录制哪些部分。补拍应解决现有素材无法妥善修复的具体问题。</p><p>没有通用的三秒剪辑规则。一个连续镜头中的动作或反应也可以吸引注意。节奏需要留出足够时间，让观众理解要点、看懂图表或体会某个瞬间。</p></div>
+<div class="video-brief"><h3>建议依据什么</h3><p>指南介绍了 Cutting 等人的电影研究、Adobe 的剪辑实践、TikTok 的广告建议和 YouTube 的观众留存说明。各来源适用范围不同：历史平均镜头时长不能确定理想节奏，重复观看的高峰也可能说明某一段不够清楚。</p><p>先通过预览检查修改。对观众留存的实际影响，需要用观看数据评估。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/VIDEO_EDITOR.md#研究与建议">查看研究与官方建议</a></div>
 </div>
 <div class="video-start" id="video-editor-start">
 <div class="video-brief"><h3>需要提供什么</h3><ul><li>原始视频素材或现有项目。</li><li>目标观众及发布平台。</li><li>目标时长、画面比例和字幕语言。</li><li>必须保留的内容。如有风格参考，也请提供。</li></ul><p>可以先只做审查。文字稿或静帧只能支持部分评估：判断声音和动态画面需要相应的视频和音频。</p><a class="text-link" href="https://github.com/bearatol/ceo-ai/blob/main/docs/VIDEO_EDITOR.md#简体中文">详细说明和更多请求示例</a></div>
-<div class="video-prompt"><h3>如何开始</h3><p>需要安装 <a href="https://github.com/bearatol/ceo-ai/blob/main/docs/PLUGINS.md#简体中文">CEO AI 原生插件</a>，项目安装和 APM 只提供 CEO。安装后开启新会话。在 Codex 中选择 <code>ceo-ai:video-editor</code>，在 Claude Code 中输入 <code>/ceo-ai:video-editor</code>。</p><label class="prompt-label" for="video-editor-prompt">附上视频，复制以下请求并按需调整：</label><textarea id="video-editor-prompt" readonly rows="7" spellcheck="false">把这段录像剪成不超过 30 秒的竖屏社交视频，配中文字幕。先评估声音、光线、构图和表达：哪些保留，哪些可通过剪辑修正，哪些需要补拍。提出带时间码的剪辑方案，保留核心意思和有意义的停顿。检查可用工具，最终导出前先给我看预览。如果暂时无法制作视频，请说明缺少什么。</textarea></div>
+<div class="video-prompt"><h3>如何开始</h3><p>需要安装 <a href="https://github.com/bearatol/ceo-ai/blob/main/docs/PLUGINS.md#简体中文">CEO AI 原生插件</a>，项目安装和 APM 只提供 CEO。安装后开启新会话。在 Codex 中选择 <code>ceo-ai:video-editor</code>，在 Claude Code 中输入 <code>/ceo-ai:video-editor</code>。</p><label class="prompt-label" for="video-editor-prompt">附上视频，复制以下请求并按需调整：</label><textarea id="video-editor-prompt" readonly rows="7" spellcheck="false">把这段录像剪成不超过 30 秒的竖屏社交视频，配中文字幕。先评估声音、光线、构图、表达，以及观众可能失去兴趣的地方。按时间码给出最多三项优先建议，说明哪些内容应缩短、重排、演示或补拍，以及原因。提出符合内容节奏的剪辑方案，保留核心意思和有意义的停顿。检查可用工具，最终导出前先给我看预览。如果暂时无法制作视频，请说明缺少什么。</textarea></div>
 </div>
 <aside class="video-limits"><h3>导出成片需要什么</h3><p>剪辑和导出取决于当前环境中可用的工具。例如，FFmpeg 可处理剪切，HyperFrames 或 Remotion 可渲染动画。这些工具与插件分开安装。缺少必要工具时，可以先审查现有材料并制定剪辑方案。安装工具或将视频发送到外部服务需要你的同意。原始文件不会被覆盖。</p></aside>
 </section>
