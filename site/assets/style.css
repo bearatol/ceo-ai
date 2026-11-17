@@ -937,3 +937,6 @@ html{scroll-padding-top:calc(var(--header-height) + 20px)}
   .motion-toggle:hover{border-color:var(--accent);color:var(--accent);background:#ff963f0d}
   .module-options article:hover{border-color:#7895a7;background:#17212a}
 }
+
+.module-options .skill-permalink{display:inline-block;margin-left:12px}
+.skill-example:target{border-color:var(--accent)}

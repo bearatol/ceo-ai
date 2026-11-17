@@ -153,3 +153,15 @@
   });
   button.hidden = false;
 })();
+
+// Shared skill links reveal their example on arrival and during navigation.
+(() => {
+  const revealSkill = () => {
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (!target?.matches('details.skill-example')) return;
+    target.open = true;
+    target.scrollIntoView({ block: 'start', behavior: 'instant' });
+  };
+  window.addEventListener('hashchange', revealSkill);
+  revealSkill();
+})();
