@@ -154,7 +154,7 @@ class PluginTests(unittest.TestCase):
                 plugins.writer_files(root)
 
     def test_listing_assets_are_reviewed_and_bounded(self):
-        files = plugins.expected(ROOT)
+        files = plugins.listing_files(ROOT)
         self.assertEqual(files['README.md'], (ROOT / 'modules/ceo-ai-plugin/README.md').read_bytes())
         icon = files['.claude-plugin/icon.png']
         self.assertTrue(icon.startswith(b'\x89PNG\r\n\x1a\n'))
@@ -169,10 +169,8 @@ class PluginTests(unittest.TestCase):
         for mutation in ('extra', 'missing', 'not-png'):
             with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder).resolve()
-                for name in ('.apm', 'modules'):
-                    shutil.copytree(ROOT / name, root / name)
-                shutil.copy2(ROOT / 'VERSION', root / 'VERSION')
                 module = root / 'modules/ceo-ai-plugin'
+                shutil.copytree(ROOT / 'modules/ceo-ai-plugin', module)
                 if mutation == 'extra':
                     (module / 'private-session.json').write_text('{"synthetic": true}')
                     pattern = 'allowlist'
@@ -183,7 +181,7 @@ class PluginTests(unittest.TestCase):
                     (module / 'icon.png').write_bytes(b'<svg xmlns="http://www.w3.org/2000/svg"/>')
                     pattern = 'PNG'
                 with self.assertRaisesRegex(ValueError, pattern):
-                    plugins.expected(root)
+                    plugins.listing_files(root)
 
     def test_committed_package_is_current(self):
         self.assertEqual(tree(ROOT / 'plugins/ceo-ai'), plugins.expected(ROOT))
