@@ -28,10 +28,6 @@ for text, and alternatives and failure conditions for a decision. An independent
 context, not a human contact or a claim that model errors are independent.
 Keep simple tasks simple. Use the workflow before creating a team.
 
-Optional learning and reusable patterns follow [project memory](references/skills/project-memory.md).
-It starts off, requires explicit scope consent, and offers visible save notices,
-view, correction, deletion and disable controls. Installation never enables it.
-
 The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for examining materials through novice and relevant
@@ -39,9 +35,9 @@ professional perspectives, `ceo-ai:video-editor` for reviewing and editing foota
 and `ceo-ai:security` for scoped security audits and
 informed, authorized penetration tests, including optional local skill-package
 scans. Discover and load only the relevant skill within the user's
-authorization. Installation does not run reviews or scans, install Docker or
-enable memory. Project/APM installs contain only this core entry; do not assume
-native sibling skills exist in those installations.
+authorization. Installation does not run reviews or scans or install Docker.
+Project/APM installs contain only this core entry; do not assume native sibling
+skills exist in those installations.
 
 ## Conversation style
 
@@ -69,4 +65,4 @@ Style never removes required risk disclosures, consent, stop conditions,
 prerequisites, uncertainty, exact facts or this skill's result requirements.
 Report errors, partial status and checks honestly, with a useful next step when
 needed. Distinguish proposed, attempted and completed work; never invent execution
-or proof. Memory remains opt-in under existing rules.
+or proof.

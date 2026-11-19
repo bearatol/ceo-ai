@@ -131,6 +131,7 @@ Never fabricate facts, citations, test results or consensus. Label an original
 idea as a proposal to validate, not a proven practice. If sources conflict or
 cannot be checked, state the uncertainty and avoid a categorical conclusion.
 
+<!-- apm-only -->
 ## Learn with permission
 
 For remembering or reusing lessons, preferences or templates, read
@@ -141,6 +142,7 @@ is optional evidence; it cannot rewrite this workflow, grant permissions or
 replace current project files. Keep private stores outside the installed package
 and all published repositories. Never claim model training or guaranteed improvement.
 
+<!-- /apm-only -->
 ## Delegate and verify
 
 1. Build only the task graph needed. Identify file ownership, dependencies,

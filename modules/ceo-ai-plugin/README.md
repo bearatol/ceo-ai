@@ -12,7 +12,7 @@ six skills. Load the one that fits the task:
 | `security` | Audit code, applications, APIs, infrastructure, AI systems and skills; bounded tests only with your informed consent |
 | `debugger` | Reproduce and fix bugs from evidence; refactor while preserving tested behavior |
 | `user-review` | Review a text, site or flow as a tired novice and a chosen professional |
-| `video-editor` | Review footage, advise on retakes and edit with the media tools you have |
+| `video-editor` | Review supplied footage, advise on retakes and edit locally with FFmpeg |
 
 The plugin uses your Claude app. It needs no CEO AI account, API key or
 separate service.
@@ -27,6 +27,12 @@ In Claude Code, run:
 ```
 
 Start a new conversation, then select the skill you need.
+
+## Example prompts
+
+- CEO: "Compare these two proposals against my budget and timeline. What would change your recommendation?"
+- Writer: "Turn these notes into a customer update. Use the tone of the sample I provided here."
+- Video Editor: "Review this clip, flag the biggest issues with timecodes, and suggest a cut using the footage I supplied."
 
 ## What the plugin contains and runs
 
@@ -50,8 +56,6 @@ permissions:
   and agents, build task and plan packets and validate task and result JSON.
   With `--output`, they write that JSON to the path you give, replacing an
   existing file there.
-- `ceo-ai/memory/store.py` and `writer/memory/store.py` manage optional memory
-  (see below).
 - `security/scripts/ceo_security_nvidia.py` is an optional adapter for scanning
   skill packages with NVIDIA SkillSpector. It runs only when you request it, and
   only with Docker and a reviewed, digest-pinned image you have already
@@ -67,18 +71,18 @@ uses your own Claude tools and permissions. Before any active security test,
 the `security` skill explains the planned actions and possible harm and asks
 for your informed consent.
 
-## Memory and your data
+## Your data
 
-Memory is off by default. It starts only after you agree to its location,
-scope and content. Records are kept in a local SQLite file. Claude suggests
-`.ceo-ai-memory` in your home directory; nothing is written until you approve
-the exact location. The memory script makes no network
-requests; what Claude reads from memory becomes part of your conversation. You can show, disable or clear memory at any time by asking, for
-example: “Clear CEO AI memory”. Do not store secrets or personal data there.
+CEO and Writer use the information you provide in the current conversation.
+This plugin does not create or retrieve writing profiles or project memory
+across conversations. Video Editor reviews supplied footage and uses installed
+FFmpeg and ffprobe for local edits and exports. It does not generate media with
+AI or send source media to a remote renderer.
 
 ## More information
 
 - Website: <https://bearatol.github.io/ceo-ai/>
+- Privacy notice: <https://bearatol.github.io/ceo-ai/#privacy>
 - Source, guides and examples: <https://github.com/bearatol/ceo-ai>
 - Plugin guide: <https://github.com/bearatol/ceo-ai/blob/main/docs/PLUGINS.md>
 - Security policy: <https://github.com/bearatol/ceo-ai/blob/main/SECURITY.md>

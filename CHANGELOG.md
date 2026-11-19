@@ -9,8 +9,9 @@
   handling, and a 512×512 listing icon at `.claude-plugin/icon.png`.
 - Generate both files from the reviewed `modules/ceo-ai-plugin` source. The
   plugin builder refuses extra or missing listing files and a non-PNG icon.
-  Skills, permissions and behavior are unchanged. Update the native plugin
-  through its manager; the new files need the reviewed layout addition.
+- In the native package prepared for the directory, CEO and Writer use
+  conversation-local guidance. Existing external memory stores are left alone.
+  Video Editor reviews supplied footage and uses local FFmpeg for editing.
 
 ## 0.10.0 - 2026-11-10
 

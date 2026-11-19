@@ -122,7 +122,7 @@ what I'm working on next."
 
 Do not reuse these anecdotes, dates or promises unless the facts hold for the
 current author and product. A person can prefer "сделал" in personal posts and
-still use "выпустили" in company release notes. Save context with a preference.
+still use "выпустили" in company release notes. Apply each preference in its stated context.
 
 ## Review exercises
 

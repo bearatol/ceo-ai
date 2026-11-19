@@ -11,5 +11,3 @@ skill:skill-authoring
 skill:software-delivery
 skill:quality-review
 skill:context-engineering
-skill:project-memory
-tool:memory

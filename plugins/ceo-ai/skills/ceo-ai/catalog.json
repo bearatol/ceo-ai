@@ -269,38 +269,6 @@
         "efficiency",
         "compression"
       ]
-    },
-    {
-      "id": "skill:project-memory",
-      "type": "skill",
-      "name": "project-memory",
-      "profile": [
-        "core"
-      ],
-      "origin": "original",
-      "license": "MIT",
-      "path": "references/skills/project-memory.md",
-      "tags": [
-        "memory",
-        "patterns",
-        "consent"
-      ]
-    },
-    {
-      "id": "tool:memory",
-      "type": "tool",
-      "name": "memory",
-      "profile": [
-        "core"
-      ],
-      "origin": "original",
-      "license": "MIT",
-      "path": "memory",
-      "tags": [
-        "memory",
-        "local",
-        "consent"
-      ]
     }
   ]
 }

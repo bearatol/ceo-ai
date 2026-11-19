@@ -12,7 +12,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import plugins
-from install import package, tree
+from install import hashes, package, tree
 
 
 class PluginTests(unittest.TestCase):
@@ -73,7 +73,6 @@ class PluginTests(unittest.TestCase):
                         plugins.expected(root)
 
     def test_existing_three_skill_plugin_can_add_workflows_without_losing_edits(self):
-        from install import hashes
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder).resolve() / 'package'
             files = plugins.expected(ROOT)
@@ -97,50 +96,16 @@ class PluginTests(unittest.TestCase):
                 plugins.write(target, files, allow_layout_change=True)
             self.assertEqual(edited.read_text(), 'Synthetic user customization')
 
-    def test_writer_has_only_reviewed_resources_and_relocated_memory_works(self):
+    def test_writer_has_only_session_resources(self):
         files = plugins.writer_files(ROOT)
         prefix = 'skills/writer/'
-        writer = {name[len(prefix):]: data for name, data in files.items()
-                  if name.startswith(prefix)}
-        self.assertEqual(set(writer), plugins.WRITER_SOURCE | plugins.WRITER_SHARED)
+        writer = {name[len(prefix):]: data for name, data in files.items()}
+        self.assertEqual(set(writer), {
+            'LICENSE', 'VERSION', 'SKILL.md', 'references/skills/writer-style.md',
+        })
         source, _ = package(ROOT / '.apm/skills/ceo-ai')
         for name in plugins.WRITER_SHARED:
             self.assertEqual(writer[name], source[name])
-        with tempfile.TemporaryDirectory(prefix='writer cache ') as folder:
-            root = Path(folder).resolve()
-            skill = root / 'relocated/skills/writer-how-me'
-            project = root / 'project'
-            project.mkdir()
-            for name, data in writer.items():
-                path = skill / name
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(data)
-            store = root / 'private-memory'
-            argv = [sys.executable, '-B', str(skill / 'memory/store.py'),
-                    '--root', str(store), '--project', str(project), '--scope', 'user']
-
-            def call(*args, data=None):
-                result = subprocess.run(argv + list(args), cwd=project,
-                    input=json.dumps(data) if data else None,
-                    capture_output=True, text=True, timeout=10)
-                self.assertEqual(result.returncode, 0, result.stderr)
-                return json.loads(result.stdout)
-
-            self.assertFalse(call('status')['enabled'])
-            self.assertFalse(store.exists())
-            call('enable', '--consent')
-            preference = dict(id='writer-punctuation', kind='preference',
-                title='Keyboard punctuation', summary='Use straight quotes in prose.',
-                applies_when='Drafting personal posts', avoid_when='Exact quotations or code',
-                evidence='Explicit correction in synthetic test', source='Synthetic user feedback',
-                verified_on='2026-10-14', review_after='2099-01-01', tags=['writer-how-me'])
-            saved = call('save', data=preference)
-            self.assertEqual(call('recall', '--query', 'writer-how-me')['records'][0]['record'], preference)
-            call('delete', '--manage', '--id', preference['id'], '--revision', saved['revision'])
-            self.assertEqual(call('recall', '--query', 'writer-how-me')['records'], [])
-            call('disable')
-            self.assertFalse(call('status')['enabled'])
-            self.assertFalse((skill / 'memory.sqlite3').exists())
 
     def test_writer_rejects_private_files_and_verifies_its_payload(self):
         self.assertEqual({n:d for n,d in tree(ROOT / 'plugins/ceo-ai').items() if n.startswith('skills/writer/')}, plugins.writer_files(ROOT))
@@ -206,7 +171,22 @@ class PluginTests(unittest.TestCase):
             cache = Path(folder).resolve() / '插件'
             shutil.copytree(ROOT / 'plugins/ceo-ai', cache)
             skill = cache / 'skills/ceo-ai'
-            self.assertEqual(package(skill)[0], package(ROOT / '.apm/skills/ceo-ai')[0])
+            core = tree(skill)
+            bundle = json.loads(core.pop('bundle.json'))
+            self.assertEqual(bundle['files'], hashes(core))
+            catalog = json.loads(core['catalog.json'])
+            self.assertEqual(
+                set(core['profiles/core.profile'].decode().splitlines()),
+                {item['id'] for item in catalog['components']},
+            )
+            for item in catalog['components']:
+                self.assertTrue((skill / item['path']).exists(), item['path'])
+            self.assertFalse((skill / 'memory').exists())
+            for name in ('SKILL.md', 'references/skills/ceo.md', 'orchestration/protocol.md'):
+                self.assertNotIn(b'project-memory', core[name])
+                self.assertNotIn(b'apm-only', core[name])
+            source, _ = package(ROOT / '.apm/skills/ceo-ai')
+            self.assertIn('memory/store.py', source)
             result = subprocess.run([sys.executable, '-B', str(skill / 'tools/team/team.py'),
                                      '--home', str(skill), 'list', '--type', 'agent'],
                                     cwd=folder, capture_output=True, text=True, timeout=10)
@@ -221,7 +201,6 @@ class PluginTests(unittest.TestCase):
             shutil.copy2(ROOT / 'VERSION', root / 'VERSION')
             source = root / '.apm/skills/ceo-ai'
             (source / 'private-notes.txt').write_text('fixture')
-            from install import hashes
             manifest = json.loads((source / 'bundle.json').read_text())
             files = tree(source)
             files.pop('bundle.json')
@@ -235,7 +214,6 @@ class PluginTests(unittest.TestCase):
             root = Path(folder).resolve() / 'skill'
             shutil.copytree(ROOT / '.apm/skills/ceo-ai', root)
             (root / 'private-memory.json').write_text('synthetic private sentinel')
-            from install import hashes
             manifest = json.loads((root / 'bundle.json').read_text())
             files = tree(root); files.pop('bundle.json')
             manifest['files'] = hashes(files)
@@ -253,11 +231,10 @@ class PluginTests(unittest.TestCase):
             self.assertEqual((target / 'private-notes.txt').read_text(), 'fixture')
 
     def test_layout_addition_needs_explicit_review(self):
-        from install import hashes
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder).resolve() / 'package'
             files = plugins.expected(ROOT)
-            removed = 'skills/ceo-ai/memory/pattern.example.json'
+            removed = '.claude-plugin/icon.png'
             old = {k:v for k,v in files.items() if k not in {removed, 'payload.json'}}
             old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
                 version='0.4.0', files=hashes(old)))
@@ -270,6 +247,39 @@ class PluginTests(unittest.TestCase):
                 plugins.write(target, files)
             plugins.write(target, files, allow_layout_change=True)
             self.assertEqual(tree(target), files)
+
+    def test_managed_upgrade_only_removes_the_complete_known_memory_payload(self):
+        files = plugins.expected(ROOT)
+        source, _ = package(ROOT / '.apm/skills/ceo-ai')
+        legacy_memory = {
+            f'skills/{skill}/{name}': source[name]
+            for skill in ('ceo-ai', 'writer') for name in plugins.APM_MEMORY_FILES
+        }
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder).resolve() / 'package'
+            for scenario in ('partial', 'complete'):
+                with self.subTest(scenario=scenario):
+                    old = files | legacy_memory
+                    if scenario == 'partial':
+                        del old['skills/writer/memory/store.py']
+                    old.pop('payload.json')
+                    old['payload.json'] = plugins.encode(dict(
+                        name='ceo-ai-plugin', schema_version=1, version='0.10.1',
+                        files=hashes(old),
+                    ))
+                    for name, data in old.items():
+                        path = target / name
+                        path.parent.mkdir(parents=True, exist_ok=True)
+                        path.write_bytes(data)
+                    with self.assertRaisesRegex(ValueError, 'layout'):
+                        plugins.write(target, files)
+                    if scenario == 'partial':
+                        with self.assertRaisesRegex(ValueError, 'layout'):
+                            plugins.write(target, files, allow_layout_change=True)
+                        self.assertEqual(tree(target), old)
+                    else:
+                        plugins.write(target, files, allow_layout_change=True)
+                        self.assertEqual(tree(target), files)
 
     def test_generation_preserves_edited_payload(self):
         with tempfile.TemporaryDirectory() as folder:

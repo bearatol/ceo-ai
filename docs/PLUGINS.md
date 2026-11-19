@@ -12,14 +12,14 @@ selected release's contents before installing it in Codex or Claude Code:
 | Skill | Use it for | Requirements |
 | --- | --- | --- |
 | `ceo-ai:ceo-ai` | Discuss decisions, coordinate work, check skills during indexing | Python 3.10+ on macOS, Linux or Windows (fixed local NTFS) for indexing |
-| `ceo-ai:writer` | Draft and edit in your voice | No Docker; Python 3.10+ only for optional persistent memory |
+| `ceo-ai:writer` | Draft and edit in your voice | Uses preferences provided in the current conversation |
 | `ceo-ai:security` | Audit applications, infrastructure, AI systems and skills; bounded pentests with explicit consent | Host model and authorized tools; Docker only for optional SkillSpector skill-package scanning |
 | `ceo-ai:debugger` | Reproduce and fix bugs; refactor while preserving tested behavior | Host access to the relevant code and checks; no bundled runtime |
 | `ceo-ai:user-review` | Review a flow as a tired novice and a chosen professional | Authorized access to the material; no bundled runtime |
-| `ceo-ai:video-editor` | Review footage, advise on retakes, and edit with captions and motion graphics | Authorized footage access and suitable media tools |
+| `ceo-ai:video-editor` | Review supplied footage, advise on retakes, and edit with captions | FFmpeg and ffprobe for local editing |
 
 In Claude Code, prefix the skill name with `/`. Load a skill when its task is
-needed. Installation does not run a scan, install Docker or enable memory.
+needed. Installation does not run a scan or install Docker.
 The plugin registers no agents, hooks, MCP servers or extra permissions.
 It uses your AI app; no CEO AI account or separate API key is needed.
 
@@ -81,7 +81,7 @@ Security conversation uses your host model. No new scanner suite is bundled.
 
 Select `ceo-ai:writer`. Start with: "Turn these notes into a post in my voice.
 Keep the useful details and don't make it sound like an ad."
-[Writing preferences](WRITER.md) explains optional memory and its controls.
+Style instructions and feedback apply within the current conversation.
 
 ### Debugger and User Review
 
@@ -100,8 +100,8 @@ a conversion forecast or legal certification. [Examples and limits](USER_REVIEW.
 
 Select `ceo-ai:video-editor` to review footage or agree on a cut before export.
 For revisions, identify the clip and source or preview timecode. Rendering
-depends on the tools available to the app.
-[Example prompts and tool requirements](VIDEO_EDITOR.md#english).
+uses local FFmpeg and ffprobe with media you supply. If local tools are
+unavailable, the skill can return a footage review or a timecoded cut plan.
 
 ### Update or remove
 
