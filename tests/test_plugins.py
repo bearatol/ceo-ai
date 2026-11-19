@@ -153,6 +153,38 @@ class PluginTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'allowlist'):
                 plugins.writer_files(root)
 
+    def test_listing_assets_are_reviewed_and_bounded(self):
+        files = plugins.expected(ROOT)
+        self.assertEqual(files['README.md'], (ROOT / 'modules/ceo-ai-plugin/README.md').read_bytes())
+        icon = files['.claude-plugin/icon.png']
+        self.assertTrue(icon.startswith(b'\x89PNG\r\n\x1a\n'))
+        width, height = int.from_bytes(icon[16:20], 'big'), int.from_bytes(icon[20:24], 'big')
+        self.assertEqual(width, height)
+        self.assertTrue(512 <= width <= 2048)
+        self.assertLessEqual(len(icon), 256 * 1024)
+        words = re.sub(r'```.*?```', '', files['README.md'].decode(), flags=re.S).split()
+        self.assertGreaterEqual(len(words), 40)
+
+    def test_listing_module_rejects_extra_missing_or_non_png_files(self):
+        for mutation in ('extra', 'missing', 'not-png'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as folder:
+                root = Path(folder).resolve()
+                for name in ('.apm', 'modules'):
+                    shutil.copytree(ROOT / name, root / name)
+                shutil.copy2(ROOT / 'VERSION', root / 'VERSION')
+                module = root / 'modules/ceo-ai-plugin'
+                if mutation == 'extra':
+                    (module / 'private-session.json').write_text('{"synthetic": true}')
+                    pattern = 'allowlist'
+                elif mutation == 'missing':
+                    (module / 'icon.png').unlink()
+                    pattern = 'allowlist'
+                else:
+                    (module / 'icon.png').write_bytes(b'<svg xmlns="http://www.w3.org/2000/svg"/>')
+                    pattern = 'PNG'
+                with self.assertRaisesRegex(ValueError, pattern):
+                    plugins.expected(root)
+
     def test_committed_package_is_current(self):
         self.assertEqual(tree(ROOT / 'plugins/ceo-ai'), plugins.expected(ROOT))
 
@@ -165,7 +197,7 @@ class PluginTests(unittest.TestCase):
             self.assertEqual(source if isinstance(source, str) else source['path'], './plugins/ceo-ai')
         files = plugins.expected(ROOT)
         self.assertEqual({name.split('/')[0] for name in files},
-                         {'.codex-plugin', '.claude-plugin', 'skills', 'LICENSE', 'payload.json'})
+                         {'.codex-plugin', '.claude-plugin', 'skills', 'LICENSE', 'README.md', 'payload.json'})
         for manifest in ('.codex-plugin/plugin.json', '.claude-plugin/plugin.json'):
             data = json.loads(files[manifest])
             self.assertFalse({'agents', 'hooks', 'mcpServers', 'apps', 'commands'} & data.keys())

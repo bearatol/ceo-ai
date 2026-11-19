@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify one CEO AI plugin with six self-contained skills."""
+"""Build or verify one CEO AI plugin with six self-contained skills and listing assets."""
 import argparse
 import json
 import os
@@ -32,6 +32,8 @@ WORKFLOW_SOURCES = {
     'video-editor': frozenset({'SKILL.md'}),
 }
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
+# Directory listing assets: module file name -> plugin path.
+LISTING_FILES = {'README.md': 'README.md', 'icon.png': '.claude-plugin/icon.png'}
 
 
 
@@ -52,6 +54,7 @@ def expected(root=ROOT):
     files.update(security_files(root))
     files.update(writer_files(root))
     files.update(workflow_files(root))
+    files.update(listing_files(root))
     files['LICENSE'] = source['LICENSE']
     files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
@@ -94,11 +97,18 @@ def workflow_files(root=ROOT):
     return files
 
 
+def listing_files(root=ROOT):
+    module = tree(root / 'modules/ceo-ai-plugin')
+    require(set(module) == set(LISTING_FILES), 'Listing module differs from publication allowlist')
+    require(module['icon.png'].startswith(b'\x89PNG\r\n\x1a\n'), 'Listing icon must be a PNG')
+    return {LISTING_FILES[name]: data for name, data in sorted(module.items())}
+
+
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
     security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                                   'scripts/ceo_inventory_windows.py'}
-    return (PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
+    return (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in ALLOWED}
             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
             | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
                for name in allowed | WORKFLOW_SHARED}
