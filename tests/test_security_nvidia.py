@@ -411,6 +411,34 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(previous, {number: signal.getsignal(number) for number in previous})
         self.assertEqual(sorted(p.name for p in self.workspace.iterdir()), ["package"])
 
+    def test_group_signal_permission_error_requires_group_to_be_gone(self):
+        for leader_exit, probe, cleanup_ok in (
+                (0, ProcessLookupError, True),
+                (0, None, False),
+                (0, PermissionError, False),
+                (None, None, False)):
+            with self.subTest(leader_exit=leader_exit, probe=probe):
+                process = mock.Mock(pid=12345, returncode=leader_exit)
+                process.poll.return_value = leader_exit
+                with mock.patch.object(adapter.subprocess, "Popen", return_value=process), \
+                     mock.patch.object(adapter.selectors, "DefaultSelector") as selector, \
+                     mock.patch.object(adapter.os, "killpg", side_effect=[PermissionError, probe]) as killpg:
+                    selector.return_value.__enter__.return_value.get_map.return_value = {1: True}
+                    if cleanup_ok:
+                        self.assertEqual(adapter._run_bounded([], env={}, cwd=self.workspace, timeout=0),
+                                         ("timeout", 0, b""))
+                    else:
+                        with self.assertRaises(PermissionError):
+                            adapter._run_bounded([], env={}, cwd=self.workspace, timeout=0)
+                expected_calls = [mock.call(process.pid, signal.SIGKILL)]
+                if leader_exit is not None:
+                    expected_calls.append(mock.call(process.pid, 0))
+                self.assertEqual(killpg.call_args_list, expected_calls)
+                if cleanup_ok:
+                    process.wait.assert_called_once_with(timeout=0.5)
+                process.stdout.close.assert_called_once()
+                process.stderr.close.assert_called_once()
+
     def test_stream_timeout_and_combined_output_bound(self):
         env = {"PATH": adapter.SAFE_PATH}
         result = adapter._run_bounded([sys.executable, "-c", "import time; time.sleep(2)"],

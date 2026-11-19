@@ -357,6 +357,17 @@ def _run_bounded(command, *, env, cwd, timeout=SCAN_TIMEOUT, output_limit=OUTPUT
                         os.killpg(process.pid, signal.SIGKILL)
                     except ProcessLookupError:
                         pass
+                    except PermissionError:
+                        # macOS can deny a signal while the exited leader is unreaped.
+                        # Reap it, then verify that no process group remains.
+                        if process.poll() is None:
+                            raise
+                        try:
+                            os.killpg(process.pid, 0)
+                        except ProcessLookupError:
+                            pass
+                        else:
+                            raise
                     process.wait(timeout=0.5)
                 finally:
                     process.stdout.close()

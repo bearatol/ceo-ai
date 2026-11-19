@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.10.1 - 2026-11-19
+
+- Prepare the native plugin for Anthropic's plugin directory: add a plugin
+  README that describes the six skills, every bundled script, memory and data
+  handling, and a 512×512 listing icon at `.claude-plugin/icon.png`.
+- Generate both files from the reviewed `modules/ceo-ai-plugin` source. The
+  plugin builder refuses extra or missing listing files and a non-PNG icon.
+- In the native package prepared for the directory, CEO and Writer use
+  conversation-local guidance. Existing external memory stores are left alone.
+  Video Editor reviews supplied footage and uses local FFmpeg for editing.
+
 ## 0.10.0 - 2026-11-10
 
 - Add the native `ceo-ai:video-editor` skill for reviewing footage, deciding

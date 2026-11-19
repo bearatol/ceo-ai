@@ -29,11 +29,14 @@ or reversible work may use the lead alone within its permissions.
    mechanism.
 6. Track task state as `ready`, `running`, `review`, `complete`, or `blocked`.
 7. Validate every result packet, evidence item, and acceptance criterion.
-8. Integrate accepted results and record task decisions. Durable lessons and
-   patterns require the optional project-memory consent and verification workflow;
-   subagents return proposed records to the authorized lead and never save private
-   memory independently.
+8. Integrate accepted results and record task decisions.
 
+<!-- apm-only -->
+Durable lessons and patterns require the optional project-memory consent and
+verification workflow. Subagents return proposed records to the authorized lead
+and never save private memory independently.
+
+<!-- /apm-only -->
 The CEO must not fabricate work, report a task as complete from a status
 message alone, or delegate the final acceptance decision.
 

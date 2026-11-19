@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify one CEO AI plugin with six self-contained skills."""
+"""Build or verify one CEO AI plugin with six self-contained skills and listing assets."""
 import argparse
 import json
 import os
@@ -24,14 +24,24 @@ LEGACY_SECURITY = frozenset('skills/security-scan/' + name for name in (
     'scripts/ceo_security_nvidia.py'))
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
-WRITER_SHARED = frozenset({'LICENSE', 'VERSION', 'references/skills/project-memory.md',
-                           'memory/store.py', 'memory/record.schema.json', 'memory/pattern.example.json'})
+WRITER_SHARED = frozenset({'LICENSE', 'VERSION'})
+APM_MEMORY_FILES = frozenset({
+    'references/skills/project-memory.md', 'memory/store.py', 'memory/record.schema.json',
+    'memory/pattern.example.json',
+})
+APM_MEMORY_COMPONENTS = frozenset({'skill:project-memory', 'tool:memory'})
+APM_ONLY_MARKDOWN = ('SKILL.md', 'references/skills/ceo.md', 'orchestration/protocol.md')
+NATIVE_CORE = ALLOWED - APM_MEMORY_FILES
+LEGACY_CORE_MEMORY = frozenset('skills/ceo-ai/' + name for name in APM_MEMORY_FILES)
+LEGACY_WRITER_MEMORY = frozenset('skills/writer/' + name for name in APM_MEMORY_FILES)
 WORKFLOW_SOURCES = {
     'debugger': frozenset({'SKILL.md'}),
     'user-review': frozenset({'SKILL.md', 'references/professional-profiles.md'}),
     'video-editor': frozenset({'SKILL.md'}),
 }
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
+# Directory listing assets: module file name -> plugin path.
+LISTING_FILES = {'README.md': 'README.md', 'icon.png': '.claude-plugin/icon.png'}
 
 
 
@@ -48,10 +58,12 @@ def expected(root=ROOT):
                     author={'name': 'Mikhail Diesperov'},
                     homepage='https://bearatol.github.io/ceo-ai/',
                     repository='https://github.com/bearatol/ceo-ai', license='MIT')
-    files = {'skills/ceo-ai/' + name: data for name, data in sorted(source.items())}
+    core = native_core(source, meta)
+    files = {'skills/ceo-ai/' + name: data for name, data in sorted(core.items())}
     files.update(security_files(root))
     files.update(writer_files(root))
     files.update(workflow_files(root))
+    files.update(listing_files(root))
     files['LICENSE'] = source['LICENSE']
     files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
@@ -61,6 +73,29 @@ def expected(root=ROOT):
         'defaultPrompt': ['Use CEO AI to challenge my assumptions and help me choose a next step.']}))
     files['payload.json'] = encode(dict(name='ceo-ai-plugin', schema_version=1,
                                         version=meta['version'], files=hashes(files)))
+    return files
+
+
+def native_core(source, meta):
+    files = {name: source[name] for name in NATIVE_CORE if name != 'bundle.json'}
+    start_marker = b'<!-- apm-only -->\n'
+    end_marker = b'<!-- /apm-only -->\n'
+    for name in APM_ONLY_MARKDOWN:
+        content = files[name]
+        require(content.count(start_marker) == content.count(end_marker) == 1,
+                'Invalid APM-only guidance markers in ' + name)
+        before, _, rest = content.partition(start_marker)
+        _, end, after = rest.partition(end_marker)
+        require(end, 'Invalid APM-only guidance marker order in ' + name)
+        files[name] = before + after
+    catalog = json.loads(files['catalog.json'])
+    catalog['components'] = [item for item in catalog['components']
+                             if item['id'] not in APM_MEMORY_COMPONENTS]
+    files['catalog.json'] = encode(catalog)
+    profile = files['profiles/core.profile'].decode('utf-8').splitlines()
+    files['profiles/core.profile'] = ''.join(
+        item + '\n' for item in profile if item not in APM_MEMORY_COMPONENTS).encode('utf-8')
+    files['bundle.json'] = encode(dict(meta, files=hashes(files)))
     return files
 
 
@@ -94,11 +129,18 @@ def workflow_files(root=ROOT):
     return files
 
 
+def listing_files(root=ROOT):
+    module = tree(root / 'modules/ceo-ai-plugin')
+    require(set(module) == set(LISTING_FILES), 'Listing module differs from publication allowlist')
+    require(module['icon.png'].startswith(b'\x89PNG\r\n\x1a\n'), 'Listing icon must be a PNG')
+    return {LISTING_FILES[name]: data for name, data in sorted(module.items())}
+
+
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
     security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                                   'scripts/ceo_inventory_windows.py'}
-    return (PLUGIN_METADATA | {'skills/ceo-ai/' + name for name in ALLOWED}
+    return (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in NATIVE_CORE}
             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
             | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
                for name in allowed | WORKFLOW_SHARED}
@@ -108,7 +150,12 @@ def publication_paths(plugin):
 def reviewed_removals(previous, removed, plugin):
     if plugin != 'ceo-ai':
         return False
-    if removed == {LEGACY_ADAPTER}:
+    # Older managed packages either have only core memory or carry both copies.
+    legacy_memory = LEGACY_CORE_MEMORY | LEGACY_WRITER_MEMORY
+    if removed & legacy_memory not in (set(), LEGACY_CORE_MEMORY, legacy_memory):
+        return False
+    removed = removed - legacy_memory
+    if not removed or removed == {LEGACY_ADAPTER}:
         return True
     # Only the complete historical payload may move. A partial legacy tree or
     # an existing new tree could contain work that the rename would discard.
@@ -184,7 +231,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--allow-layout-change', action='store_true',
-                        help='Accept reviewed additions, the security skill rename, or the known core Docker-adapter removal')
+                        help='Accept reviewed additions, the security skill rename, or known legacy payload removals')
     args = parser.parse_args()
     try:
         if args.write:

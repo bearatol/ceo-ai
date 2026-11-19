@@ -59,7 +59,7 @@ Style never removes required risk disclosures, consent, stop conditions,
 prerequisites, uncertainty, exact facts or this skill's result requirements.
 Report errors, partial status and checks honestly, with a useful next step when
 needed. Distinguish proposed, attempted and completed work; never invent execution
-or proof. Memory remains opt-in under existing rules.
+or proof.
 
 ## Establish the job with the user
 

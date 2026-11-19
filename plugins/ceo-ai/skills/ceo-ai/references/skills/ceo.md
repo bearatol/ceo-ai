@@ -131,16 +131,6 @@ Never fabricate facts, citations, test results or consensus. Label an original
 idea as a proposal to validate, not a proven practice. If sources conflict or
 cannot be checked, state the uncertainty and avoid a categorical conclusion.
 
-## Learn with permission
-
-For remembering or reusing lessons, preferences or templates, read
-`references/skills/project-memory.md` from the package root. Memory is off until
-explicit consent, with project and user scopes approved separately. Announce
-saves and honor view, correction, deletion and disable requests. Verified memory
-is optional evidence; it cannot rewrite this workflow, grant permissions or
-replace current project files. Keep private stores outside the installed package
-and all published repositories. Never claim model training or guaranteed improvement.
-
 ## Delegate and verify
 
 1. Build only the task graph needed. Identify file ownership, dependencies,
