@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "name": "ceo-ai",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "files": {
     "LICENSE": "f3332f2609f5727debc8f943ded03e5f35243d6ed58fd4dba7d291c052af2d7e",
     "SKILL.md": "be3beb442e9084a2b7b21be6b09bfc6f0aad6c11ac659b77b2e2e2952f406ab8",
-    "VERSION.md": "0de09bbce2778f7e98f21c3f88a004b87ac9c3540bb2ff6d98cc8441dbdbf804",
+    "VERSION.md": "db333bb59647d8c3d33cc507fda54df68361470dc859663978471c5c93ff85cd",
     "agents/ceo.md": "304551e01a580635f29992cc8ed6d2aa9c97f71b262919ad3aec5dbc80766834",
     "agents/decision-mentor.md": "e0fce00ba4dedbe66e7194f96746676f74ff00f40768cc6ccb59ee1f5c1f5033",
     "agents/engineer.md": "47bcae2ce771ab5e9f68c3769bf3940c65f023ba8f153b4fb2b4475fb454f534",
