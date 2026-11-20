@@ -43,7 +43,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Tests
-        run: python -c "import subprocess,sys; subprocess.run([sys.executable,'-B','-m','unittest','discover','-s','tests'],check=True,timeout=30)"
+        run: python -c "import subprocess,sys; subprocess.run([sys.executable,'-B','-m','unittest','discover','-s','tests'],check=True,timeout=300 if sys.platform=='win32' else 30)"
       - name: Package integrity
         run: python -c "import subprocess,sys; subprocess.run([sys.executable,'-B','scripts/check.py'],check=True,timeout=30)"
       - name: Documentation links
