@@ -7,7 +7,7 @@
     {
       "name": "ceo-ai",
       "source": "./plugins/ceo-ai",
-      "description": "Discuss decisions, challenge assumptions, and coordinate verified work."
+      "description": "Discuss decisions, coordinate work, and plan video edits."
     }
   ],
   "metadata": {

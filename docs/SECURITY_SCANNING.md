@@ -148,7 +148,8 @@ caches and creating none in the installed bundle.
 ## Optional SkillSpector route for skill packages
 
 The native `ceo-ai` plugin contains the broader `ceo-ai:security` skill.
-It can fetch the verified inventory helper for an approved inventory request.
+The CEO skill can separately list local skill and agent metadata on request
+using authorized read-only file access.
 The NVIDIA adapter is a separate tool for checking skill packages and is
 available from a reviewed source checkout. See the [setup steps](DOCKER_SCAN.md).
 

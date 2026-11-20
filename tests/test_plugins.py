@@ -166,6 +166,9 @@ class PluginTests(unittest.TestCase):
             data = json.loads(files[manifest])
             self.assertFalse({'agents', 'hooks', 'mcpServers', 'apps', 'commands'} & data.keys())
             self.assertEqual(data['version'], (ROOT / 'VERSION').read_text().strip())
+        claude_manifest = json.loads(files['.claude-plugin/plugin.json'].decode('utf-8'))
+        self.assertTrue({'видеомонтажёр', 'видеомонтажер', 'видеоредактор'} <=
+                        set(claude_manifest['keywords']))
 
     def test_relocated_cache_is_self_contained(self):
         with tempfile.TemporaryDirectory(prefix='ceo cache ') as folder:
@@ -187,6 +190,11 @@ class PluginTests(unittest.TestCase):
             self.assertIn('memory/store.py', source)
             self.assertIn('tools/team/team.py', source)
             self.assertIn('references/skills/inventory.md', core)
+            schema = json.loads(core['references/skills/inventory.schema.json'])
+            self.assertFalse(schema['additionalProperties'])
+            self.assertEqual(schema['required'], ['status', 'entries', 'issues'])
+            self.assertIn(b'(inventory.schema.json)', core['references/skills/inventory.md'])
+            self.assertNotIn(b'inventory_release.py', core['references/skills/inventory.md'])
 
     def test_script_removal_requires_verified_managed_upgrade(self):
         files = plugins.expected(ROOT)

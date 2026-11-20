@@ -27,11 +27,11 @@ def archive_payload(extra=None, link=None):
 
 
 class InventoryReleaseTests(unittest.TestCase):
-    def test_guide_names_same_pinned_release_and_digest(self):
-        guide = (ROOT / "modules/ceo-ai-plugin/inventory.md").read_text(encoding="utf-8")
-        self.assertIn(runner.ASSET, guide)
-        self.assertIn(runner.TAG, guide)
-        self.assertIn(runner.SHA256, guide)
+    def test_compatibility_runner_stays_pinned_to_original_release(self):
+        self.assertEqual(runner.ASSET, "ceo-ai-inventory-0.10.2.zip")
+        self.assertEqual(runner.TAG, "v0.10.2")
+        self.assertEqual(runner.SHA256,
+                         "02ae12d0b2e94c8c987cbdbf286028e1ba5972ec29f0b7bbbc5b6a450a99d751")
 
     def test_attestation_failure_never_runs_inventory(self):
         payload = archive_payload()

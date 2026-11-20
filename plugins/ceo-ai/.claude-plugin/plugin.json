@@ -1,11 +1,18 @@
 {
   "name": "ceo-ai",
-  "version": "0.10.2",
-  "description": "Discuss decisions, challenge assumptions, and coordinate verified work.",
+  "version": "0.10.3",
+  "description": "Discuss decisions, coordinate work, and plan video edits.",
   "author": {
     "name": "Mikhail Diesperov"
   },
   "homepage": "https://bearatol.github.io/ceo-ai/",
   "repository": "https://github.com/bearatol/ceo-ai",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "video editing",
+    "видеомонтаж",
+    "видеомонтажёр",
+    "видеомонтажер",
+    "видеоредактор"
+  ]
 }
