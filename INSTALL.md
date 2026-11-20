@@ -81,7 +81,9 @@ or successful host discovery.
 
 `ceo-ai:video-editor` uses authorized access to footage and selects the available
 media tools for the requested edit. FFmpeg, Whisper, HyperFrames and Remotion
-are separate tools.
+are separate tools. The skill can install FFmpeg through an existing supported
+package manager when you explicitly request installation. Editing alone does
+not authorize installation.
 
 Each skill resolves resources from its own directory inside the installed package.
 Verify all six directories for this layout against the reviewed payload.

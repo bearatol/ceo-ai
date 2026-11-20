@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- For local video editing, install FFmpeg through a supported package manager
+  only when the user explicitly requests it. Verify FFmpeg and ffprobe before
+  resuming the requested edit.
+
 - Use authorized read-only file tools and a strict JSON schema for native skill
   and agent inventory. No runner, downloads or cache are needed.
 - Add Russian discovery keywords for the video editing skill and its Claude

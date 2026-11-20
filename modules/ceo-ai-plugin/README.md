@@ -49,6 +49,11 @@ JSON. It downloads nothing and creates no cache. If Claude cannot safely
 inspect your directory, it reports that inventory is unavailable.
 See the [inventory guide](https://github.com/bearatol/ceo-ai/blob/main/modules/ceo-ai-plugin/inventory.md).
 
+Video Editor uses installed FFmpeg and ffprobe for local editing. If they are
+unavailable, it can provide a timecoded cut plan. It can also install FFmpeg
+from an approved package source through an existing package manager when the
+user explicitly requests installation and the host grants permission.
+
 Work you request, such as a security test of a site you own or a video edit,
 uses your own Claude tools and permissions. Before any active security test,
 the `security` skill explains the planned actions and possible harm and asks
