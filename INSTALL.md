@@ -67,13 +67,8 @@ explained target, purpose, exact actions, risks, safer option, limits and
 stop/recovery plan before informed approval. Unchanged approvals can be reused;
 new targets or risks need new consent. Host permissions and policy still apply.
 
-For native plugin inventory, provision [the runner](scripts/inventory_release.py)
-from a separately verified CEO AI release checkout. Check the immutable release
-attestation with `gh release verify v0.10.2 --repo github.com/bearatol/ceo-ai`
-and confirm the checkout's exact commit matches the release attestation before
-accepting its runner. Supply the runner location and the absolute path to the
-trusted GitHub CLI when explicitly authorizing inventory. The runner uses
-Python 3.10+, the host's normal permissions and the pinned helper release.
+Native plugin inventory uses the host's read-only file tools within a directory
+you select and returns JSON without setup, downloads or a cache.
 See the [inventory guide](plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md).
 The project and APM installs retain their local inventory scripts.
 The Docker SkillSpector adapter remains a separate source tool.

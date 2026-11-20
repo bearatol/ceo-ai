@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CEO AI local inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "entries", "issues"],
+  "properties": {
+    "status": {"enum": ["complete", "partial", "unavailable"]},
+    "entries": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "path", "name"],
+        "properties": {
+          "kind": {"enum": ["skill", "agent"]},
+          "path": {"$ref": "#/$defs/relativePath"},
+          "name": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+          }
+        },
+        "if": {"properties": {"kind": {"const": "skill"}}},
+        "then": {"properties": {"path": {"pattern": "^[^/]+(?:/[^/]+)*/SKILL[.]md$"}}},
+        "else": {"properties": {"path": {"pattern": "(^|/)[^/]+[.]md$"}}}
+      }
+    },
+    "issues": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "path"],
+        "properties": {
+          "code": {
+            "enum": ["access_unavailable", "unsafe_path", "unreadable",
+                     "metadata_limited", "candidate_limit"]
+          },
+          "path": {"anyOf": [{"$ref": "#/$defs/relativePath"}, {"type": "null"}]}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "complete"}}},
+      "then": {"properties": {"issues": {"maxItems": 0}}},
+      "else": {"properties": {"issues": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "unavailable"}}},
+      "then": {"properties": {"entries": {"maxItems": 0}}}
+    }
+  ],
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "maxLength": 512,
+      "pattern": "^(?:(?!\\.{1,2}(?:/|$))[^/\\\\:\\u0000-\\u001f\\u007f]+/)*(?!\\.{1,2}$)[^/\\\\:\\u0000-\\u001f\\u007f]+$"
+    }
+  }
+}

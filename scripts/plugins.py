@@ -43,6 +43,7 @@ APM_TOOL_FILES = frozenset({
 })
 NATIVE_CORE = ALLOWED - APM_MEMORY_FILES - APM_TOOL_FILES
 INVENTORY_GUIDE = 'skills/ceo-ai/references/skills/inventory.md'
+INVENTORY_SCHEMA = 'skills/ceo-ai/references/skills/inventory.schema.json'
 SECURITY_TOOL_FILES = frozenset({
     'scripts/ceo_inventory.py', 'scripts/ceo_inventory_windows.py',
     'scripts/ceo_security.py', 'scripts/ceo_security_nvidia.py',
@@ -62,7 +63,7 @@ WORKFLOW_SOURCES = {
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
 # Directory listing assets: module file name -> plugin path.
 LISTING_FILES = {'README.md': 'README.md', 'icon.png': '.claude-plugin/icon.png',
-                 'inventory.md': INVENTORY_GUIDE}
+                 'inventory.md': INVENTORY_GUIDE, 'inventory.schema.json': INVENTORY_SCHEMA}
 
 
 
@@ -75,19 +76,23 @@ def expected(root=ROOT):
     require(set(source) == ALLOWED, 'Plugin source differs from publication allowlist')
     require(meta['version'] == (root / 'VERSION').read_text().strip(), 'Release version mismatch')
     manifest = dict(name='ceo-ai', version=meta['version'],
-                    description='Discuss decisions, challenge assumptions, and coordinate verified work.',
+                    description='Discuss decisions, coordinate work, and plan video edits.',
                     author={'name': 'Mikhail Diesperov'},
                     homepage='https://bearatol.github.io/ceo-ai/',
                     repository='https://github.com/bearatol/ceo-ai', license='MIT')
     listing = listing_files(root)
-    core = native_core(source, meta, listing.pop(INVENTORY_GUIDE))
+    inventory = {path.removeprefix('skills/ceo-ai/'): listing.pop(path)
+                 for path in (INVENTORY_GUIDE, INVENTORY_SCHEMA)}
+    core = native_core(source, meta, inventory)
     files = {'skills/ceo-ai/' + name: data for name, data in sorted(core.items())}
     files.update(security_files(root))
     files.update(writer_files(root))
     files.update(workflow_files(root))
     files.update(listing)
     files['LICENSE'] = source['LICENSE']
-    files['.claude-plugin/plugin.json'] = encode(manifest)
+    files['.claude-plugin/plugin.json'] = encode(dict(
+        manifest, keywords=['video editing', 'видеомонтаж', 'видеомонтажёр',
+                            'видеомонтажер', 'видеоредактор']))
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
         'displayName': 'CEO AI', 'shortDescription': 'Discuss decisions and coordinate verified work.',
         'developerName': 'Mikhail Diesperov', 'category': 'Productivity',
@@ -104,7 +109,7 @@ def versioned(name):
     return folder + '/' + PLUGIN_VERSION if folder.startswith('skills/') and base == 'VERSION' else name
 
 
-def native_core(source, meta, inventory_guide):
+def native_core(source, meta, inventory):
     files = {name: source[name] for name in NATIVE_CORE if name != 'bundle.json'}
     start_marker = b'<!-- apm-only -->\n'
     end_marker = b'<!-- /apm-only -->\n'
@@ -120,7 +125,7 @@ def native_core(source, meta, inventory_guide):
     catalog['components'] = [item for item in catalog['components']
                              if item['id'] not in APM_MEMORY_COMPONENTS | {'tool:team'}]
     files['catalog.json'] = encode(catalog)
-    files['references/skills/inventory.md'] = inventory_guide
+    files.update(inventory)
     files['SKILL.md'] += (b'\nFor an explicit local inventory request, follow the '
                          b'[native inventory guide](references/skills/inventory.md).\n')
     files[PLUGIN_VERSION] = files.pop('VERSION')

@@ -11,7 +11,7 @@ selected release's contents before installing it in Codex or Claude Code:
 
 | Skill | Use it for | Requirements |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | Discuss decisions, coordinate work, check skills during indexing | Python 3.10+ on macOS, Linux or Windows (fixed local NTFS) for indexing |
+| `ceo-ai:ceo-ai` | Discuss decisions, coordinate work and list local skills and agents | Authorized read-only file access for inventory |
 | `ceo-ai:writer` | Draft and edit in your voice | Uses preferences provided in the current conversation |
 | `ceo-ai:security` | Audit applications, infrastructure, AI systems and skills; bounded pentests with explicit consent | Host model and authorized tools; Docker only for optional SkillSpector skill-package scanning |
 | `ceo-ai:debugger` | Reproduce and fix bugs; refactor while preserving tested behavior | Host access to the relevant code and checks; no bundled runtime |
@@ -71,8 +71,9 @@ complete security.
 [Workflow, methods and reports](SECURITY_SCANNING.md).
 
 Ordinary audits use the host model and its authorized tools. The native plugin
-contains no runnable scripts. On an explicit request and after approval, it can
-fetch the [local inventory helper](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md).
+contains no runnable scripts. On request, the CEO skill can list [local skill
+and agent metadata](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md)
+through the host's authorized read-only file tools.
 The SkillSpector adapter is a separate tool in the source repository.
 
 ### Writer
@@ -145,7 +146,7 @@ host. Windows/Linux CI checks packaging and the project installer. See
 
 | Навык | Для чего | Что нужно |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | Обсуждение задач, координация, проверка при индексации | Для локальной проверки Python 3.10+ и macOS, Linux или Windows (локальный NTFS) |
+| `ceo-ai:ceo-ai` | Обсуждение задач, координация, список локальных навыков и агентов | Разрешённый доступ на чтение для инвентаризации |
 | `ceo-ai:writer` | Тексты и редактура в твоём стиле | Без Docker; Python нужен только для сохранения предпочтений |
 | `ceo-ai:security` | Аудит приложений, инфраструктуры, ИИ-систем и скиллов; согласованный пентест | Модель приложения и разрешённые инструменты; Docker только для опциональной проверки пакетов через SkillSpector |
 | `ceo-ai:debugger` | Воспроизведение и исправление ошибок; рефакторинг с сохранением проверенного поведения | Доступ приложения к нужному коду и проверкам; без встроенной среды исполнения |
@@ -204,8 +205,9 @@ APM. Сейчас они ставят только основной навык, 
 [Процесс, методы и отчёт](SECURITY_SCANNING.md).
 
 Обычный аудит использует модель приложения и доступные ей инструменты.
-В плагине нет исполняемых скриптов. По запросу и с согласия пользователя агент
-может скачать [утилиту локальной инвентаризации](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md).
+В плагине нет исполняемых скриптов. По запросу навык CEO составит
+[список локальных навыков и агентов](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md)
+штатными инструментами чтения в указанной папке.
 Адаптер SkillSpector доступен отдельно в исходном репозитории.
 
 ### Writer
@@ -275,7 +277,7 @@ codex plugin add ceo-ai@ceo-ai-plugins
 
 | 技能 | 用途 | 要求 |
 | --- | --- | --- |
-| `ceo-ai:ceo-ai` | 讨论决策、协调任务、索引时检查 | 本地检查需要 Python 3.10+，支持 macOS、Linux 及 Windows（本地固定 NTFS） |
+| `ceo-ai:ceo-ai` | 讨论决策、协调任务、列出本地技能和代理 | 清点需要获准的只读文件访问 |
 | `ceo-ai:writer` | 按你的风格写作和编辑 | 无需 Docker；持久偏好需要 Python |
 | `ceo-ai:security` | 审查应用、基础设施、AI 系统和技能；经明确同意的有限渗透测试 | 宿主模型及获准工具；仅可选 SkillSpector 技能包扫描需要 Docker |
 | `ceo-ai:debugger` | 复现并修复问题；保持已测试行为的重构 | 宿主可访问相关代码与检查；不捆绑运行环境 |
@@ -314,8 +316,8 @@ APM 目前仍只提供主技能，不包含其他原生技能。
 新目标或新风险需要重新同意。宿主权限和政策始终有效。报告说明哪些检查无法执行，
 以及哪些部分仍未验证；不能保证完全安全。[流程、方法与报告](SECURITY_SCANNING.md)。
 
-常规审查使用宿主模型和获准工具。插件不包含可执行脚本。经用户请求并批准后，
-代理可下载[本地清点工具](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md)。
+常规审查使用宿主模型和获准工具。插件不包含可执行脚本。根据用户的请求，
+CEO 技能可使用宿主的只读工具[清点本地技能和代理](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md)。
 SkillSpector 适配器作为独立工具保留在源代码仓库中。
 
 ### Writer

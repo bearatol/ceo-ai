@@ -34,20 +34,20 @@ Start a new conversation, then select the skill you need.
 - Writer: "Turn these notes into a customer update. Use the tone of the sample I provided here."
 - Video Editor: "Review this clip, flag the biggest issues with timecodes, and suggest a cut using the footage I supplied."
 
+По запросу «видеомонтажёр» или «видеоредактор» навык `ceo-ai:video-editor`
+разберёт доступные исходники, предложит правки и составит план монтажа с таймкодами.
+
 ## What the plugin contains and runs
 
 The plugin contains six skills with Markdown instructions, JSON schemas and
 templates. It contains no executable scripts. Installation runs nothing and
 grants no extra permissions.
 
-When you request local inventory and approve the scope and execution, Claude
-can invoke your separately provisioned CEO AI runner. The runner downloads the
-versioned helper from GitHub Releases and verifies its attestation and pinned
-SHA-256 before running it with the host's existing permissions.
-The helper reads skill and agent metadata and can refresh its own cache with
-your approval. It makes no network requests and uploads no local files.
-This requires Python, a trusted GitHub CLI, approved network access and a local
-terminal. See the [inventory guide](https://github.com/bearatol/ceo-ai/blob/main/modules/ceo-ai-plugin/inventory.md).
+On request, Claude can list skill and agent metadata in a directory you select
+using its authorized read-only file tools. The inventory returns structured
+JSON. It downloads nothing and creates no cache. If Claude cannot safely
+inspect your directory, it reports that inventory is unavailable.
+See the [inventory guide](https://github.com/bearatol/ceo-ai/blob/main/modules/ceo-ai-plugin/inventory.md).
 
 Work you request, such as a security test of a site you own or a video edit,
 uses your own Claude tools and permissions. Before any active security test,
