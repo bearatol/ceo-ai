@@ -39,8 +39,7 @@ The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
 `ceo-ai:user-review` for examining materials through novice and relevant
 professional perspectives, `ceo-ai:video-editor` for reviewing and editing footage,
 and `ceo-ai:security` for scoped security audits and
-informed, authorized penetration tests, including optional local skill-package
-scans. Discover and load only the relevant skill within the user's
+informed, authorized penetration tests. Discover and load only the relevant skill within the user's
 authorization. Installation does not run reviews or scans or install Docker.
 Project/APM installs contain only this core entry; do not assume native sibling
 skills exist in those installations.

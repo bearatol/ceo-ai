@@ -122,11 +122,19 @@ Choose a **new**, approved private directory outside the scanned package. Its
 ancestors must be trusted and not writable by other users. Replace the example
 path; do not change permissions on an existing directory to force acceptance.
 
-Set `CEO_SCAN_ADAPTER` to `scripts/ceo_security_nvidia.py` inside the loaded
-installed `security` skill, not to a guessed cache or downloaded substitute.
+From the reviewed CEO AI source checkout, copy the adapter and its two
+companion files into a new private directory. The native plugin does not
+ship the adapter.
+
+Use the full commit ID from the verified CEO AI release attestation as `CEO_SCAN_COMMIT`. Read the three files from that Git commit so local edits cannot change the staged adapter.
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
+ceo_adapter_dir="$(mktemp -d)"
+git show "$CEO_SCAN_COMMIT:modules/ceo-ai-security/scripts/ceo_security_nvidia.py" > "$ceo_adapter_dir/ceo_security_nvidia.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_inventory.py" > "$ceo_adapter_dir/ceo_inventory.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_security.py" > "$ceo_adapter_dir/ceo_security.py" ||
+  exit 1
+CEO_SCAN_ADAPTER="$ceo_adapter_dir/ceo_security_nvidia.py"
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -143,8 +151,7 @@ test on your machine.
 
 Repeat the adapter command with `--package /approved/skill-directory`, a directory
 containing `SKILL.md`. Keep the approved private workspace, image ID, version and
-socket. For an installed plugin, use `scripts/ceo_security_nvidia.py` relative to
-the loaded `security/SKILL.md`, not a guessed cache path. Approve the report's
+socket. Keep the prepared adapter and both companion files together. Approve the report's
 private destination before saving the JSON.
 
 For the skill interface, start a new chat and select `ceo-ai:security`

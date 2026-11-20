@@ -122,12 +122,18 @@ docker --host "$CEO_SCAN_SOCKET" run --rm --pull=never --network none --read-onl
 родительские каталоги должны быть доверенными и недоступными другим пользователям
 для записи. Замени путь в примере; не меняй права существующей папки ради обхода проверки.
 
-Укажи в `CEO_SCAN_ADAPTER` файл `scripts/ceo_security_nvidia.py` внутри
-загруженного установленного скилла `security`. Не угадывай путь кеша
-и не используй скачанную замену.
+Скопируй адаптер и два вспомогательных файла из проверенной копии исходников
+CEO AI в новый приватный каталог. Адаптер поставляется отдельно от плагина.
+
+Укажи в `CEO_SCAN_COMMIT` полный идентификатор коммита из проверенного подтверждения выпуска CEO AI. Файлы берутся из Git, поэтому локальные изменения не попадут в копию адаптера.
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
+ceo_adapter_dir="$(mktemp -d)"
+git show "$CEO_SCAN_COMMIT:modules/ceo-ai-security/scripts/ceo_security_nvidia.py" > "$ceo_adapter_dir/ceo_security_nvidia.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_inventory.py" > "$ceo_adapter_dir/ceo_inventory.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_security.py" > "$ceo_adapter_dir/ceo_security.py" ||
+  exit 1
+CEO_SCAN_ADAPTER="$ceo_adapter_dir/ceo_security_nvidia.py"
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -144,8 +150,7 @@ python3 -I -B "$CEO_SCAN_ADAPTER" \
 
 Повтори команду адаптера с `--package /approved/skill-directory` — каталогом,
 содержащим `SKILL.md`. Оставь разрешённые рабочую папку, ID образа, версию и сокет.
-При установке плагина используй `scripts/ceo_security_nvidia.py` относительно
-загруженного `security/SKILL.md`, не угадывай путь кэша. До сохранения JSON
+Храни подготовленный адаптер и два вспомогательных файла в одном каталоге. До сохранения JSON
 согласуй приватный путь отчёта.
 
 Для работы через навык начни новый чат: выбери `ceo-ai:security`

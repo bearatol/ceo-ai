@@ -15,7 +15,6 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import plugins
 from install import tree
 
-CORE = ROOT / 'plugins/ceo-ai'
 OPTIONAL = ROOT / 'plugins/ceo-ai/skills/security'
 LEGACY_FILES = frozenset({'LICENSE', 'SKILL.md', 'VERSION', 'scripts/ceo_inventory.py',
                           'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
@@ -44,9 +43,14 @@ class SecurityModuleTests(unittest.TestCase):
         files = {name: data for name, data in current.items()
                  if name != 'payload.json' and not name.startswith('skills/security/')}
         for name in LEGACY_FILES:
-            data = current['skills/security/' + name]
             if name == 'SKILL.md':
                 data = b'---\nname: security-scan\n---\nPrevious reviewed security skill.\n'
+            elif name == 'scripts/ceo_security_nvidia.py':
+                data = (ROOT / 'modules/ceo-ai-security' / name).read_bytes()
+            elif name.startswith('scripts/'):
+                data = (ROOT / '.apm/skills/ceo-ai' / name).read_bytes()
+            else:
+                data = current[plugins.versioned('skills/security/' + name)]
             files['skills/security-scan/' + name] = data
         if adapter:
             files[plugins.LEGACY_ADAPTER] = b'# previous reviewed adapter\n'
@@ -62,7 +66,7 @@ class SecurityModuleTests(unittest.TestCase):
     def test_core_does_not_ship_docker_adapter(self):
         files = plugins.expected(ROOT)
         self.assertFalse('skills/ceo-ai/scripts/ceo_security_nvidia.py' in files, 'Core still ships Docker adapter')
-        self.assertIn('skills/ceo-ai/scripts/ceo_security.py', files)
+        self.assertNotIn('skills/ceo-ai/scripts/ceo_security.py', files)
         self.assertNotIn('scripts/ceo_security_nvidia.py', tree(ROOT / '.apm/skills/ceo-ai'))
 
     def test_catalogs_offer_one_plugin_without_runtime_dependencies(self):
@@ -76,11 +80,11 @@ class SecurityModuleTests(unittest.TestCase):
     def test_core_index_works_without_docker(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary).resolve()
-            shutil.copytree(CORE, base / 'core')
+            shutil.copytree(ROOT / '.apm/skills/ceo-ai/scripts', base / 'tools')
             package = base / 'home/skills/demo'
             package.mkdir(parents=True)
             (package / 'SKILL.md').write_text('---\nname: demo\n---\nSummarize supplied text.\n')
-            run = subprocess.run([sys.executable, '-I', '-B', str(base/'core/skills/ceo-ai/scripts/ceo_inventory.py'),
+            run = subprocess.run([sys.executable, '-I', '-B', str(base/'tools/ceo_inventory.py'),
                                   '--home', str(base/'home')], env={'PATH':''}, capture_output=True,text=True,timeout=10)
             self.assertEqual(run.returncode,0,run.stderr)
             self.assertEqual(json.loads(run.stdout)['entries'][0]['security']['decision'],'no-findings')
@@ -90,9 +94,7 @@ class SecurityModuleTests(unittest.TestCase):
         files = plugins.security_files(ROOT)
         self.assertEqual({'skills/security/'+n:d for n,d in tree(OPTIONAL).items()},files)
         self.assertEqual([n for n in files if n.endswith('/SKILL.md')],['skills/security/SKILL.md'])
-        for name in ('ceo_inventory.py','ceo_security.py'):
-            self.assertEqual(files['skills/security/scripts/'+name],
-                             (ROOT/'.apm/skills/ceo-ai/scripts'/name).read_bytes())
+        self.assertFalse([name for name in files if '/scripts/' in name])
         for name in ('.codex-plugin/plugin.json','.claude-plugin/plugin.json'):
             manifest = json.loads(plugins.expected(ROOT)[name])
             self.assertEqual(manifest['name'],'ceo-ai')
@@ -103,7 +105,7 @@ class SecurityModuleTests(unittest.TestCase):
         files = {name[len(prefix):]: data for name, data in plugins.security_files(ROOT).items()}
         self.assertEqual({name for name in files if name.startswith('references/')}, {
             'references/engagement.md', 'references/testing-profiles.md',
-            'references/reporting.md', 'references/skill-scan.md'})
+            'references/reporting.md'})
         with tempfile.TemporaryDirectory(prefix='security references ') as temporary:
             target = Path(temporary).resolve() / '插件'
             self.write_fixture(target, files)
@@ -119,8 +121,12 @@ class SecurityModuleTests(unittest.TestCase):
     def test_optional_cli_survives_relocation_without_core_or_docker(self):
         with tempfile.TemporaryDirectory(prefix='security cache ') as temporary:
             base = Path(temporary).resolve()
-            shutil.copytree(OPTIONAL, base/'插件')
             scripts = base/'插件/scripts'
+            scripts.mkdir(parents=True)
+            for name in ('ceo_inventory.py', 'ceo_security.py'):
+                shutil.copyfile(ROOT / '.apm/skills/ceo-ai/scripts' / name, scripts / name)
+            shutil.copyfile(ROOT / 'modules/ceo-ai-security/scripts/ceo_security_nvidia.py',
+                            scripts / 'ceo_security_nvidia.py')
             command = [sys.executable,'-I','-B',str(scripts/'ceo_security_nvidia.py')]
             help_result = subprocess.run(command+['--help'],env={'PATH':''},capture_output=True,text=True,timeout=10)
             self.assertEqual(help_result.returncode,0,help_result.stderr)
@@ -240,13 +246,13 @@ class SecurityModuleTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'allowlist'):
                     plugins.security_files(root)
 
-    def test_altered_generated_shared_runtime_fails_verification(self):
+    def test_altered_generated_security_skill_fails_verification(self):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary).resolve()
             for directory in ('.apm','modules','plugins'):
                 shutil.copytree(ROOT/directory,root/directory)
             shutil.copyfile(ROOT/'VERSION',root/'VERSION')
-            (root/'plugins/ceo-ai/skills/security/scripts/ceo_security.py').write_text('altered')
+            (root/'plugins/ceo-ai/skills/security/SKILL.md').write_text('altered')
             with self.assertRaisesRegex(ValueError,'stale'):
                 plugins.check(root)
 

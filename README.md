@@ -33,8 +33,9 @@ respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md
 
 ## Security checks during indexing
 
-CEO AI checks selected skills and agents locally during indexing, without running
-their content. The builtin scanner needs Python 3.10+ on macOS, Linux or native Windows (fixed local NTFS),
+CEO AI checks selected skills and agents locally during indexing without running
+their content. The native plugin can fetch a verified helper after you approve
+the download, execution and scope. The helper needs Python 3.10+ on macOS, Linux or native Windows (fixed local NTFS),
 with no Docker, LLM or API calls. Reports show risk signals, unchecked content
 and unverified trust. No findings does not mean safe.
 
