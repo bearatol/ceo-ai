@@ -1,10 +1,10 @@
-# 六个技能, 一位理发师, 几个可疑的点子
+# 五个技能, 一位理发师, 几个可疑的点子
 
 [English](DIALOGUE.md) · [Русский](DIALOGUE.ru.md) · [简体中文](DIALOGUE.zh-CN.md)
 
 **以下所有场景均为虚构教学示例.** 每段可以独立阅读, 用来展示工作方式, 并非运行记录, 实测成果, 背书或保证. 故事中的扫描, 观察和测试也都是虚构的.
 
-**目录:** [CEO](#ceo) | [Writer](#writer) | [Security](#security) | [Debugger](#debugger) | [User Review](#user-review) | [Video Editor](#video-editor)
+**目录:** [CEO](#ceo) | [Writer](#writer) | [Security](#security) | [Debugger](#debugger) | [User Review](#user-review)
 
 ## CEO
 
@@ -161,14 +161,4 @@
 
 ## Video Editor
 
-*虚构示例。此对话没有实际渲染视频。*
-
-**理发师：** 做一条 20 秒的竖屏宣传片。删掉所有停顿吧，预约应用已经有加载画面了。
-
-**Video Editor：** 源素材 00:05–00:06，你说完“我就修一点”后停顿，接着切到发型特写。这个停顿给笑点留了时间。建议保留它，缩短 00:12–00:14 的空白，把字幕移到应用按钮上方。导出前可以对比两段短预览。
-
-**理发师：** 留着那个停顿。把“首次到店的顾客”那句加回来，同事已经确认过了。
-
-**Video Editor：** 我会在新版本恢复源素材 00:15–00:17，保留字幕的位置，再按新预览的时间码检查这句话和成片时长。
-
-[Video Editor 指南和提示词](VIDEO_EDITOR.md#简体中文)。
+视频剪辑已迁移至独立插件 [Video Editor AI](https://github.com/bearatol/video-editor-ai/blob/main/EXAMPLES.md#简体中文).

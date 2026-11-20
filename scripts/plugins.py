@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or verify one CEO AI plugin with six self-contained skills and listing assets."""
+"""Build or verify one CEO AI plugin with five self-contained skills and listing assets."""
 import argparse
 import json
 import os
@@ -25,7 +25,12 @@ LEGACY_SECURITY = frozenset('skills/security-scan/' + name for name in (
 PLUGIN_VERSION = 'VERSION.md'
 # Skill version markers before the plugin directory required a text extension.
 LEGACY_VERSIONS = frozenset('skills/' + skill + '/VERSION' for skill in (
-    'ceo-ai', 'security', 'writer', 'debugger', 'user-review', 'video-editor'))
+    'ceo-ai', 'security', 'writer', 'debugger', 'user-review'))
+LEGACY_VIDEO = frozenset('skills/video-editor/' + name for name in ('SKILL.md', 'LICENSE'))
+LEGACY_VIDEO_TREES = (
+    LEGACY_VIDEO | {'skills/video-editor/VERSION'},
+    LEGACY_VIDEO | {'skills/video-editor/VERSION.md'},
+)
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
 WRITER_SHARED = frozenset({'LICENSE', 'VERSION'})
@@ -58,7 +63,6 @@ LEGACY_WRITER_MEMORY = frozenset('skills/writer/' + name for name in APM_MEMORY_
 WORKFLOW_SOURCES = {
     'debugger': frozenset({'SKILL.md'}),
     'user-review': frozenset({'SKILL.md', 'references/professional-profiles.md'}),
-    'video-editor': frozenset({'SKILL.md'}),
 }
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
 # Directory listing assets: module file name -> plugin path.
@@ -76,7 +80,7 @@ def expected(root=ROOT):
     require(set(source) == ALLOWED, 'Plugin source differs from publication allowlist')
     require(meta['version'] == (root / 'VERSION').read_text().strip(), 'Release version mismatch')
     manifest = dict(name='ceo-ai', version=meta['version'],
-                    description='Discuss decisions, coordinate work, and plan video edits.',
+                    description='Discuss decisions, challenge assumptions, and coordinate verified work.',
                     author={'name': 'Mikhail Diesperov'},
                     homepage='https://bearatol.github.io/ceo-ai/',
                     repository='https://github.com/bearatol/ceo-ai', license='MIT')
@@ -90,9 +94,7 @@ def expected(root=ROOT):
     files.update(workflow_files(root))
     files.update(listing)
     files['LICENSE'] = source['LICENSE']
-    files['.claude-plugin/plugin.json'] = encode(dict(
-        manifest, keywords=['video editing', 'видеомонтаж', 'видеомонтажёр',
-                            'видеомонтажер', 'видеоредактор']))
+    files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
         'displayName': 'CEO AI', 'shortDescription': 'Discuss decisions and coordinate verified work.',
         'developerName': 'Mikhail Diesperov', 'category': 'Productivity',
@@ -183,6 +185,11 @@ def publication_paths(plugin):
 def reviewed_removals(previous, removed, plugin):
     if plugin != 'ceo-ai':
         return False
+    # The editor moved to its own plugin. Remove only a complete managed subtree.
+    video = {name for name in previous if name.startswith('skills/video-editor/')}
+    if video and (video not in LEGACY_VIDEO_TREES or not video <= removed):
+        return False
+    removed = removed - video
     # Older managed packages either have only core memory or carry both copies.
     legacy_memory = LEGACY_CORE_MEMORY | LEGACY_WRITER_MEMORY
     if removed & legacy_memory not in (set(), LEGACY_CORE_MEMORY, legacy_memory):

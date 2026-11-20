@@ -29,7 +29,7 @@ established practices and authoritative primary sources before consequential
 recommendations. It separates facts from guesses, flags missing evidence and
 respects your informed preferences. [How it checks a proposal](docs/CEO_GUIDE.md#check-the-proposal-against-the-outcome).
 
-[Six fictional skill demonstrations](docs/DIALOGUE.md).
+[Five fictional skill demonstrations](docs/DIALOGUE.md).
 
 ## Security checks during indexing
 
@@ -87,9 +87,7 @@ points to concrete friction or possible exit points, and proposes fixes with
 tradeoffs. These are synthetic hypotheses, not user research or conversion
 predictions. [User Review guide](docs/USER_REVIEW.md#english).
 
-Use **`ceo-ai:video-editor`** to review footage, decide what to reshoot, or plan
-and revise a cut with timecodes, captions and previews. Rendering depends on the
-tools available to your app. [Video Editor guide and prompts](docs/VIDEO_EDITOR.md#english).
+Video editing is available separately in [Video Editor AI](https://bearatol.github.io/video-editor-ai/).
 
 Check the contents of the release you select. Project and APM installs provide
 the core CEO skill only.
@@ -168,12 +166,12 @@ changes, CEO can then help implement the plan and check the result.
 
 | Installation method | Verified | Still unverified |
 | --- | --- | --- |
-| Earlier core-only Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Six-skill layout discovery and model invocation; Windows/Linux native managers |
+| Earlier core-only Codex / Claude Code plugins | Install, update, removal and skill discovery on macOS | Five-skill layout discovery and model invocation; Windows/Linux native managers |
 | Project installer, all three tools | File lifecycle in Windows, Linux and macOS CI | Skill invocation in the apps |
 | APM 0.31.0 | File lifecycle on macOS with CEO AI 0.2.0 | Installation example for CEO AI 0.9.1 |
 
 The native checks used Codex CLI 0.147.0 and Claude Code 2.1.232 with the earlier
-core-only layout. They do not establish discovery or model behavior for the six
+core-only layout. They do not establish discovery or model behavior for the five
 skills in this source tree.
 See [test evidence and limitations](docs/PLUGINS.md#what-was-checked) and
 [automated checks](https://github.com/bearatol/ceo-ai/actions/workflows/checks.yml).

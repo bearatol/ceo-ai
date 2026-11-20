@@ -127,11 +127,10 @@ indexing never invokes it automatically. The same plugin includes
 `ceo-ai:writer` for writing and editing. The current source tree also includes
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for synthetic reviews as a tired novice and a chosen
-professional, and `ceo-ai:video-editor` for reviewing footage, planning cuts and
-revising previews. No separate plugin installation is needed for this layout. Load
+professional. No separate plugin installation is needed for this layout. Load
 siblings through the host's skill discovery only when relevant; do not assume
 their availability in an older release or a project/APM installation, which
-contains only the core entry. See [Debugger](DEBUGGER.md), [User Review](USER_REVIEW.md) and [Video Editor](VIDEO_EDITOR.md).
+contains only the core entry. See [Debugger](DEBUGGER.md) and [User Review](USER_REVIEW.md).
 
 [Security workflow](SECURITY_SCANNING.md) explains informed consent, target-specific
 methods, evidence reports, T0–T4 inventory observations, partial coverage,

@@ -31,7 +31,7 @@ Keep simple tasks simple. Use the workflow before creating a team.
 The native `ceo-ai` plugin also includes `ceo-ai:writer` for writing tasks,
 `ceo-ai:debugger` for debugging and behavior-preserving refactoring,
 `ceo-ai:user-review` for examining materials through novice and relevant
-professional perspectives, `ceo-ai:video-editor` for reviewing and editing footage,
+professional perspectives,
 and `ceo-ai:security` for scoped security audits and
 informed, authorized penetration tests. Discover and load only the relevant skill within the user's
 authorization. Installation does not run reviews or scans or install Docker.

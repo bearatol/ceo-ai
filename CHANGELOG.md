@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Move video editing to the standalone [Video Editor AI](https://github.com/bearatol/video-editor-ai) plugin.
+  CEO AI now ships its five decision and work skills.
+
+## 0.10.4 - 2026-11-20
+
 - For local video editing, install FFmpeg through a supported package manager
   only when the user explicitly requests it. Verify FFmpeg and ffprobe before
   resuming the requested edit.
