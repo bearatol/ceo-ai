@@ -1,12 +1,12 @@
 # CEO AI plugin
 
-Six fictional skill demonstrations: [English](DIALOGUE.md) | [Русский](DIALOGUE.ru.md) | [简体中文](DIALOGUE.zh-CN.md).
+Five fictional skill demonstrations: [English](DIALOGUE.md) | [Русский](DIALOGUE.ru.md) | [简体中文](DIALOGUE.zh-CN.md).
 
 [English](#english) · [Русский](#русский) · [简体中文](#简体中文)
 
 ## English
 
-The `ceo-ai` native plugin in this source tree contains six skills. Check the
+The `ceo-ai` native plugin in this source tree contains five skills. Check the
 selected release's contents before installing it in Codex or Claude Code:
 
 | Skill | Use it for | Requirements |
@@ -16,7 +16,6 @@ selected release's contents before installing it in Codex or Claude Code:
 | `ceo-ai:security` | Audit applications, infrastructure, AI systems and skills; bounded pentests with explicit consent | Host model and authorized tools; Docker only for optional SkillSpector skill-package scanning |
 | `ceo-ai:debugger` | Reproduce and fix bugs; refactor while preserving tested behavior | Host access to the relevant code and checks; no bundled runtime |
 | `ceo-ai:user-review` | Review a flow as a tired novice and a chosen professional | Authorized access to the material; no bundled runtime |
-| `ceo-ai:video-editor` | Review supplied footage, advise on retakes, and edit with captions | FFmpeg and ffprobe for local editing |
 
 In Claude Code, prefix the skill name with `/`. Load a skill when its task is
 needed. Installation does not run a scan or install Docker.
@@ -97,10 +96,7 @@ a conversion forecast or legal certification. [Examples and limits](USER_REVIEW.
 
 ### Video Editor
 
-Select `ceo-ai:video-editor` to review footage or agree on a cut before export.
-For revisions, identify the clip and source or preview timecode. Rendering
-uses local FFmpeg and ffprobe with media you supply. If local tools are
-unavailable, the skill can return a footage review or a timecoded cut plan.
+Video editing moved to [Video Editor AI](https://bearatol.github.io/video-editor-ai/).
 
 ### Update or remove
 
@@ -130,7 +126,7 @@ never delete cache folders or user preferences manually. See
 
 ### What was checked
 
-Package checks cover the six skill directories, exact resource lists, shared
+Package checks cover the five skill directories, exact resource lists, shared
 files and relocation of resources. Passing those checks does not establish
 behavior quality. Native package installation and
 cached-file integrity can be checked separately from model invocation. Historical
@@ -141,7 +137,7 @@ host. Windows/Linux CI checks packaging and the project installer. See
 
 ## Русский
 
-В текущих исходниках один нативный плагин `ceo-ai` содержит шесть навыков.
+В текущих исходниках один нативный плагин `ceo-ai` содержит пять навыков.
 Перед установкой проверь состав выбранного релиза:
 
 | Навык | Для чего | Что нужно |
@@ -151,7 +147,6 @@ host. Windows/Linux CI checks packaging and the project installer. See
 | `ceo-ai:security` | Аудит приложений, инфраструктуры, ИИ-систем и скиллов; согласованный пентест | Модель приложения и разрешённые инструменты; Docker только для опциональной проверки пакетов через SkillSpector |
 | `ceo-ai:debugger` | Воспроизведение и исправление ошибок; рефакторинг с сохранением проверенного поведения | Доступ приложения к нужному коду и проверкам; без встроенной среды исполнения |
 | `ceo-ai:user-review` | Проверка сценария глазами уставшего новичка и выбранного профессионала | Разрешённый доступ к материалу; без встроенной среды исполнения |
-| `ceo-ai:video-editor` | Оценка исходника, рекомендации по пересъёмке, монтаж с субтитрами и анимацией | Разрешённый доступ к видео и подходящие инструменты монтажа |
 
 В Claude Code перед именем добавь `/`. Инструкции нужного навыка загружаются по
 задаче. Установка не запускает сканирование, не ставит Docker и не включает память.
@@ -232,10 +227,7 @@ APM. Сейчас они ставят только основной навык, 
 
 ### Video Editor
 
-Выбери `ceo-ai:video-editor` для разбора исходников или согласования монтажа
-перед экспортом. Для правки укажи клип и таймкод исходника или превью. Рендер
-зависит от доступных приложению инструментов.
-[Примеры запросов и требования](VIDEO_EDITOR.md#русский).
+Видеомонтаж перенесён в [Video Editor AI](https://bearatol.github.io/video-editor-ai/).
 
 ### Обновление и удаление
 
@@ -264,7 +256,7 @@ codex plugin add ceo-ai@ceo-ai-plugins
 
 ### Что проверено
 
-Проверки пакета охватывают состав шести навыков, общие файлы и перенос ресурсов.
+Проверки пакета охватывают состав пяти навыков, общие файлы и перенос ресурсов.
 Их успешное прохождение не доказывает качество поведения модели.
 Установка пакета, обнаружение навыков и ответ модели проверяются отдельно.
 Прежние проверки Codex CLI 0.147.0 и Claude Code 2.1.232 на macOS относились к
@@ -273,7 +265,7 @@ codex plugin add ceo-ai@ceo-ai-plugins
 
 ## 简体中文
 
-当前源码中的一个 `ceo-ai` 原生插件包含六个技能。安装前请核对所选发布版本：
+当前源码中的一个 `ceo-ai` 原生插件包含五个技能。安装前请核对所选发布版本：
 
 | 技能 | 用途 | 要求 |
 | --- | --- | --- |
@@ -282,7 +274,6 @@ codex plugin add ceo-ai@ceo-ai-plugins
 | `ceo-ai:security` | 审查应用、基础设施、AI 系统和技能；经明确同意的有限渗透测试 | 宿主模型及获准工具；仅可选 SkillSpector 技能包扫描需要 Docker |
 | `ceo-ai:debugger` | 复现并修复问题；保持已测试行为的重构 | 宿主可访问相关代码与检查；不捆绑运行环境 |
 | `ceo-ai:user-review` | 从疲惫新手和指定专业人士的角度检查流程 | 获准访问审查材料；不捆绑运行环境 |
-| `ceo-ai:video-editor` | 评估素材、建议重拍、剪辑并添加字幕和动态图形 | 获准访问视频素材及合适的媒体工具 |
 
 Claude Code 调用时在名称前加 `/`。按任务加载相应技能。安装不会启动扫描、
 安装 Docker 或开启记忆，也不会注册代理、hooks、MCP 服务或新增权限。
@@ -338,9 +329,7 @@ SkillSpector 适配器作为独立工具保留在源代码仓库中。
 
 ### Video Editor
 
-选择 `ceo-ai:video-editor` 审查素材，或在导出前确认剪辑方案。要求修改时，
-请给出片段和源素材或预览的时间码。能否渲染取决于应用可用的工具。
-[提示词示例与工具要求](VIDEO_EDITOR.md#简体中文)。
+视频剪辑已迁移至 [Video Editor AI](https://bearatol.github.io/video-editor-ai/)。
 
 ### 更新和卸载
 
@@ -353,7 +342,7 @@ Claude Code 使用 `claude plugin marketplace update ceo-ai-plugins` 和
 
 ### 验证范围
 
-打包检查覆盖六个技能、文件完整性和资源迁移，不证明模型行为的质量。
+打包检查覆盖五个技能、文件完整性和资源迁移，不证明模型行为的质量。
 安装、技能发现与模型调用是
 不同的检查；旧主技能的宿主测试不能证明新布局在所有平台均可使用。
 [开发说明](DEVELOPMENT.md)。

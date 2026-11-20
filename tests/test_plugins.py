@@ -15,12 +15,11 @@ from install import hashes, package, tree
 
 
 class PluginTests(unittest.TestCase):
-    def test_one_plugin_exposes_six_skills(self):
+    def test_one_plugin_exposes_five_skills(self):
         files = plugins.expected(ROOT)
         self.assertEqual({n for n in files if n.endswith('/SKILL.md')}, {
             'skills/ceo-ai/SKILL.md', 'skills/writer/SKILL.md', 'skills/security/SKILL.md',
-            'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md',
-            'skills/video-editor/SKILL.md'})
+            'skills/debugger/SKILL.md', 'skills/user-review/SKILL.md'})
         self.assertIn(b'name: writer\n', files['skills/writer/SKILL.md'])
         self.assertIn(b'name: security\n', files['skills/security/SKILL.md'])
         self.assertFalse([name for name in files if name.endswith(('.py', '.sh', '.profile'))])
@@ -31,7 +30,6 @@ class PluginTests(unittest.TestCase):
             'debugger': {'SKILL.md', 'LICENSE', 'VERSION.md'},
             'user-review': {'SKILL.md', 'LICENSE', 'VERSION.md',
                             'references/professional-profiles.md'},
-            'video-editor': {'SKILL.md', 'LICENSE', 'VERSION.md'},
         }
         with tempfile.TemporaryDirectory(prefix='workflow cache ') as folder:
             cache = Path(folder).resolve() / '插件'
@@ -58,7 +56,7 @@ class PluginTests(unittest.TestCase):
                         self.assertTrue(resource.is_file(), str(resource))
 
     def test_new_workflows_reject_extra_or_missing_source_files(self):
-        for skill in ('debugger', 'user-review', 'video-editor'):
+        for skill in ('debugger', 'user-review'):
             for mutation in ('extra', 'missing'):
                 with self.subTest(skill=skill, mutation=mutation), tempfile.TemporaryDirectory() as folder:
                     root = Path(folder).resolve()
@@ -79,7 +77,7 @@ class PluginTests(unittest.TestCase):
             files = plugins.expected(ROOT)
             old = {name: data for name, data in files.items()
                    if name != 'payload.json' and not name.startswith(
-                       ('skills/debugger/', 'skills/user-review/', 'skills/video-editor/'))}
+                       ('skills/debugger/', 'skills/user-review/'))}
             old['payload.json'] = plugins.encode(dict(name='ceo-ai-plugin', schema_version=1,
                 version='0.8.0', files=hashes(old)))
             for name, data in old.items():
@@ -167,8 +165,39 @@ class PluginTests(unittest.TestCase):
             self.assertFalse({'agents', 'hooks', 'mcpServers', 'apps', 'commands'} & data.keys())
             self.assertEqual(data['version'], (ROOT / 'VERSION').read_text().strip())
         claude_manifest = json.loads(files['.claude-plugin/plugin.json'].decode('utf-8'))
-        self.assertTrue({'видеомонтажёр', 'видеомонтажер', 'видеоредактор'} <=
-                        set(claude_manifest['keywords']))
+        self.assertNotIn('video', claude_manifest['description'].lower())
+        self.assertFalse({'видеомонтажёр', 'видеомонтажер', 'видеоредактор'} &
+                         set(claude_manifest.get('keywords', [])))
+
+    def test_managed_upgrade_removes_only_the_complete_old_video_skill(self):
+        files = plugins.expected(ROOT)
+        for legacy in plugins.LEGACY_VIDEO_TREES:
+            self.assertTrue(plugins.reviewed_removals(legacy, legacy, 'ceo-ai'))
+            for path in legacy:
+                partial = legacy - {path}
+                self.assertFalse(plugins.reviewed_removals(partial, partial, 'ceo-ai'))
+            extra = legacy | {'skills/video-editor/notes.md'}
+            self.assertFalse(plugins.reviewed_removals(extra, extra, 'ceo-ai'))
+
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder).resolve() / 'package'
+            previous = {name: data for name, data in files.items() if name != 'payload.json'}
+            for name in plugins.LEGACY_VIDEO_TREES[1]:
+                previous[name] = b'prior release fixture\n'
+            previous['payload.json'] = plugins.encode(dict(
+                name='ceo-ai-plugin', schema_version=1, version='0.10.4', files=hashes(previous)))
+            for name, data in previous.items():
+                path = target / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+            old_skill = target / 'skills/video-editor/SKILL.md'
+            old_skill.write_bytes(b'local edit\n')
+            with self.assertRaisesRegex(ValueError, 'edited'):
+                plugins.write(target, files, allow_layout_change=True)
+            self.assertEqual(old_skill.read_bytes(), b'local edit\n')
+            old_skill.write_bytes(previous['skills/video-editor/SKILL.md'])
+            plugins.write(target, files, allow_layout_change=True)
+            self.assertEqual(tree(target), files)
 
     def test_relocated_cache_is_self_contained(self):
         with tempfile.TemporaryDirectory(prefix='ceo cache ') as folder:
