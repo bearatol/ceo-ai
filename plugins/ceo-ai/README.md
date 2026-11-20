@@ -36,36 +36,19 @@ Start a new conversation, then select the skill you need.
 
 ## What the plugin contains and runs
 
-The plugin contains only skills: Markdown instructions, JSON schemas and
-templates, readable Python 3.10+ scripts that use the standard library, and
-one small Bash wrapper.
-It registers no hooks, MCP servers, agents, commands or extra permissions, and
-installation runs nothing.
+The plugin contains six skills with Markdown instructions, JSON schemas and
+templates. It contains no executable scripts. Installation runs nothing and
+grants no extra permissions.
 
-Skills may ask Claude to run these bundled scripts with your host's normal
-permissions:
+When you request local inventory and approve the scope and execution, Claude
+can invoke your separately provisioned CEO AI runner. The runner downloads the
+versioned helper from GitHub Releases and verifies its attestation and pinned
+SHA-256 before running it with the host's existing permissions.
+The helper reads skill and agent metadata and can refresh its own cache with
+your approval. It makes no network requests and uploads no local files.
+This requires Python, a trusted GitHub CLI, approved network access and a local
+terminal. See the [inventory guide](https://github.com/bearatol/ceo-ai/blob/main/modules/ceo-ai-plugin/inventory.md).
 
-- `ceo-ai/scripts/ceo_inventory.py` and `ceo_inventory_windows.py` read
-  metadata of skills and agents in folders you approve, without executing the
-  code they find. A refresh writes only its own cache, when you authorize it.
-- `ceo-ai/scripts/catalog.py` validates the bundled component catalog without
-  executing component code.
-- `ceo-ai/scripts/ceo_security.py` and the copies in `security/scripts/`
-  make static, text-only observations of an already captured snapshot.
-- `ceo-ai/tools/team/team.py` and its `team.sh` wrapper list the bundled roles
-  and agents, build task and plan packets and validate task and result JSON.
-  With `--output`, they write that JSON to the path you give, replacing an
-  existing file there.
-- `security/scripts/ceo_security_nvidia.py` is an optional adapter for scanning
-  skill packages with NVIDIA SkillSpector. It runs only when you request it, and
-  only with Docker and a reviewed, digest-pinned image you have already
-  installed, and talks only to the local Docker socket. It copies a read-only
-  snapshot of the package into a temporary folder in the workspace you approve,
-  then starts the container with no network access, a read-only file system
-  and all capabilities dropped. The plugin installs neither Docker nor the
-  image.
-
-The bundled scripts make no network requests and send no data to any service.
 Work you request, such as a security test of a site you own or a video edit,
 uses your own Claude tools and permissions. Before any active security test,
 the `security` skill explains the planned actions and possible harm and asks

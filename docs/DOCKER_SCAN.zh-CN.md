@@ -106,11 +106,18 @@ docker --host "$CEO_SCAN_SOCKET" run --rm --pull=never --network none --read-onl
 在待扫描包外选择一个**新的**、已批准的私密目录。父目录必须可信且不允许其他用户写入。
 替换示例路径；不要修改已有目录的权限来强行通过检查。
 
-将 `CEO_SCAN_ADAPTER` 设置为已加载、已安装的 `security` 技能内的
-`scripts/ceo_security_nvidia.py`。不要猜测缓存路径或使用下载的替代文件。
+从已审查的 CEO AI 源代码副本将适配器和两个辅助文件复制到新的私密目录。
+原生插件不包含此适配器。
+
+将已验证的 CEO AI 发布证明中的完整提交 ID 设为 `CEO_SCAN_COMMIT`。直接从该提交读取三个文件，避免将本地修改复制到适配器。
 
 ```sh
-CEO_SCAN_ADAPTER='/absolute/path/to/loaded/security/scripts/ceo_security_nvidia.py'
+ceo_adapter_dir="$(mktemp -d)"
+git show "$CEO_SCAN_COMMIT:modules/ceo-ai-security/scripts/ceo_security_nvidia.py" > "$ceo_adapter_dir/ceo_security_nvidia.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_inventory.py" > "$ceo_adapter_dir/ceo_inventory.py" &&
+git show "$CEO_SCAN_COMMIT:.apm/skills/ceo-ai/scripts/ceo_security.py" > "$ceo_adapter_dir/ceo_security.py" ||
+  exit 1
+CEO_SCAN_ADAPTER="$ceo_adapter_dir/ceo_security_nvidia.py"
 mkdir -m 700 /approved/private-scan-workspace
 python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package research/security-scanners/fixtures/skills/b01-summary \
@@ -125,9 +132,8 @@ python3 -I -B "$CEO_SCAN_ADAPTER" \
 ## 5. 检查一个获批技能
 
 重复适配器命令，将参数改为 `--package /approved/skill-directory`，该目录须包含
-`SKILL.md`。保留获批工作目录、镜像 ID、版本及套接字。使用已安装插件时，
-从加载的 `security/SKILL.md` 所在目录找到 `scripts/ceo_security_nvidia.py`，
-不要猜测缓存路径。保存 JSON 前先批准私密报告位置。
+`SKILL.md`。保留获批工作目录、镜像 ID、版本及套接字。
+适配器和两个辅助文件应保存在同一目录。保存 JSON 前先批准私密报告位置。
 
 如需通过技能操作，请开启新会话，在 Codex 中选择 `ceo-ai:security`，
 或在 Claude Code 中调用 `/ceo-ai:security`。

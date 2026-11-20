@@ -140,22 +140,6 @@
       ]
     },
     {
-      "id": "tool:team",
-      "type": "tool",
-      "name": "team",
-      "profile": [
-        "core"
-      ],
-      "origin": "original",
-      "license": "MIT",
-      "path": "tools/team",
-      "tags": [
-        "coordination",
-        "cli",
-        "multi-host"
-      ]
-    },
-    {
       "id": "skill:ceo",
       "type": "skill",
       "name": "ceo",

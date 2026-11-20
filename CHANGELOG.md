@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.10.2 - 2026-11-20
+
+- Publish six native skills without bundled executable scripts. For an
+  approved inventory request, the agent can invoke a separately provisioned
+  runner that downloads and verifies the release helper. Project and APM inventory scripts remain
+  available from their existing install routes.
+
+- Ship each skill's version marker in the native plugin as `VERSION.md`, because
+  Anthropic's plugin directory accepts only known text and image types. The
+  APM bundle and installers keep `VERSION`. Updating the native plugin removes
+  the old `VERSION` files as a reviewed layout change.
+
 ## 0.10.1 - 2026-11-19
 
 - Prepare the native plugin for Anthropic's plugin directory: add a plugin

@@ -1,6 +1,6 @@
 ---
 name: security
-description: Audit the security of user-selected code, applications, APIs, infrastructure, configurations, mobile apps, AI agents, skills or other systems. Explain findings and risks, agree scope with the user, and perform bounded penetration tests only with informed authorization. Includes an optional local SkillSpector route for skill packages.
+description: Audit the security of user-selected code, applications, APIs, infrastructure, configurations, mobile apps, AI agents, skills or other systems. Explain findings and risks, agree scope with the user, and perform bounded penetration tests only with informed authorization.
 ---
 
 # CEO AI Security
@@ -13,8 +13,7 @@ practical consequences before technical detail.
 This skill supplies a method, not a bundled general-purpose pentest engine or
 extra privileges. Use only tools actually available and permitted by the host.
 Ordinary assistant-led analysis has no Docker prerequisite; model and tool costs
-follow the user's host. Only the optional SkillSpector route needs its documented
-Python/POSIX/Docker/image setup. Loading this skill starts no scan or installation.
+follow the user's host. Loading this skill starts no scan or installation.
 
 ## Load only what the task needs
 
@@ -27,8 +26,6 @@ these original guides from that root, including after cache relocation:
   the sections matching the target, its version and the available evidence.
 - [Evidence, reporting and retesting](references/reporting.md): use for findings
   and the final result, even when active testing was unavailable or declined.
-- [Optional local skill-package scan](references/skill-scan.md): read in full
-  before preparing or running the shipped SkillSpector adapter.
 
 Missing bundled resources mean an incomplete installation. Do not silently find
 replacement scripts in other caches, download tools or invent a scanner backend.

@@ -93,8 +93,7 @@ instructions. Investigate suspicious findings or incomplete coverage; capability
 tiers, cached results and vendor safety badges do not establish trust. Builtin
 indexing is local and calls no models or Docker. The native plugin includes
 `ceo-ai:security` for scoped security audits and informed, authorized penetration
-tests. Its optional SkillSpector route checks skill packages and needs the
-reviewed local Docker setup; ordinary assistant-led audits do not require it.
+tests. Ordinary assistant-led audits do not require Docker.
 Active tests need agreed scope, purpose, risks, action limits, stop/recovery rules
 and human approval. Scanner preparation and external services need applicable
 data, network and spending permissions. Neither a scan nor a subagent can enlarge

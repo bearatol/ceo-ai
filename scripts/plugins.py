@@ -22,6 +22,10 @@ LEGACY_SECURITY = frozenset('skills/security-scan/' + name for name in (
     'LICENSE', 'SKILL.md', 'VERSION', 'scripts/ceo_inventory.py',
     'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
     'scripts/ceo_security_nvidia.py'))
+PLUGIN_VERSION = 'VERSION.md'
+# Skill version markers before the plugin directory required a text extension.
+LEGACY_VERSIONS = frozenset('skills/' + skill + '/VERSION' for skill in (
+    'ceo-ai', 'security', 'writer', 'debugger', 'user-review', 'video-editor'))
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
 WRITER_SHARED = frozenset({'LICENSE', 'VERSION'})
@@ -30,8 +34,24 @@ APM_MEMORY_FILES = frozenset({
     'memory/pattern.example.json',
 })
 APM_MEMORY_COMPONENTS = frozenset({'skill:project-memory', 'tool:memory'})
-APM_ONLY_MARKDOWN = ('SKILL.md', 'references/skills/ceo.md', 'orchestration/protocol.md')
-NATIVE_CORE = ALLOWED - APM_MEMORY_FILES
+APM_ONLY_MARKDOWN = ('SKILL.md', 'references/skills/ceo.md', 'orchestration/protocol.md',
+                     'references/skills/capability-discovery.md')
+APM_TOOL_FILES = frozenset({
+    'profiles/core.profile', 'scripts/catalog.py', 'scripts/ceo_inventory.py',
+    'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
+    'tools/team/team.py', 'tools/team/team.sh',
+})
+NATIVE_CORE = ALLOWED - APM_MEMORY_FILES - APM_TOOL_FILES
+INVENTORY_GUIDE = 'skills/ceo-ai/references/skills/inventory.md'
+SECURITY_TOOL_FILES = frozenset({
+    'scripts/ceo_inventory.py', 'scripts/ceo_inventory_windows.py',
+    'scripts/ceo_security.py', 'scripts/ceo_security_nvidia.py',
+    'references/skill-scan.md',
+})
+LEGACY_NATIVE_TOOLS = (
+    {'skills/ceo-ai/' + name for name in APM_TOOL_FILES}
+    | {'skills/security/' + name for name in SECURITY_TOOL_FILES}
+)
 LEGACY_CORE_MEMORY = frozenset('skills/ceo-ai/' + name for name in APM_MEMORY_FILES)
 LEGACY_WRITER_MEMORY = frozenset('skills/writer/' + name for name in APM_MEMORY_FILES)
 WORKFLOW_SOURCES = {
@@ -41,7 +61,8 @@ WORKFLOW_SOURCES = {
 }
 WORKFLOW_SHARED = frozenset({'LICENSE', 'VERSION'})
 # Directory listing assets: module file name -> plugin path.
-LISTING_FILES = {'README.md': 'README.md', 'icon.png': '.claude-plugin/icon.png'}
+LISTING_FILES = {'README.md': 'README.md', 'icon.png': '.claude-plugin/icon.png',
+                 'inventory.md': INVENTORY_GUIDE}
 
 
 
@@ -58,12 +79,13 @@ def expected(root=ROOT):
                     author={'name': 'Mikhail Diesperov'},
                     homepage='https://bearatol.github.io/ceo-ai/',
                     repository='https://github.com/bearatol/ceo-ai', license='MIT')
-    core = native_core(source, meta)
+    listing = listing_files(root)
+    core = native_core(source, meta, listing.pop(INVENTORY_GUIDE))
     files = {'skills/ceo-ai/' + name: data for name, data in sorted(core.items())}
     files.update(security_files(root))
     files.update(writer_files(root))
     files.update(workflow_files(root))
-    files.update(listing_files(root))
+    files.update(listing)
     files['LICENSE'] = source['LICENSE']
     files['.claude-plugin/plugin.json'] = encode(manifest)
     files['.codex-plugin/plugin.json'] = encode(dict(manifest, skills='./skills/', interface={
@@ -76,7 +98,13 @@ def expected(root=ROOT):
     return files
 
 
-def native_core(source, meta):
+def versioned(name):
+    # The plugin directory accepts only known text types, so skills carry VERSION.md.
+    folder, _, base = name.rpartition('/')
+    return folder + '/' + PLUGIN_VERSION if folder.startswith('skills/') and base == 'VERSION' else name
+
+
+def native_core(source, meta, inventory_guide):
     files = {name: source[name] for name in NATIVE_CORE if name != 'bundle.json'}
     start_marker = b'<!-- apm-only -->\n'
     end_marker = b'<!-- /apm-only -->\n'
@@ -90,11 +118,12 @@ def native_core(source, meta):
         files[name] = before + after
     catalog = json.loads(files['catalog.json'])
     catalog['components'] = [item for item in catalog['components']
-                             if item['id'] not in APM_MEMORY_COMPONENTS]
+                             if item['id'] not in APM_MEMORY_COMPONENTS | {'tool:team'}]
     files['catalog.json'] = encode(catalog)
-    profile = files['profiles/core.profile'].decode('utf-8').splitlines()
-    files['profiles/core.profile'] = ''.join(
-        item + '\n' for item in profile if item not in APM_MEMORY_COMPONENTS).encode('utf-8')
+    files['references/skills/inventory.md'] = inventory_guide
+    files['SKILL.md'] += (b'\nFor an explicit local inventory request, follow the '
+                         b'[native inventory guide](references/skills/inventory.md).\n')
+    files[PLUGIN_VERSION] = files.pop('VERSION')
     files['bundle.json'] = encode(dict(meta, files=hashes(files)))
     return files
 
@@ -103,10 +132,9 @@ def security_files(root=ROOT):
     source, _ = package(root / '.apm/skills/ceo-ai')
     module = tree(root / 'modules/ceo-ai-security')
     require(set(module) == OPTIONAL_SOURCE, 'Security module differs from publication allowlist')
-    for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
-                 'scripts/ceo_inventory_windows.py'):
-        module[name] = source[name]
-    return {'skills/security/' + name: data for name, data in sorted(module.items())}
+    module = {name: data for name, data in module.items() if name not in SECURITY_TOOL_FILES}
+    module.update({name: source[name] for name in ('LICENSE', 'VERSION')})
+    return {versioned('skills/security/' + name): data for name, data in sorted(module.items())}
 
 
 def writer_files(root=ROOT):
@@ -114,7 +142,7 @@ def writer_files(root=ROOT):
     module = tree(root / 'modules/ceo-ai-writer')
     require(set(module) == WRITER_SOURCE, 'Writer module differs from publication allowlist')
     module.update({name: source[name] for name in WRITER_SHARED})
-    return {'skills/writer/' + name: data for name, data in sorted(module.items())}
+    return {versioned('skills/writer/' + name): data for name, data in sorted(module.items())}
 
 
 def workflow_files(root=ROOT):
@@ -124,7 +152,7 @@ def workflow_files(root=ROOT):
         module = tree(root / 'modules' / ('ceo-ai-' + skill))
         require(set(module) == allowed, skill + ' module differs from publication allowlist')
         module.update({name: source[name] for name in WORKFLOW_SHARED})
-        files.update({'skills/' + skill + '/' + name: data
+        files.update({versioned('skills/' + skill + '/' + name): data
                       for name, data in sorted(module.items())})
     return files
 
@@ -138,13 +166,13 @@ def listing_files(root=ROOT):
 
 def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
-    security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
-                                  'scripts/ceo_inventory_windows.py'}
-    return (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in NATIVE_CORE}
-            | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
-            | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
-               for name in allowed | WORKFLOW_SHARED}
-            | {'skills/security/' + name for name in security})
+    security = (OPTIONAL_SOURCE - SECURITY_TOOL_FILES) | {'LICENSE', 'VERSION'}
+    paths = (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in NATIVE_CORE}
+             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
+             | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
+                for name in allowed | WORKFLOW_SHARED}
+             | {'skills/security/' + name for name in security})
+    return {versioned(name) for name in paths}
 
 
 def reviewed_removals(previous, removed, plugin):
@@ -154,7 +182,7 @@ def reviewed_removals(previous, removed, plugin):
     legacy_memory = LEGACY_CORE_MEMORY | LEGACY_WRITER_MEMORY
     if removed & legacy_memory not in (set(), LEGACY_CORE_MEMORY, legacy_memory):
         return False
-    removed = removed - legacy_memory
+    removed = removed - legacy_memory - LEGACY_VERSIONS - LEGACY_NATIVE_TOOLS
     if not removed or removed == {LEGACY_ADAPTER}:
         return True
     # Only the complete historical payload may move. A partial legacy tree or

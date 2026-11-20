@@ -70,12 +70,10 @@ lists checks that could not run and what remains unverified. It never guarantees
 complete security.
 [Workflow, methods and reports](SECURITY_SCANNING.md).
 
-Ordinary audits do not require Docker. Only optional SkillSpector scanning of
-skill packages uses the [Docker walkthrough](DOCKER_SCAN.md): the current image
-recipe supports native ARM64 Docker hosts with Buildx/BuildKit. Python 3.10+,
-POSIX, Docker and the reviewed image are prerequisites for that adapter alone.
-The plugin installs none of them. The static adapter uses no LLM/API; the ordinary
-Security conversation uses your host model. No new scanner suite is bundled.
+Ordinary audits use the host model and its authorized tools. The native plugin
+contains no runnable scripts. On an explicit request and after approval, it can
+fetch the [local inventory helper](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md).
+The SkillSpector adapter is a separate tool in the source repository.
 
 ### Writer
 
@@ -205,12 +203,10 @@ APM. Сейчас они ставят только основной навык, 
 неподтверждённым. Он не гарантирует безопасность.
 [Процесс, методы и отчёт](SECURITY_SCANNING.md).
 
-Обычному аудиту Docker не нужен. Он нужен только опциональному SkillSpector для
-пакетов скиллов: [подготовка по шагам](DOCKER_SCAN.ru.md). Текущий рецепт —
-нативный ARM64 Docker-хост и Buildx/BuildKit. Python 3.10+, POSIX и проверенный
-образ тоже нужны только этому адаптеру; плагин их не устанавливает.
-Статический адаптер не вызывает LLM/API, а диалог Security использует модель
-приложения. Нового набора сканеров в поставке нет.
+Обычный аудит использует модель приложения и доступные ей инструменты.
+В плагине нет исполняемых скриптов. По запросу и с согласия пользователя агент
+может скачать [утилиту локальной инвентаризации](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md).
+Адаптер SkillSpector доступен отдельно в исходном репозитории.
 
 ### Writer
 
@@ -318,11 +314,9 @@ APM 目前仍只提供主技能，不包含其他原生技能。
 新目标或新风险需要重新同意。宿主权限和政策始终有效。报告说明哪些检查无法执行，
 以及哪些部分仍未验证；不能保证完全安全。[流程、方法与报告](SECURITY_SCANNING.md)。
 
-常规审查不需要 Docker。仅可选 SkillSpector 技能包扫描使用
-[ARM64 Docker 准备步骤](DOCKER_SCAN.zh-CN.md)：当前方案要求原生 ARM64 Docker
-主机和 Buildx/BuildKit。Python 3.10+、POSIX 和已审查镜像也仅是该适配器的前置条件，
-插件不会安装它们。静态适配器不调用 LLM/API；常规 Security 对话使用宿主模型。
-插件不捆绑新的扫描工具套件。
+常规审查使用宿主模型和获准工具。插件不包含可执行脚本。经用户请求并批准后，
+代理可下载[本地清点工具](../plugins/ceo-ai/skills/ceo-ai/references/skills/inventory.md)。
+SkillSpector 适配器作为独立工具保留在源代码仓库中。
 
 ### Writer
 

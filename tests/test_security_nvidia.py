@@ -17,8 +17,27 @@ from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.dont_write_bytecode = True
-sys.path.insert(0, str(ROOT / "plugins/ceo-ai/skills/security/scripts"))
-import ceo_security_nvidia as adapter
+ADAPTER_SOURCE = ROOT / "modules/ceo-ai-security/scripts"
+INVENTORY_SOURCE = ROOT / ".apm/skills/ceo-ai/scripts"
+
+
+def copy_adapter(scripts):
+    scripts.mkdir()
+    for name in ("ceo_inventory.py", "ceo_security.py"):
+        shutil.copyfile(INVENTORY_SOURCE / name, scripts / name)
+    script = scripts / "ceo_security_nvidia.py"
+    shutil.copyfile(ADAPTER_SOURCE / script.name, script)
+    return script
+
+
+def setUpModule():
+    global adapter
+    temporary = tempfile.TemporaryDirectory()
+    unittest.addModuleCleanup(temporary.cleanup)
+    script = copy_adapter(pathlib.Path(temporary.name) / "scripts")
+    spec = importlib.util.spec_from_file_location("ceo_security_nvidia", script)
+    adapter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(adapter)
 
 FILES = {"SKILL.md": b"# Synthetic\nRead the local notes.\n"}
 IMAGE = "scanner@sha256:" + "a" * 64
@@ -259,11 +278,9 @@ class CommandTests(unittest.TestCase):
 
     def run_copied_cli(self, *, stale_bytecode=False, expect_snapshot=True):
         scripts = self.workspace / "scripts"
-        scripts.mkdir()
-        source_scripts = ROOT / "plugins/ceo-ai/skills/security/scripts"
+        copy_adapter(scripts)
         for name in ("ceo_security_nvidia", "ceo_inventory", "ceo_security"):
             destination = scripts / (name + ".py")
-            shutil.copyfile(source_scripts / (name + ".py"), destination)
             if stale_bytecode and name != "ceo_security_nvidia":
                 cache = pathlib.Path(importlib.util.cache_from_source(str(destination)))
                 cache.parent.mkdir(exist_ok=True)
@@ -337,7 +354,8 @@ class CommandTests(unittest.TestCase):
             "    active.unlink()",
         ]) + "\n", encoding="utf-8")
         docker.chmod(0o700)
-        command = [sys.executable, str(ROOT / "plugins/ceo-ai/skills/security/scripts/ceo_security_nvidia.py"),
+        script = copy_adapter(self.workspace / "scripts")
+        command = [sys.executable, str(script),
                    "--package", str(self.package), "--workspace", str(self.workspace),
                    "--image", IMAGE, "--version", "2.12.0"]
         process = subprocess.Popen(command, env={"PATH": str(fake_bin)}, stdin=subprocess.DEVNULL,

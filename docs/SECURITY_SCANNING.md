@@ -33,8 +33,7 @@ permissions and policies remain binding.
 
 The installed skill links to [engagement and consent rules](../modules/ceo-ai-security/references/engagement.md),
 [target-specific testing profiles](../modules/ceo-ai-security/references/testing-profiles.md),
-[evidence and reporting](../modules/ceo-ai-security/references/reporting.md) and
-[optional skill-package scanning](../modules/ceo-ai-security/references/skill-scan.md).
+[evidence and reporting](../modules/ceo-ai-security/references/reporting.md).
 Use the resources next to the loaded `security/SKILL.md` in a native installation.
 Project and APM installs still contain only the core CEO skill.
 
@@ -148,13 +147,10 @@ caches and creating none in the installed bundle.
 
 ## Optional SkillSpector route for skill packages
 
-The native `ceo-ai` plugin includes the builtin indexing check and the broader
-`ceo-ai:security` skill described above. That skill retains a bounded reader,
-static scanner and NVIDIA adapter for optional checks of skill packages only.
-This adapter does not audit a website, API, mobile app or infrastructure target.
-Installing the plugin does not start a scan or install Docker. Use the
-[plugin guide](PLUGINS.md#security) to verify the selected snapshot; older
-releases used a separate security plugin.
+The native `ceo-ai` plugin contains the broader `ceo-ai:security` skill.
+It can fetch the verified inventory helper for an approved inventory request.
+The NVIDIA adapter is a separate tool for checking skill packages and is
+available from a reviewed source checkout. See the [setup steps](DOCKER_SCAN.md).
 
 Only for this optional route, check these prerequisites: Python 3.10 or newer,
 a POSIX host with descriptor/no-follow support, a Docker client and working
@@ -170,16 +166,13 @@ workspace must already exist, be owned by the invoking user, and have trusted
 ancestors and no group/world write permission.
 
 ```sh
-python3 plugins/ceo-ai/skills/security/scripts/ceo_security_nvidia.py \
+python3 -I -B "$CEO_SCAN_ADAPTER" \
   --package /approved/skill-package --workspace /approved/private-workspace \
   --image "$SCANNER_IMAGE_DIGEST" --version 2.12.0
 ```
 
-In a native installation, use `scripts/ceo_security_nvidia.py` relative to the
-loaded `security/SKILL.md`, not the source checkout or the core skill. Select
-`ceo-ai:security` in Codex or invoke
-`/ceo-ai:security` in Claude Code. The skill checks scope and
-prerequisites before running an explicitly requested scan. A scan-only request
+Set `CEO_SCAN_ADAPTER` to the prepared local adapter described in the setup
+steps. Confirm scope and prerequisites before an explicitly requested scan. A scan-only request
 does not authorize Docker installation or image builds/downloads. An explicit
 preparation request can authorize the separately reviewed setup workflow in the
 skill-scan guide. The adapter itself never pulls/builds an image or falls back
