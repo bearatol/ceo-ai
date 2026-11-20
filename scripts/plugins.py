@@ -22,6 +22,10 @@ LEGACY_SECURITY = frozenset('skills/security-scan/' + name for name in (
     'LICENSE', 'SKILL.md', 'VERSION', 'scripts/ceo_inventory.py',
     'scripts/ceo_inventory_windows.py', 'scripts/ceo_security.py',
     'scripts/ceo_security_nvidia.py'))
+PLUGIN_VERSION = 'VERSION.md'
+# Skill version markers before the plugin directory required a text extension.
+LEGACY_VERSIONS = frozenset('skills/' + skill + '/VERSION' for skill in (
+    'ceo-ai', 'security', 'writer', 'debugger', 'user-review', 'video-editor'))
 PLUGIN_METADATA = frozenset({'LICENSE', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'payload.json'})
 WRITER_SOURCE = frozenset({'SKILL.md', 'references/skills/writer-style.md'})
 WRITER_SHARED = frozenset({'LICENSE', 'VERSION'})
@@ -76,6 +80,12 @@ def expected(root=ROOT):
     return files
 
 
+def versioned(name):
+    # The plugin directory accepts only known text types, so skills carry VERSION.md.
+    folder, _, base = name.rpartition('/')
+    return folder + '/' + PLUGIN_VERSION if folder.startswith('skills/') and base == 'VERSION' else name
+
+
 def native_core(source, meta):
     files = {name: source[name] for name in NATIVE_CORE if name != 'bundle.json'}
     start_marker = b'<!-- apm-only -->\n'
@@ -95,6 +105,7 @@ def native_core(source, meta):
     profile = files['profiles/core.profile'].decode('utf-8').splitlines()
     files['profiles/core.profile'] = ''.join(
         item + '\n' for item in profile if item not in APM_MEMORY_COMPONENTS).encode('utf-8')
+    files[PLUGIN_VERSION] = files.pop('VERSION')
     files['bundle.json'] = encode(dict(meta, files=hashes(files)))
     return files
 
@@ -106,7 +117,7 @@ def security_files(root=ROOT):
     for name in ('LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                  'scripts/ceo_inventory_windows.py'):
         module[name] = source[name]
-    return {'skills/security/' + name: data for name, data in sorted(module.items())}
+    return {versioned('skills/security/' + name): data for name, data in sorted(module.items())}
 
 
 def writer_files(root=ROOT):
@@ -114,7 +125,7 @@ def writer_files(root=ROOT):
     module = tree(root / 'modules/ceo-ai-writer')
     require(set(module) == WRITER_SOURCE, 'Writer module differs from publication allowlist')
     module.update({name: source[name] for name in WRITER_SHARED})
-    return {'skills/writer/' + name: data for name, data in sorted(module.items())}
+    return {versioned('skills/writer/' + name): data for name, data in sorted(module.items())}
 
 
 def workflow_files(root=ROOT):
@@ -124,7 +135,7 @@ def workflow_files(root=ROOT):
         module = tree(root / 'modules' / ('ceo-ai-' + skill))
         require(set(module) == allowed, skill + ' module differs from publication allowlist')
         module.update({name: source[name] for name in WORKFLOW_SHARED})
-        files.update({'skills/' + skill + '/' + name: data
+        files.update({versioned('skills/' + skill + '/' + name): data
                       for name, data in sorted(module.items())})
     return files
 
@@ -140,11 +151,12 @@ def publication_paths(plugin):
     require(plugin in RECEIPTS, 'Unknown plugin identity')
     security = OPTIONAL_SOURCE | {'LICENSE', 'VERSION', 'scripts/ceo_inventory.py', 'scripts/ceo_security.py',
                                   'scripts/ceo_inventory_windows.py'}
-    return (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in NATIVE_CORE}
-            | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
-            | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
-               for name in allowed | WORKFLOW_SHARED}
-            | {'skills/security/' + name for name in security})
+    paths = (PLUGIN_METADATA | set(LISTING_FILES.values()) | {'skills/ceo-ai/' + name for name in NATIVE_CORE}
+             | {'skills/writer/' + name for name in WRITER_SOURCE | WRITER_SHARED}
+             | {'skills/' + skill + '/' + name for skill, allowed in WORKFLOW_SOURCES.items()
+                for name in allowed | WORKFLOW_SHARED}
+             | {'skills/security/' + name for name in security})
+    return {versioned(name) for name in paths}
 
 
 def reviewed_removals(previous, removed, plugin):
@@ -154,7 +166,7 @@ def reviewed_removals(previous, removed, plugin):
     legacy_memory = LEGACY_CORE_MEMORY | LEGACY_WRITER_MEMORY
     if removed & legacy_memory not in (set(), LEGACY_CORE_MEMORY, legacy_memory):
         return False
-    removed = removed - legacy_memory
+    removed = removed - legacy_memory - LEGACY_VERSIONS
     if not removed or removed == {LEGACY_ADAPTER}:
         return True
     # Only the complete historical payload may move. A partial legacy tree or

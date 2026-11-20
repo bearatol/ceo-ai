@@ -45,7 +45,7 @@ approved scope. Never run these steps merely because this skill was loaded:
    socket, not an unchecked selected or remote builder. Do not bootstrap one to
    discover where it connects. Missing Docker/Buildx installation needs applicable
    authorization, not an automatic install.
-3. Read this package's `VERSION`. The build recipe and synthetic smoke fixture are
+3. Read this package's `VERSION` (`VERSION.md` in the native plugin). The build recipe and synthetic smoke fixture are
    not bundled runtime files. Obtain them only from the trusted upstream
    `https://github.com/bearatol/ceo-ai` checkout at the release commit corresponding
    to that installed version. Verify and record the commit and review

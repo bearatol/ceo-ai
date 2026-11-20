@@ -44,7 +44,7 @@ class SecurityModuleTests(unittest.TestCase):
         files = {name: data for name, data in current.items()
                  if name != 'payload.json' and not name.startswith('skills/security/')}
         for name in LEGACY_FILES:
-            data = current['skills/security/' + name]
+            data = current[plugins.versioned('skills/security/' + name)]
             if name == 'SKILL.md':
                 data = b'---\nname: security-scan\n---\nPrevious reviewed security skill.\n'
             files['skills/security-scan/' + name] = data

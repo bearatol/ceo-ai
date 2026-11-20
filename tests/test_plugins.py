@@ -28,10 +28,10 @@ class PluginTests(unittest.TestCase):
     def test_new_workflows_are_self_contained_after_cache_relocation(self):
         files = plugins.expected(ROOT)
         resources = {
-            'debugger': {'SKILL.md', 'LICENSE', 'VERSION'},
-            'user-review': {'SKILL.md', 'LICENSE', 'VERSION',
+            'debugger': {'SKILL.md', 'LICENSE', 'VERSION.md'},
+            'user-review': {'SKILL.md', 'LICENSE', 'VERSION.md',
                             'references/professional-profiles.md'},
-            'video-editor': {'SKILL.md', 'LICENSE', 'VERSION'},
+            'video-editor': {'SKILL.md', 'LICENSE', 'VERSION.md'},
         }
         with tempfile.TemporaryDirectory(prefix='workflow cache ') as folder:
             cache = Path(folder).resolve() / '插件'
@@ -47,7 +47,8 @@ class PluginTests(unittest.TestCase):
                     path.write_bytes(data)
                 self.assertIn('name: ' + skill + '\n', (target / 'SKILL.md').read_text())
                 for shared in ('LICENSE', 'VERSION'):
-                    self.assertEqual(payload[shared], (ROOT / shared).read_bytes())
+                    self.assertEqual(payload['VERSION.md' if shared == 'VERSION' else shared],
+                                     (ROOT / shared).read_bytes())
                 for path in target.rglob('*.md'):
                     for link in re.findall(r'\]\(([^)]+)\)', path.read_text()):
                         if link.startswith(('https://', 'http://', '#')):
@@ -101,11 +102,11 @@ class PluginTests(unittest.TestCase):
         prefix = 'skills/writer/'
         writer = {name[len(prefix):]: data for name, data in files.items()}
         self.assertEqual(set(writer), {
-            'LICENSE', 'VERSION', 'SKILL.md', 'references/skills/writer-style.md',
+            'LICENSE', 'VERSION.md', 'SKILL.md', 'references/skills/writer-style.md',
         })
         source, _ = package(ROOT / '.apm/skills/ceo-ai')
         for name in plugins.WRITER_SHARED:
-            self.assertEqual(writer[name], source[name])
+            self.assertEqual(writer['VERSION.md' if name == 'VERSION' else name], source[name])
 
     def test_writer_rejects_private_files_and_verifies_its_payload(self):
         self.assertEqual({n:d for n,d in tree(ROOT / 'plugins/ceo-ai').items() if n.startswith('skills/writer/')}, plugins.writer_files(ROOT))
@@ -280,6 +281,35 @@ class PluginTests(unittest.TestCase):
                     else:
                         plugins.write(target, files, allow_layout_change=True)
                         self.assertEqual(tree(target), files)
+
+    def test_reviewed_upgrade_renames_skill_versions_to_markdown(self):
+        files = plugins.expected(ROOT)
+        self.assertFalse([name for name in files if name.endswith('/VERSION')])
+        self.assertEqual({name for name in files if name.endswith('/VERSION.md')},
+                         {name + '.md' for name in plugins.LEGACY_VERSIONS})
+        old = {(name[:-3] if name.endswith('/VERSION.md') else name): data
+               for name, data in files.items() if name != 'payload.json'}
+        for extra in (False, True):
+            with self.subTest(extra=extra), tempfile.TemporaryDirectory() as folder:
+                target = Path(folder).resolve() / 'package'
+                previous = dict(old)
+                if extra:
+                    previous['skills/ceo-ai/private-notes.md'] = b'Synthetic local file\n'
+                previous['payload.json'] = plugins.encode(dict(
+                    name='ceo-ai-plugin', schema_version=1, version='0.10.1', files=hashes(previous)))
+                for name, data in previous.items():
+                    path = target / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(data)
+                with self.assertRaisesRegex(ValueError, 'layout'):
+                    plugins.write(target, files)
+                if extra:
+                    with self.assertRaisesRegex(ValueError, 'layout'):
+                        plugins.write(target, files, allow_layout_change=True)
+                    self.assertEqual(tree(target), previous)
+                else:
+                    plugins.write(target, files, allow_layout_change=True)
+                    self.assertEqual(tree(target), files)
 
     def test_generation_preserves_edited_payload(self):
         with tempfile.TemporaryDirectory() as folder:
